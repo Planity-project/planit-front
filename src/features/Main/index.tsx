@@ -14,7 +14,7 @@ const MainPage = () => {
           <div className="main-btnBox">
             <Button
               onClick={() => {
-                router.push("/datechoicepage");
+                router.push("/datecreatepage");
               }}
             >
               시작하기

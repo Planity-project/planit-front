@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { DateRange, DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { ko } from "react-day-picker/locale";
+
 const useResponsive = () => {
   const [isMobile, setIsMobile] = useState(false);
 
@@ -13,7 +14,7 @@ const useResponsive = () => {
     };
 
     window.addEventListener("resize", handleResize);
-    handleResize(); // 컴포넌트가 마운트될 때 크기 확인
+    handleResize();
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -21,14 +22,23 @@ const useResponsive = () => {
   return isMobile;
 };
 
-const DateChoice = () => {
-  const [range, setRange] = useState<DateRange | undefined>();
+interface DateChoiceProps {
+  range: DateRange | undefined;
+  setRange: (range: DateRange | undefined) => void;
+  onNext: () => void;
+}
+
+const DateChoice = ({ range, setRange, onNext }: DateChoiceProps) => {
   const isMobile = useResponsive();
+
+  const isRangeSelected =
+    range?.from instanceof Date &&
+    range?.to instanceof Date &&
+    range.from.getTime() !== range.to.getTime();
+
   return (
     <DateChoiceStyled className="choice-wrap">
       <div className="choice-bigcontainer">
-        <div className="choice-text">여행 기간이 어떻게 되시나요?</div>
-        <Button>다음 단계</Button>
         <div className="choice-container">
           <div>
             <DayPicker
@@ -36,9 +46,14 @@ const DateChoice = () => {
               mode="range"
               numberOfMonths={isMobile ? 1 : 2}
               selected={range}
-              onSelect={setRange}
+              onSelect={setRange} // 선택 시 상위로 전달
             />
           </div>
+        </div>
+        <div className="choice-btnDiv">
+          <Button type="primary" disabled={!isRangeSelected} onClick={onNext}>
+            선택
+          </Button>
         </div>
       </div>
     </DateChoiceStyled>

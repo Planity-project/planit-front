@@ -24,12 +24,6 @@ export const DateChoiceStyled = styled.div`
     border-radius: 12px;
   }
 
-  .choice-text {
-    font-size: 24px;
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 50px;
-  }
   .rdp-range_start .rdp-day_button,
   .rdp-range_end .rdp-day_button {
     background-color: rgb(83, 183, 232, 0.6) !important;
@@ -65,8 +59,30 @@ export const DateChoiceStyled = styled.div`
       transparent
     );
   }
+  .choice-btnDiv {
+    margin-top: 20px;
+    width: 70%;
+    display: flex;
+    justify-content: end;
+  }
+  .choice-btnDiv Button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(83, 183, 232, 0.6);
+    border-radius: 5px;
+    color: white;
+    border: none;
+    padding: 20px 20px;
+  }
+  .choice-btnDiv .ant-btn[disabled] {
+    background-color: #ccc;
+    border-color: #ccc;
+    color: #666;
+  }
   @media (max-width: 1480px) {
-    .choice-container {
+    .choice-container,
+    .choice-btnDiv {
       width: 90%;
       .rdp-root {
         font-size: 20px;
@@ -78,7 +94,8 @@ export const DateChoiceStyled = styled.div`
     }
   }
   @media (max-width: 1280px) {
-    .choice-container {
+    .choice-container,
+    .choice-btnDiv {
       width: 90%;
       .rdp-root {
         font-size: 22px;
@@ -94,7 +111,8 @@ export const DateChoiceStyled = styled.div`
       display: flex;
       gap: 2rem;
     }
-    .choice-container {
+    .choice-container,
+    .choice-btnDiv {
       width: 95%;
       aspect-ratio: 1/0.6 !important;
       .rdp-root {
@@ -107,7 +125,8 @@ export const DateChoiceStyled = styled.div`
     }
   }
   @media (max-width: 768px) {
-    .choice-container {
+    .choice-container,
+    .choice-btnDiv {
       width: 70%;
       aspect-ratio: 1/0.8 !important;
       .rdp-root {
@@ -120,7 +139,8 @@ export const DateChoiceStyled = styled.div`
     }
   }
   @media (max-width: 500px) {
-    .choice-container {
+    .choice-container,
+    .choice-btnDiv {
       width: 85%;
       aspect-ratio: 1/1 !important;
       .rdp-root {
