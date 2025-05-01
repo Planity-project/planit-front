@@ -32,7 +32,13 @@ const CreateDatePage: React.FC = () => {
 
   return (
     <Createpage>
-      <div className="createpage-text">여행 기간이 어떻게 되시나요?</div>
+      <div className="createpage-text">
+        {current === 0
+          ? "여행 기간이 어떻게 되시나요?"
+          : current === 1
+          ? "어디로 여행을 떠나시나요?"
+          : "어떤 하루를 보낼지 정해볼까요?"}
+      </div>
 
       <div className="createpage-step">
         <Steps
