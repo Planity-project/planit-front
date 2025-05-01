@@ -11,7 +11,7 @@ const Header = () => {
     <HeaderStyled>
       <div className="Header-container">
         <div className="Header-logo">
-          <Image className="Header-logoImg" src={logo} alt="logo" />
+          <Image className="Header-logoImg" src={logo} alt="logo" priority />
         </div>
         <div className="Header-sideBox">
           <div className="Header-sideText">내 일정</div>
@@ -23,6 +23,7 @@ const Header = () => {
               className="Header-sideImg"
               src={sidebar}
               alt="menu"
+              priority
             />
           </div>
         </div>

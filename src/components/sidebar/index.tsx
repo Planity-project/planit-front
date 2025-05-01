@@ -42,13 +42,13 @@ const StyledMenu = styled(Menu)`
   }
 
   .ant-menu-item:hover {
-    background-color: rgba(94, 234, 96, 0.3) !important;
+    background-color: rgb(83, 183, 232, 0.6) !important;
     color: black !important;
     border: none !important;
   }
 
   .ant-menu-item:focus {
-    background-color: rgba(94, 234, 96, 0.3) !important;
+    background-color: rgb(83, 183, 232, 0.6) !important;
     color: black !important;
     border: none !important;
   }
@@ -90,6 +90,7 @@ const SideBar = ({ isOpen, setIsOpen }: SideBarProps) => {
           className="sideBar-btn"
           src={CloseButton}
           alt="closeButton"
+          priority
         />
       </div>
       <div className="sideBar-container">

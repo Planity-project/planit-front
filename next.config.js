@@ -45,7 +45,9 @@ module.exports = {
   },
 
   images: {
-    domains: ["localhost", "13.209.89.42", "15.164.52.122"], // 외부 접속을 위한 IP 추가
+    domains: ["localhost"], // 외부 이미지 도메인 설정
+    loader: "default", // 이미지를 최적화하는 로더 설정
+    formats: ["image/webp"], // 최적화된 웹포맷 설정
   },
 
   // src/pages 디렉토리로 경로 설정
