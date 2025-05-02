@@ -52,8 +52,8 @@ export const LoginStyled = styled.div`
   }
 
   .google-logo img {
-    width: 20px !important;
-    height: 20px !important;
+    width: 30px !important;
+    height: 30px !important;
     margin-right: 20px;
   }
 
