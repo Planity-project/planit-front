@@ -1,43 +1,44 @@
-import { Input } from "antd";
+import { Button, Input } from "antd";
 import { ChioceWhiceStyled } from "./styled";
 import { SearchOutlined } from "@ant-design/icons";
-import api from "@/util/api";
 import { useEffect, useState } from "react";
 import gps from "@/assets/images/gps.png";
 import Image from "next/image";
 import ShowWhich from "./ShowWhich";
-const ChoiceWhich = () => {
-  const [location, setLocation] = useState<any>([]);
+
+interface ChoiceWhichProps {
+  setSelectedPlace: (place: string) => void;
+  onNext: () => void;
+}
+
+const ChoiceWhich = ({ setSelectedPlace, onNext }: ChoiceWhichProps) => {
+  const [location, setLocation] = useState<any[]>([]);
   const [inputValue, setInputValue] = useState<string>("");
+  const [selectedLocation, setSelectedLocation] = useState<any | null>(null);
+
   const example = [
-    { country: "대한민국", name: "부산" },
-    { country: "대한민국", name: "서울" },
-    { country: "대한민국", name: "울산" },
-    { country: "대한민국", name: "대구" },
-    { country: "대한민국", name: "제주" },
-    { country: "대한민국", name: "거제통영" },
-    { country: "대한민국", name: "울릉도" },
+    { country: "대한민국", name: "부산", lat: 35.1796, lng: 129.0756 },
+    { country: "대한민국", name: "서울", lat: 37.5665, lng: 126.978 },
+    { country: "대한민국", name: "울산", lat: 35.5384, lng: 129.3114 },
+    { country: "대한민국", name: "대구", lat: 35.8722, lng: 128.6025 },
+    { country: "대한민국", name: "제주", lat: 33.4996, lng: 126.5312 },
+    { country: "대한민국", name: "거제통영", lat: 34.8805, lng: 128.6216 },
+    { country: "대한민국", name: "울릉도", lat: 37.4847, lng: 130.8987 },
   ];
-  const search = (word: string) => {
-    // api.post("/search", { word }).then((res) => {
-    //   setLocation(res.data);
-    // });
-  };
+
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const keyword = e.target.value;
     setInputValue(keyword);
-
     const filtered = example.filter((item) => item.name.includes(keyword));
-
     setLocation(filtered);
   };
+
   useEffect(() => {
     setLocation(example);
-    // 또는 서버에서 받아올 경우 아래처럼 사용
-    // api.get("/location").then((res) => {
-    //   setLocation(res.data);
-    // });
+    setSelectedLocation(example[0]);
+    setSelectedPlace(example[0].name); // ⬅ 초기 설정 전달
   }, []);
+
   return (
     <ChioceWhiceStyled>
       <div className="which-container">
@@ -54,9 +55,17 @@ const ChoiceWhich = () => {
               />
             </div>
             <div className="which-mapBox">
-              {location.map((x: any, i: number) => {
+              {location.map((x, i) => {
+                const isSelected = selectedLocation?.name === x.name;
                 return (
-                  <div key={i} className="which-mapDiv">
+                  <div
+                    key={i}
+                    className={`which-mapDiv ${isSelected ? "selected" : ""}`}
+                    onClick={() => {
+                      setSelectedLocation(x);
+                      setSelectedPlace(x.name); // ⬅ 선택 시 상위로 전달
+                    }}
+                  >
                     <div className="which-gpsDiv">
                       <div className="which-gpsimg">
                         <Image src={gps} alt="" />
@@ -70,10 +79,17 @@ const ChoiceWhich = () => {
                 );
               })}
             </div>
+            <div className="which-btnDiv">
+              <Button type="primary" onClick={onNext}>
+                선택
+              </Button>
+            </div>
           </div>
         </div>
         <div className="which-rightcontainer">
-          <ShowWhich />
+          {selectedLocation && (
+            <ShowWhich selectedLocation={selectedLocation} />
+          )}
         </div>
       </div>
     </ChioceWhiceStyled>

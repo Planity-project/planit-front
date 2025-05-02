@@ -18,10 +18,6 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <Head>
         <title>PLANIT</title>
-        <Script
-          strategy="afterInteractive" //"beforeInteractive"으로 찾았는데 경고메세지 떠가지고 after로 수정해줬습니다.
-          src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ncp_iam_BPAMKR18hv9RBgxjXe5H`}
-        ></Script>
       </Head>
 
       <Header />

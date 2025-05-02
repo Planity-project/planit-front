@@ -4,17 +4,21 @@ import DateChoice from "./DateChoice";
 import { Createpage } from "./styled";
 import { DateRange } from "react-day-picker";
 import ChoiceWhich from "./ChoiceWhich";
+import CreateDays from "./CreateDays";
+
 const CreateDatePage: React.FC = () => {
   const [current, setCurrent] = useState(0);
   const [range, setRange] = useState<DateRange | undefined>();
-  console.log(range);
+  const [selectedPlace, setSelectedPlace] = useState<string | null>(null); // ⬅ 추가
+
+  console.log("선택된 지역:", selectedPlace); // ⬅ 확인용 로그
+
   const isRangeValid =
     range?.from instanceof Date &&
     range?.to instanceof Date &&
     range.from.getTime() !== range.to.getTime();
 
   const onChange = (value: number) => {
-    // 현재 Step이 0일 때만 유효성 검사를 수행함
     if (current === 0 && !isRangeValid) {
       Modal.error({
         content: `날짜를 선택해 주세요`,
@@ -25,9 +29,7 @@ const CreateDatePage: React.FC = () => {
   };
 
   const handleNextStep = () => {
-    if (isRangeValid) {
-      setCurrent((prev) => prev + 1);
-    }
+    setCurrent((prev) => prev + 1);
   };
 
   return (
@@ -55,7 +57,13 @@ const CreateDatePage: React.FC = () => {
       {current === 0 && (
         <DateChoice range={range} setRange={setRange} onNext={handleNextStep} />
       )}
-      {current === 1 && <ChoiceWhich />}
+      {current === 1 && (
+        <ChoiceWhich
+          setSelectedPlace={setSelectedPlace}
+          onNext={handleNextStep}
+        />
+      )}
+      {current === 2 && <CreateDays />}
     </Createpage>
   );
 };

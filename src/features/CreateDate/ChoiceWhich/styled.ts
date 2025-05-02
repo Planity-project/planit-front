@@ -31,8 +31,26 @@ export const ChioceWhiceStyled = styled.div`
     border-radius: 24px;
   }
   .which-rightcontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 50%;
-    text-align: center;
+    height: 100%;
+  }
+  .which-btnDiv {
+    margin-top: 10px;
+    display: flex;
+    justify-content: end;
+  }
+  .which-btnDiv Button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(83, 183, 232, 0.6);
+    border-radius: 5px;
+    color: white;
+    border: none;
+    padding: 20px 20px;
   }
   .which-mapBox {
     overflow-y: scroll;
@@ -48,7 +66,9 @@ export const ChioceWhiceStyled = styled.div`
     background-color: rgba(136, 136, 136, 0.3);
     border-radius: 10px;
   }
-
+  .which-mapDiv.selected {
+    background-color: rgb(83, 183, 232, 0.4);
+  }
   .which-mapBox::-webkit-scrollbar-track {
     background-color: whitesmoke;
   }
@@ -77,5 +97,18 @@ export const ChioceWhiceStyled = styled.div`
   .which-country {
     font-weight: 300;
     font-size: 12px;
+  }
+  @media (max-width: 900px) {
+    .which-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-top: 50px;
+      gap: 50px;
+    }
+    .which-leftcontainer {
+      width: 90%;
+    }
   }
 `;
