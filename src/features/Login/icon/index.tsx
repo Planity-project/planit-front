@@ -24,6 +24,7 @@ const SocialLoginButton = ({
       backgroundColor={backgroundColor}
       textColor={textColor}
       className={className}
+      type="button"
     >
       <LogoImage src={iconSrc} alt="logo" />
       {text}

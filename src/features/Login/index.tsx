@@ -6,13 +6,13 @@ import { LoginStyled } from "@/features/Login/styled";
 
 const Login = () => {
   const naverLogin = () => {
-    console.log("네이버 로그인 클릭됨");
+    window.location.href = "http://localhost:3000/auth/naver";
   };
   const kakaoLogin = () => {
-    console.log("카카오 로그인 클릭됨");
+    window.location.href = "http://localhost:3000/auth/kakao";
   };
   const googleLogin = () => {
-    console.log("구글 로그인 클릭됨");
+    window.location.href = "http://localhost:3000/auth/google";
   };
 
   return (
