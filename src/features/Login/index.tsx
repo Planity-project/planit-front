@@ -6,13 +6,13 @@ import { LoginStyled } from "@/features/Login/styled";
 
 const Login = () => {
   const naverLogin = () => {
-    window.location.href = "http://localhost:3000/auth/naver";
+    window.location.href = "http://localhost:5001/auth/naver";
   };
   const kakaoLogin = () => {
-    window.location.href = "http://localhost:3000/auth/kakao";
+    window.location.href = "http://localhost:5001/auth/kakao";
   };
   const googleLogin = () => {
-    window.location.href = "http://localhost:3000/auth/google";
+    window.location.href = "http://localhost:5001/auth/google";
   };
 
   return (
