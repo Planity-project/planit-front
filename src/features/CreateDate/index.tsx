@@ -63,7 +63,7 @@ const CreateDatePage: React.FC = () => {
           onNext={handleNextStep}
         />
       )}
-      {current === 2 && <CreateDays />}
+      {current === 2 && <CreateDays selectedPlace={selectedPlace} />}
     </Createpage>
   );
 };

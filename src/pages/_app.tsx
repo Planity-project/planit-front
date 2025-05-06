@@ -9,6 +9,7 @@ import axios from "axios";
 import "antd/dist/antd.css";
 import { useRouter } from "next/router";
 import Script from "next/script";
+import { UserProvider } from "@/context/UserContext";
 
 // 최상위 App 컴포넌트
 export default function App({ Component, pageProps }: AppProps) {
@@ -20,10 +21,11 @@ export default function App({ Component, pageProps }: AppProps) {
         <title>PLANIT</title>
       </Head>
 
-      <Header />
-      {/* loading ? <LoadingSpinner /> : */}
-      {<Component {...pageProps} />}
-      {!excludedFooterPages.includes(router.pathname) && <Footer />}
+      <UserProvider>
+        <Header />
+        <Component {...pageProps} />
+        {!excludedFooterPages.includes(router.pathname) && <Footer />}
+      </UserProvider>
     </>
   );
 }
