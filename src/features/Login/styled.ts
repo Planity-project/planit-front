@@ -6,7 +6,7 @@ export const LoginStyled = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    margin-top: 100px;
     padding: 20px;
   }
 

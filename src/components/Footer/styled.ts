@@ -7,6 +7,5 @@ export const FooterStyled = styled.div`
   align-items: center;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   background-color: rgba(238, 237, 237, 0.1);
-  z-index: 1000;
   margin-top: 50px;
 `;
