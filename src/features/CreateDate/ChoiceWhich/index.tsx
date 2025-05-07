@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import gps from "@/assets/images/gps.png";
 import Image from "next/image";
 import ShowWhich from "./ShowWhich";
+import api from "@/util/api";
+import { RSC_HEADER } from "next/dist/client/components/app-router-headers";
 
 interface ChoiceWhichProps {
   setSelectedPlace: (place: string) => void;
@@ -34,9 +36,20 @@ const ChoiceWhich = ({ setSelectedPlace, onNext }: ChoiceWhichProps) => {
   };
 
   useEffect(() => {
-    setLocation(example);
-    setSelectedLocation(example[0]);
-    setSelectedPlace(example[0].name); // ⬅ 초기 설정 전달
+    const fetchData = async () => {
+      try {
+        const res = await api.get("location/findAll");
+        const arr = res.data;
+
+        setLocation(arr);
+        setSelectedLocation(arr[0]);
+        setSelectedPlace(arr[0].name);
+      } catch (error) {
+        console.error("error", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (
