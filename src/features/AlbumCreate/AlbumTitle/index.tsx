@@ -1,12 +1,13 @@
 import { Button, Input, message } from "antd";
 import { AlbumTitleStyled } from "./styled";
 import { useEffect, useState } from "react";
-
+import api from "@/util/api";
+import { useUser } from "@/context/UserContext";
 const AlbumTitle = ({ setModal }: any) => {
   const [albumName, setAlbumName] = useState("");
   const [inviteUrl, setInviteUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
-
+  const user = useUser();
   useEffect(() => {
     const updateShortUrl = () => {
       setShortUrl(shortenUrl(inviteUrl));
@@ -36,23 +37,20 @@ const AlbumTitle = ({ setModal }: any) => {
     if (width >= 768) return 25; // 태블릿
     return 15; // 모바일
   };
-
   const shortenUrl = (url: string) => {
     const maxLength = getMaxLength();
     if (url.length <= maxLength) return url;
     return "..." + url.slice(url.length - maxLength);
   };
-
+  const create = () => {
+    api
+      .post("/album/바꿔", { userId: user?.id, title: albumName })
+      .then((res) => {
+        console.log(res.data);
+      });
+  };
   return (
     <AlbumTitleStyled>
-      <div
-        className="AlbumTitle-closeBtn"
-        onClick={() => {
-          setModal(false);
-        }}
-      >
-        &times;
-      </div>
       <div className="AlbumTitle-title">추억앨범의 이름을 정하세요</div>
       <div className="AlbumTitle-titleBox">
         <div className="AlbumTitle-inputDiv">
@@ -75,7 +73,7 @@ const AlbumTitle = ({ setModal }: any) => {
         )}
       </div>
       <div className="AlbumTitle-createbtn">
-        <Button>앨범 만들기</Button>
+        <Button onClick={create}>앨범 만들기</Button>
       </div>
     </AlbumTitleStyled>
   );
