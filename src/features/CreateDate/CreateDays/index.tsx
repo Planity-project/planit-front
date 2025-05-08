@@ -20,6 +20,7 @@ const CreateDays: React.FC<CreateDaysProps> = ({ selectedPlace }) => {
 
       try {
         console.log("요청 보냄");
+        console.log(selectedPlace);
         const res = await api.get("/map/nearby", {
           params: { address: selectedPlace }, // 요청 양식
         });
