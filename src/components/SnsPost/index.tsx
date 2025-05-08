@@ -2,11 +2,12 @@ import { SnsPostStyled } from "./styled";
 import Image from "next/image";
 interface snspostprops {
   data: any;
+  variant?: "default" | "album";
 }
 
-const SnsPost = ({ data }: snspostprops) => {
+const SnsPost = ({ data, variant }: snspostprops) => {
   return (
-    <SnsPostStyled>
+    <SnsPostStyled $variant={variant}>
       <div className="sns-wrap">
         {data.map((x: any, i: number) => {
           return (
@@ -23,9 +24,9 @@ const SnsPost = ({ data }: snspostprops) => {
               </div>
 
               <div className="sns-textBox">
-                <div className="sns-title">{x.title}</div>
-                <div className="sns-hashtag">{x.hashtag}</div>
-                <div className="sns-comment">{x.comment}</div>
+                <div className="sns-title">{x?.title}</div>
+                <div className="sns-hashtag">{x?.hashtag}</div>
+                <div className="sns-comment">{x?.comment}</div>
               </div>
             </div>
           );

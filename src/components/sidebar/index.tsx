@@ -60,7 +60,7 @@ const StyledMenu = styled(Menu)`
 const items: MenuProps["items"] = [
   {
     key: "sub1",
-    label: "일정",
+    label: "내 일정",
     icon: React.createElement(MailOutlined),
   },
   {
@@ -72,10 +72,6 @@ const items: MenuProps["items"] = [
     key: "sub3",
     label: "추억 앨범",
     icon: React.createElement(AppstoreOutlined),
-    children: [
-      { key: "1", label: "시작하기" },
-      { key: "2", label: "내 앨범" },
-    ],
   },
 ];
 
@@ -111,7 +107,16 @@ const SideBar = ({ isOpen, setIsOpen }: SideBarProps) => {
           </div>
           <div>프로필</div>
         </div>
-        <StyledMenu mode="inline" items={items} />
+        <StyledMenu
+          mode="inline"
+          items={items}
+          onClick={({ key }) => {
+            if (key === "sub3") router.push("/album"); // 시작하기
+            // if (key === "2") router.push("/my-album");
+            // if (key === "sub1") router.push("/schedule");
+            // if (key === "sub2") router.push("/profile");
+          }}
+        />
         <div className="sideBar-logoutText" onClick={logout}>
           로그아웃
         </div>

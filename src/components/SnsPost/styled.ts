@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const SnsPostStyled = styled.div`
+export const SnsPostStyled = styled.div<{ $variant?: "default" | "album" }>`
   margin-top: 70px;
   width: 100%;
   display: flex;
@@ -12,7 +12,7 @@ export const SnsPostStyled = styled.div`
     justify-content: center;
     flex-wrap: wrap;
     gap: 20px;
-    width: 50%;
+    width: ${(props) => (props.$variant === "album" ? "80%" : "50%")};
     max-width: 1280px;
   }
 
@@ -37,7 +37,7 @@ export const SnsPostStyled = styled.div`
     gap: 2px; /* 기존 1px에서 2px로 늘리면 더욱 구분감 생김 */
     background-color: #eaeaea; /* 틈 사이 회색 배경 느낌 추가 */
     width: 100%;
-    height: 60%;
+    height: ${(props) => (props.$variant === "album" ? "80%" : "60%")};
     overflow: hidden;
     /* 왼쪽 위 모서리만 둥글게 */
     border-top-left-radius: 5px;
