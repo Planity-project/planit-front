@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const SnsStyled = styled.div`
+export const SnsPostStyled = styled.div`
   margin-top: 70px;
   width: 100%;
   display: flex;

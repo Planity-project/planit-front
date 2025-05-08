@@ -24,8 +24,15 @@ export const SidebarStyled = styled.div<{ $isOpen: boolean }>`
     gap: 15px;
   }
   .sideBar-profileBox {
+    margin-left: 15px;
     display: flex;
-    gap: 30px;
+    gap: 40px;
     align-items: center;
+  }
+  .sideBar-logoutText {
+    font-size: 12px;
+    margin-top: 40px;
+    text-align: center;
+    cursor: pointer;
   }
 `;

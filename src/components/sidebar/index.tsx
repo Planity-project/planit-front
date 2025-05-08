@@ -8,8 +8,11 @@ import {
   SettingOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
+import { useUser } from "@/context/UserContext";
+import { useRouter } from "next/router";
+import api from "@/util/api";
 
 // Menu 항목을 스타일링하기 위한 스타일 컴포넌트 정의
 const StyledMenu = styled(Menu)`
@@ -57,12 +60,12 @@ const StyledMenu = styled(Menu)`
 const items: MenuProps["items"] = [
   {
     key: "sub1",
-    label: "예약",
+    label: "일정",
     icon: React.createElement(MailOutlined),
   },
   {
     key: "sub2",
-    label: "정보 관리",
+    label: "내 정보",
     icon: React.createElement(SettingOutlined),
   },
   {
@@ -82,6 +85,13 @@ interface SideBarProps {
 }
 
 const SideBar = ({ isOpen, setIsOpen }: SideBarProps) => {
+  const router = useRouter();
+  const user = useUser();
+  const logout = () => {
+    api.get("auth/logout").then((res) => {
+      window.location.reload();
+    });
+  };
   return (
     <SidebarStyled $isOpen={isOpen}>
       <div className="sideBar-closeBtn">
@@ -96,12 +106,15 @@ const SideBar = ({ isOpen, setIsOpen }: SideBarProps) => {
       <div className="sideBar-container">
         <div className="sideBar-profileBox">
           <div>
-            <div>NickName</div>
+            <div className="sideBar-nickName">{user?.nickname}님</div>
             <div>연동 계정</div>
           </div>
           <div>프로필</div>
         </div>
         <StyledMenu mode="inline" items={items} />
+        <div className="sideBar-logoutText" onClick={logout}>
+          로그아웃
+        </div>
       </div>
     </SidebarStyled>
   );

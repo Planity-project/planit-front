@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import Script from "next/script";
 import { ShowWhichStyled } from "./styled";
+//데이터 타입
 interface ShowWhichProps {
   selectedLocation: { name: string; country: string; lat: number; lng: number };
 }

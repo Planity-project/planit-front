@@ -4,7 +4,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import gps from "@/assets/images/gps.png";
 import Image from "next/image";
-import ShowWhich from "./ShowWhich";
+import ShowWhich from "../../../components/ShowWhich";
 import api from "@/util/api";
 import { RSC_HEADER } from "next/dist/client/components/app-router-headers";
 

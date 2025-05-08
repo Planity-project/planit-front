@@ -15,7 +15,11 @@ export const HeaderStyled = styled.div`
     align-items: center;
     margin: 0px 50px;
   }
-
+  .Header-loginText {
+    font-size: 13px;
+    font-weight: 400;
+    cursor: pointer;
+  }
   .Header-logoImg {
     width: 55%;
     height: 50%;

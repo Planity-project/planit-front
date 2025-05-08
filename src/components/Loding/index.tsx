@@ -1,6 +1,6 @@
 import { LodingStyled } from "./styled";
 import Image from "next/image";
-import LodingGif from "@/assets/images/lodinggif.gif";
+import LodingGif from "@/assets/images/Lodinggif1.gif";
 const Loding = () => {
   return (
     <LodingStyled>
