@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { DateRange, DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { ko } from "react-day-picker/locale";
-
+import ShowWhich from "@/components/ShowWhich";
 const useResponsive = () => {
   const [isMobile, setIsMobile] = useState(false);
 

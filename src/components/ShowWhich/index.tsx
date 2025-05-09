@@ -3,7 +3,12 @@ import Script from "next/script";
 import { ShowWhichStyled } from "./styled";
 //데이터 타입
 interface ShowWhichProps {
-  selectedLocation: { name: string; country: string; lat: number; lng: number };
+  selectedLocation: {
+    name: string;
+    country?: string;
+    lat: number;
+    lng: number;
+  };
 }
 
 const ShowWhich = ({ selectedLocation }: ShowWhichProps) => {
@@ -11,6 +16,7 @@ const ShowWhich = ({ selectedLocation }: ShowWhichProps) => {
   const mapRef = useRef<any>(null);
   const markerRef = useRef<any>(null);
   const [isMapReady, setIsMapReady] = useState(false);
+
   useEffect(() => {
     if (!mapRef.current) {
       initMap(); // 지도와 마커를 처음 생성

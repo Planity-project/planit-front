@@ -17,21 +17,12 @@ const ChoiceWhich = ({ setSelectedPlace, onNext }: ChoiceWhichProps) => {
   const [location, setLocation] = useState<any[]>([]);
   const [inputValue, setInputValue] = useState<string>("");
   const [selectedLocation, setSelectedLocation] = useState<any | null>(null);
-
-  const example = [
-    { country: "대한민국", name: "부산", lat: 35.1796, lng: 129.0756 },
-    { country: "대한민국", name: "서울", lat: 37.5665, lng: 126.978 },
-    { country: "대한민국", name: "울산", lat: 35.5384, lng: 129.3114 },
-    { country: "대한민국", name: "대구", lat: 35.8722, lng: 128.6025 },
-    { country: "대한민국", name: "제주", lat: 33.4996, lng: 126.5312 },
-    { country: "대한민국", name: "거제통영", lat: 34.8805, lng: 128.6216 },
-    { country: "대한민국", name: "울릉도", lat: 37.4847, lng: 130.8987 },
-  ];
+  const [array, setArray] = useState<any[]>([]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const keyword = e.target.value;
     setInputValue(keyword);
-    const filtered = example.filter((item) => item.name.includes(keyword));
+    const filtered = array.filter((item: any) => item.name.includes(keyword));
     setLocation(filtered);
   };
 
@@ -40,10 +31,10 @@ const ChoiceWhich = ({ setSelectedPlace, onNext }: ChoiceWhichProps) => {
       try {
         const res = await api.get("location/findAll");
         const arr = res.data;
-
+        setArray(arr);
         setLocation(arr);
-        setSelectedLocation(arr[0]);
-        setSelectedPlace(arr[0].name);
+        setSelectedLocation(location[0]);
+        setSelectedPlace(location[0].name);
       } catch (error) {
         console.error("error", error);
       }
