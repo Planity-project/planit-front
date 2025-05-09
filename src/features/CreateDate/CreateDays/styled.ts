@@ -1,7 +1,13 @@
 import styled from "styled-components";
 
 export const CreateDaysStyled = styled.div`
+  width: 100%;
+  .create-wrap {
+    display: flex;
+    gap: 10px;
+  }
   .create-container {
+    width: 50%;
     display: flex;
     align-items: flex-start;
     gap: 20px;
@@ -10,7 +16,7 @@ export const CreateDaysStyled = styled.div`
   }
 
   .create-left {
-    width: 25%;
+    width: 100%;
     max-height: 500px;
     overflow-y: auto;
     padding-right: 10px;
