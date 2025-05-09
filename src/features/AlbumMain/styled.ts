@@ -41,4 +41,10 @@ export const AlbumMainStyled = styled.div`
     font-size: 17px;
     font-weight: 500;
   }
+  .AlbumMain-noData {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 500;
+  }
 `;

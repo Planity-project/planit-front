@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { SnsDetailStyled } from "./styled";
 import { useRouter } from "next/router";
 import api from "@/util/api";
+
 const SnsDetail = () => {
   const router = useRouter();
   const { id } = router.query;

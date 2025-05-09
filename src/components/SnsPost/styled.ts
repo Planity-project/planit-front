@@ -29,7 +29,8 @@ export const SnsPostStyled = styled.div<{ $variant?: "default" | "album" }>`
   }
 
   .sns-postBox:nth-child(even) {
-    transform: translateY(5px);
+    transform: ${(props) =>
+      props.$variant === "album" ? "translateY(0px)" : "translateY(5px)"};
   }
 
   .sns-imgBox {

@@ -59,7 +59,11 @@ const AlbumMain = () => {
         </div>
 
         <div className="AlbimMain-container">
-          <SnsPost data={dummy} variant="album" />
+          {data.length === 0 ? (
+            <div className="AlbumMain-noData">새로운 앨범을 시작해보세요</div>
+          ) : (
+            <SnsPost data={data} variant="album" />
+          )}
         </div>
         <div>
           <div></div>

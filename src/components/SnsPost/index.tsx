@@ -18,7 +18,7 @@ const SnsPost = ({ data, variant }: snspostprops) => {
   return (
     <SnsPostStyled $variant={variant}>
       <div className="sns-wrap">
-        {data.map((x: any, i: number) => {
+        {data?.map((x: any, i: number) => {
           return (
             <div
               className="sns-postBox"
@@ -26,7 +26,7 @@ const SnsPost = ({ data, variant }: snspostprops) => {
               onClick={() => handleClick(x.id)}
             >
               <div className="sns-imgBox" data-img-count={x.img.length}>
-                {x.img.map((src: string, idx: number) => (
+                {x?.img.map((src: string, idx: number) => (
                   <div
                     key={idx}
                     className={`sns-imgWrapper ${idx === 0 ? "first" : ""}`}
