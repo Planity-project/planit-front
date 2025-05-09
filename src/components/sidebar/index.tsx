@@ -112,9 +112,8 @@ const SideBar = ({ isOpen, setIsOpen }: SideBarProps) => {
           items={items}
           onClick={({ key }) => {
             if (key === "sub3") router.push("/album"); // 시작하기
-            // if (key === "2") router.push("/my-album");
             // if (key === "sub1") router.push("/schedule");
-            // if (key === "sub2") router.push("/profile");
+            if (key === "sub2") router.push("/mypage");
           }}
         />
         <div className="sideBar-logoutText" onClick={logout}>

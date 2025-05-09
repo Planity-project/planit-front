@@ -4,6 +4,7 @@ export const CreateDaysStyled = styled.div`
   width: 100%;
   .create-wrap {
     display: flex;
+    justify-content: center;
     gap: 10px;
   }
   .create-container {
@@ -15,29 +16,39 @@ export const CreateDaysStyled = styled.div`
     flex-wrap: wrap;
   }
 
-  .create-left {
-    width: 100%;
+  .create-choiceBox {
+    width: 50%;
     max-height: 500px;
     overflow-y: auto;
-    padding-right: 10px;
   }
-
+  .create-daylistBox {
+    width: 50%;
+    max-height: 500px;
+    overflow-y: auto;
+    background-color: #f6f6f6;
+  }
+  .create-left {
+    display: flex;
+    gap: 10px;
+  }
   .create-right {
     width: 48%;
   }
 
   .create-placecard {
+    display: flex;
+    align-items: center;
+    gap: 5px;
     background-color: #f6f6f6;
-    padding: 15px;
-    margin-bottom: 10px;
+    padding: 10px;
+    margin-bottom: 5px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 
   .create-image {
-    width: 250px;
-    height: auto;
-    border-radius: 6px;
+    width: 25%;
+    aspect-ratio: 1/1;
+    border-radius: 4px;
     margin-bottom: 10px;
   }
 

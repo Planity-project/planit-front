@@ -11,9 +11,14 @@ import { RSC_HEADER } from "next/dist/client/components/app-router-headers";
 interface ChoiceWhichProps {
   setSelectedPlace: (place: string) => void;
   onNext: () => void;
+  setChoiceWhich: (place: []) => void;
 }
 
-const ChoiceWhich = ({ setSelectedPlace, onNext }: ChoiceWhichProps) => {
+const ChoiceWhich = ({
+  setSelectedPlace,
+  onNext,
+  setChoiceWhich,
+}: ChoiceWhichProps) => {
   const [location, setLocation] = useState<any[]>([]);
   const [inputValue, setInputValue] = useState<string>("");
   const [selectedLocation, setSelectedLocation] = useState<any | null>(null);
@@ -33,8 +38,9 @@ const ChoiceWhich = ({ setSelectedPlace, onNext }: ChoiceWhichProps) => {
         const arr = res.data;
         setArray(arr);
         setLocation(arr);
-        setSelectedLocation(location[0]);
-        setSelectedPlace(location[0].name);
+        setChoiceWhich(arr[0]);
+        setSelectedLocation(arr[0]);
+        setSelectedPlace(arr[0].name);
       } catch (error) {
         console.error("error", error);
       }
@@ -67,6 +73,7 @@ const ChoiceWhich = ({ setSelectedPlace, onNext }: ChoiceWhichProps) => {
                     className={`which-mapDiv ${isSelected ? "selected" : ""}`}
                     onClick={() => {
                       setSelectedLocation(x);
+                      setChoiceWhich(x);
                       setSelectedPlace(x.name); // ⬅ 선택 시 상위로 전달
                     }}
                   >

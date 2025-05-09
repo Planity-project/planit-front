@@ -10,8 +10,7 @@ const CreateDatePage: React.FC = () => {
   const [current, setCurrent] = useState(0);
   const [range, setRange] = useState<DateRange | undefined>();
   const [selectedPlace, setSelectedPlace] = useState<string | null>(null); // ⬅ 추가
-
-  console.log("선택된 지역:", selectedPlace); // ⬅ 확인용 로그
+  const [choicewhich, setChiocewhich] = useState<any>("");
 
   const isRangeValid =
     range?.from instanceof Date &&
@@ -61,9 +60,10 @@ const CreateDatePage: React.FC = () => {
         <ChoiceWhich
           setSelectedPlace={setSelectedPlace}
           onNext={handleNextStep}
+          setChoiceWhich={setChiocewhich}
         />
       )}
-      {current === 2 && <CreateDays selectedPlace={selectedPlace} />}
+      {current === 2 && <CreateDays selectedPlace={choicewhich} />}
     </Createpage>
   );
 };

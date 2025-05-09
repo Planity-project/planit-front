@@ -37,11 +37,12 @@ const AlbumMain = () => {
     },
   ];
   // 앨범 데이터 다 주는 요청 id, 대표 이미지 , 코멘트 필요
-  // useEffect(() => {
-  //   api.get("/album/allData").then((res) => {
-  //     setData(res.data);
-  //   });
-  // }, []);
+  useEffect(() => {
+    api.get("/album/allData").then((res) => {
+      console.log(res.data);
+      setData(res.data);
+    });
+  }, []);
   return (
     <AlbumMainStyled>
       <div className="AlbumMain-wrap">

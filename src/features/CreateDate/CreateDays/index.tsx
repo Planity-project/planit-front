@@ -3,11 +3,11 @@ import api from "@/util/api";
 import { CreateDaysStyled } from "./styled";
 import ShowWhich from "@/components/ShowWhich";
 interface CreateDaysProps {
-  selectedPlace: string | null;
+  selectedPlace: any;
   children?: React.ReactNode;
 }
 
-const CreateDays: React.FC<CreateDaysProps> = ({ selectedPlace, children }) => {
+const CreateDays = ({ selectedPlace, children }: CreateDaysProps) => {
   const [places, setPlaces] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -20,7 +20,7 @@ const CreateDays: React.FC<CreateDaysProps> = ({ selectedPlace, children }) => {
     setLoading(true);
     try {
       const res = await api.get("/map/nearby", {
-        params: { address: selectedPlace, page: currentPage },
+        params: { address: selectedPlace.name, page: currentPage },
       });
       const newPlaces = res.data.locations;
       if (newPlaces.length === 0) setHasMore(false);
@@ -49,6 +49,7 @@ const CreateDays: React.FC<CreateDaysProps> = ({ selectedPlace, children }) => {
     }
   };
 
+  console.log(selectedPlace.name);
   const searchInput = async (str: string) => {
     setStr(str); // 상태 업데이트
     if (!selectedPlace) return;
@@ -56,7 +57,7 @@ const CreateDays: React.FC<CreateDaysProps> = ({ selectedPlace, children }) => {
     try {
       const res = await api.get("/map/searchInput", {
         params: {
-          address: selectedPlace,
+          address: selectedPlace.name,
           page: currentPage,
           str,
         },
@@ -87,38 +88,57 @@ const CreateDays: React.FC<CreateDaysProps> = ({ selectedPlace, children }) => {
             <button onClick={handleSearchClick}>검색</button>
           </div>
           <div className="create-left">
-            {places.length === 0 && !loading && (
-              <p>장소를 불러올 수 없습니다.</p>
-            )}
-            {places.map((place, i) => (
-              <div className="create-placecard" key={i}>
-                {
-                  <img
-                    src={place.imageSrc ? place.imageSrc : "/defaultImage.png"}
-                    alt={place.title ? place.title : "default"}
-                    className="create-image"
-                  />
-                }
-
-                <div className="create-title">{place.title}</div>
-                <div className="create-info">카테고리: {place.category}</div>
-                <div className="create-info">전화번호: {place.tel}</div>
-                <div className="create-info">
-                  위도: {place.lat} / 경도: {place.lon}
+            <div className="create-choiceBox">
+              {places.length === 0 && !loading && (
+                <p>장소를 불러올 수 없습니다.</p>
+              )}
+              {places.map((place, i) => (
+                <div
+                  className="create-placecard"
+                  key={i}
+                  onClick={() => {
+                    setPlace({
+                      name: place.title,
+                      lat: place.lat,
+                      lng: place.lon,
+                    });
+                  }}
+                >
+                  {
+                    <img
+                      src={
+                        place.imageSrc ? place.imageSrc : "/defaultImage.png"
+                      }
+                      alt={place.title ? place.title : "default"}
+                      className="create-image"
+                    />
+                  }
+                  <div className="">
+                    <div className="create-title">{place.title}</div>
+                    <div className="create-info">
+                      카테고리: {place.category}
+                    </div>
+                    <div className="create-info">전화번호: {place.tel}</div>
+                    <div className="create-info">
+                      위도: {place.lat} / 경도: {place.lon}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
-            {loading && <p className="create-loading">로딩 중...</p>}
-            {!loading && hasMore && (
-              <button className="create-loadmore" onClick={loadMore}>
-                더보기
-              </button>
-            )}
-            {!hasMore && <p className="create-end">더 이상 장소가 없습니다.</p>}
+              ))}
+              {loading && <p className="create-loading">로딩 중...</p>}
+              {!loading && hasMore && (
+                <button className="create-loadmore" onClick={loadMore}>
+                  더보기
+                </button>
+              )}
+              {!hasMore && (
+                <p className="create-end">더 이상 장소가 없습니다.</p>
+              )}
+            </div>
+            <div className="create-daylistBox">dsadsa</div>
           </div>
-          <div className="create-right">{children}</div>
-        </div>{" "}
-        <ShowWhich selectedLocation={place} />;
+        </div>
+        <ShowWhich selectedLocation={place} />
       </div>
     </CreateDaysStyled>
   );

@@ -70,12 +70,9 @@ const ShowWhich = ({ selectedLocation }: ShowWhichProps) => {
         src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=ztngs2jumn`}
         strategy="afterInteractive"
         onLoad={() => {
-          console.log("네이버 맵 스크립트 로드 완료");
           setIsMapReady(true);
         }}
-        onError={(e) => {
-          console.error("네이버 맵 스크립트 로드 실패", e);
-        }}
+        onError={(e) => {}}
       />
       <ShowWhichStyled>
         <div className="show-wrapper">

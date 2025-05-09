@@ -57,7 +57,7 @@ const AlbumTitle = ({ setModal }: any) => {
       });
     }
     api
-      .post("/album/바꿔", { userId: user?.id, title: albumName })
+      .post("/album/submit", { userId: user?.id, title: albumName })
       .then((res) => {
         console.log(res.data);
       });
