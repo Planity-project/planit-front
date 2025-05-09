@@ -12,7 +12,7 @@ const SnsPost = ({ data, variant }: snspostprops) => {
     if (variant === "album") {
       router.push(`/album/detail/${id}`);
     } else {
-      router.push(`/post/detail/${id}`);
+      router.push(`/snsmainpage/detail/${id}`);
     }
   };
   return (

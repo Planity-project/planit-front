@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 export const LoginStyled = styled.div`
+  width: 100%;
+  height: 56vh;
   .login-box {
     display: flex;
     flex-direction: column;
