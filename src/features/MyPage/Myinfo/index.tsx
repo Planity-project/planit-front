@@ -13,7 +13,7 @@ const Myinfo = ({ user }: infoprops) => {
             <div className="myinfo-logtype">연동계정 {user?.type}</div>
           </div>
           <div>
-            <Image src={""} alt="profile" />
+            <Image src={"/defaultImage"} alt="profile" />
           </div>
         </div>
         <div>nickname : {user?.nickname}</div>

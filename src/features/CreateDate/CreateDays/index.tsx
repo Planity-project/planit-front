@@ -7,13 +7,23 @@ interface CreateDaysProps {
   children?: React.ReactNode;
 }
 
+interface DataType {
+  category: string;
+  imageSrc: string;
+  lat: string;
+  lon: string;
+  tel: string;
+  title: string;
+}
+
 const CreateDays = ({ selectedPlace, children }: CreateDaysProps) => {
-  const [places, setPlaces] = useState<any[]>([]);
+  const [places, setPlaces] = useState<DataType[]>([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [place, setPlace] = useState<any | null>(selectedPlace);
   const [str, setStr] = useState("");
+  const [data, setData] = useState<DataType[]>([]);
   const fetchNearbyPlaces = useCallback(async () => {
     if (!selectedPlace) return;
 
@@ -22,10 +32,10 @@ const CreateDays = ({ selectedPlace, children }: CreateDaysProps) => {
       const res = await api.get("/map/nearby", {
         params: { address: selectedPlace.name, page: currentPage },
       });
+
       const newPlaces = res.data.locations;
       if (newPlaces.length === 0) setHasMore(false);
       else setPlaces((prev) => [...prev, ...newPlaces]);
-      console.log(newPlaces);
     } catch (err) {
       console.log(err);
     } finally {
@@ -49,20 +59,18 @@ const CreateDays = ({ selectedPlace, children }: CreateDaysProps) => {
     }
   };
 
-  console.log(selectedPlace.name);
   const searchInput = async (str: string) => {
     setStr(str); // 상태 업데이트
     if (!selectedPlace) return;
 
     try {
-      const res = await api.get("/map/searchInput", {
+      const res = await api.get("/map/searchNearby", {
         params: {
           address: selectedPlace.name,
           page: currentPage,
           str,
         },
       });
-
       const filteredPlaces = res.data.locations;
       setPlaces(filteredPlaces); // 결과 덮어쓰기
       setHasMore(false); // 검색 결과는 더 불러오지 않도록
@@ -74,6 +82,31 @@ const CreateDays = ({ selectedPlace, children }: CreateDaysProps) => {
     searchInput(str);
     setCurrentPage(1);
   };
+
+  const handlePlaceClick = (i: number) => {
+    const selected = places[i];
+
+    const newPlace: DataType = {
+      title: selected.title,
+      lat: selected.lat,
+      lon: selected.lon,
+      category: selected.category,
+      tel: selected.tel,
+      imageSrc: selected.imageSrc,
+    };
+
+    setPlace({
+      name: newPlace.title,
+      lat: newPlace.lat,
+      lng: newPlace.lon,
+    });
+
+    setData((prev) => {
+      if (prev.find((p) => p.title === newPlace.title)) return prev;
+      return [...prev, newPlace];
+    });
+  };
+
   return (
     <CreateDaysStyled>
       <div className="create-wrap">
@@ -96,13 +129,7 @@ const CreateDays = ({ selectedPlace, children }: CreateDaysProps) => {
                 <div
                   className="create-placecard"
                   key={i}
-                  onClick={() => {
-                    setPlace({
-                      name: place.title,
-                      lat: place.lat,
-                      lng: place.lon,
-                    });
-                  }}
+                  onClick={() => handlePlaceClick(i)}
                 >
                   {
                     <img
@@ -135,7 +162,46 @@ const CreateDays = ({ selectedPlace, children }: CreateDaysProps) => {
                 <p className="create-end">더 이상 장소가 없습니다.</p>
               )}
             </div>
-            <div className="create-daylistBox">dsadsa</div>
+            <div className="create-daylistBox">
+              {" "}
+              {data.length === 0 && !loading && <p></p>}
+              {data.map((place, i) => (
+                <div
+                  className="create-placecard"
+                  key={i}
+                  onClick={() => handlePlaceClick(i)}
+                >
+                  {
+                    <img
+                      src={
+                        place.imageSrc ? place.imageSrc : "/defaultImage.png"
+                      }
+                      alt={place.title ? place.title : "default"}
+                      className="create-image"
+                    />
+                  }
+                  <div className="">
+                    <div className="create-title">{place.title}</div>
+                    <div className="create-info">
+                      카테고리: {place.category}
+                    </div>
+                    <div className="create-info">전화번호: {place.tel}</div>
+                    <div className="create-info">
+                      위도: {place.lat} / 경도: {place.lon}
+                    </div>
+                  </div>
+                </div>
+              ))}
+              {loading && <p className="create-loading">로딩 중...</p>}
+              {!loading && hasMore && (
+                <button className="create-loadmore" onClick={loadMore}>
+                  더보기
+                </button>
+              )}
+              {!hasMore && (
+                <p className="create-end">더 이상 장소가 없습니다.</p>
+              )}
+            </div>
           </div>
         </div>
         <ShowWhich selectedLocation={place} />
