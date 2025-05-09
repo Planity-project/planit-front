@@ -1,4 +1,4 @@
-import { Button, Input, message } from "antd";
+import { Button, Input, message, Modal } from "antd";
 import { AlbumTitleStyled } from "./styled";
 import { useEffect, useState } from "react";
 import api from "@/util/api";
@@ -18,6 +18,12 @@ const AlbumTitle = ({ setModal }: any) => {
     return () => window.removeEventListener("resize", updateShortUrl);
   }, [inviteUrl]);
   const handleCreateLink = () => {
+    if (albumName.length < 2) {
+      return Modal.warning({
+        centered: true,
+        title: "2글자 이상 입력해주세요",
+      });
+    }
     const encodedName = encodeURIComponent(albumName);
     const randomNum = Math.floor(100 + Math.random() * 900); // 100 ~ 999
     const url = `${window.location.origin}/invite?name=${encodedName}${randomNum}`;
@@ -42,7 +48,14 @@ const AlbumTitle = ({ setModal }: any) => {
     if (url.length <= maxLength) return url;
     return "..." + url.slice(url.length - maxLength);
   };
+  // 앨범 생성 요청 userid title 담아서 보냄
   const create = () => {
+    if (albumName.length < 2) {
+      return Modal.warning({
+        centered: true,
+        title: "2글자 이상 입력해주세요",
+      });
+    }
     api
       .post("/album/바꿔", { userId: user?.id, title: albumName })
       .then((res) => {
