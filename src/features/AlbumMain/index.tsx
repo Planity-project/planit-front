@@ -36,7 +36,7 @@ const AlbumMain = () => {
       comment: "아 더미데이터 만들기 개 귀찮네 진짜 ",
     },
   ];
-  // 앨범 데이터 다 주는 요청 , 대표 이미지 , 코멘트 필요
+  // 앨범 데이터 다 주는 요청 id, 대표 이미지 , 코멘트 필요
   // useEffect(() => {
   //   api.get("/album/allData").then((res) => {
   //     setData(res.data);
