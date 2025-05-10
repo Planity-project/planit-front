@@ -25,8 +25,8 @@ const SnsPost = ({ data, variant }: snspostprops) => {
               key={i}
               onClick={() => handleClick(x.id)}
             >
-              <div className="sns-imgBox" data-img-count={x.img.length}>
-                {x?.img.map((src: string, idx: number) => (
+              <div className="sns-imgBox" data-img-count={x.img?.length || 0}>
+                {x?.img?.map((src: string, idx: number) => (
                   <div
                     key={idx}
                     className={`sns-imgWrapper ${idx === 0 ? "first" : ""}`}

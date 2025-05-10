@@ -1,11 +1,12 @@
+// CreateStay.tsx
+
 import React, { useCallback, useEffect, useState } from "react";
 import api from "@/util/api";
-import { CreateDaysStyled } from "./styled";
+import { CreateStayStyled } from "./styled";
 import ShowWhich from "@/components/ShowWhich";
-import { Button } from "antd";
+
 interface CreateDaysProps {
   selectedPlace: any;
-  onNext: () => void;
   children?: React.ReactNode;
 }
 
@@ -18,7 +19,7 @@ interface DataType {
   title: string;
 }
 
-const CreateDays = ({ selectedPlace, onNext, children }: CreateDaysProps) => {
+const CreateStay = ({ selectedPlace, children }: CreateDaysProps) => {
   const [places, setPlaces] = useState<DataType[]>([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -26,16 +27,18 @@ const CreateDays = ({ selectedPlace, onNext, children }: CreateDaysProps) => {
   const [place, setPlace] = useState<any | null>(selectedPlace);
   const [str, setStr] = useState("");
   const [data, setData] = useState<DataType[]>([]);
+
   const fetchNearbyPlaces = useCallback(async () => {
-    if (!selectedPlace) return;
+    if (!selectedPlace) return; // selectedPlace가 없으면 요청을 보내지 않음
 
     setLoading(true);
     try {
       const res = await api.get("/map/nearby", {
-        params: { address: selectedPlace.name, page: currentPage, type: 1 },
+        params: { address: selectedPlace.name, page: currentPage, type: 2 },
       });
 
       const newPlaces = res.data.locations;
+      console.log(newPlaces, "ASDFASDFAS");
       if (newPlaces.length === 0) setHasMore(false);
       else setPlaces((prev) => [...prev, ...newPlaces]);
     } catch (err) {
@@ -62,7 +65,7 @@ const CreateDays = ({ selectedPlace, onNext, children }: CreateDaysProps) => {
   };
 
   const searchInput = async (str: string) => {
-    setStr(str); // 상태 업데이트
+    setStr(str);
     if (!selectedPlace) return;
 
     try {
@@ -71,16 +74,17 @@ const CreateDays = ({ selectedPlace, onNext, children }: CreateDaysProps) => {
           address: selectedPlace.name,
           page: currentPage,
           str,
-          type: 1,
+          type: 2,
         },
       });
       const filteredPlaces = res.data.locations;
-      setPlaces(filteredPlaces); // 결과 덮어쓰기
-      setHasMore(false); // 검색 결과는 더 불러오지 않도록
+      setPlaces(filteredPlaces);
+      setHasMore(false);
     } catch (err) {
       console.log("검색 오류", err);
     }
   };
+
   const handleSearchClick = () => {
     searchInput(str);
     setCurrentPage(1);
@@ -112,16 +116,11 @@ const CreateDays = ({ selectedPlace, onNext, children }: CreateDaysProps) => {
   };
 
   return (
-    <CreateDaysStyled>
+    <CreateStayStyled>
       <div className="create-wrap">
         <div className="create-container">
           <div>
-            <input
-              value={str}
-              onChange={(e) => {
-                setStr(e.target.value);
-              }}
-            />
+            <input value={str} onChange={(e) => setStr(e.target.value)} />
             <button onClick={handleSearchClick}>검색</button>
           </div>
           <div className="create-left">
@@ -135,16 +134,12 @@ const CreateDays = ({ selectedPlace, onNext, children }: CreateDaysProps) => {
                   key={i}
                   onClick={() => handlePlaceClick(i)}
                 >
-                  {
-                    <img
-                      src={
-                        place.imageSrc ? place.imageSrc : "/defaultImage.png"
-                      }
-                      alt={place.title ? place.title : "default"}
-                      className="create-image"
-                    />
-                  }
-                  <div className="">
+                  <img
+                    src={place.imageSrc ? place.imageSrc : "/defaultImage.png"}
+                    alt={place.title ? place.title : "default"}
+                    className="create-image"
+                  />
+                  <div>
                     <div className="create-title">{place.title}</div>
                     <div className="create-info">
                       카테고리: {place.category}
@@ -167,7 +162,6 @@ const CreateDays = ({ selectedPlace, onNext, children }: CreateDaysProps) => {
               )}
             </div>
             <div className="create-daylistBox">
-              {" "}
               {data.length === 0 && !loading && <p></p>}
               {data.map((place, i) => (
                 <div
@@ -175,16 +169,12 @@ const CreateDays = ({ selectedPlace, onNext, children }: CreateDaysProps) => {
                   key={i}
                   onClick={() => handlePlaceClick(i)}
                 >
-                  {
-                    <img
-                      src={
-                        place.imageSrc ? place.imageSrc : "/defaultImage.png"
-                      }
-                      alt={place.title ? place.title : "default"}
-                      className="create-image"
-                    />
-                  }
-                  <div className="">
+                  <img
+                    src={place.imageSrc ? place.imageSrc : "/defaultImage.png"}
+                    alt={place.title ? place.title : "default"}
+                    className="create-image"
+                  />
+                  <div>
                     <div className="create-title">{place.title}</div>
                     <div className="create-info">
                       카테고리: {place.category}
@@ -199,13 +189,11 @@ const CreateDays = ({ selectedPlace, onNext, children }: CreateDaysProps) => {
             </div>
           </div>
         </div>
-        <ShowWhich selectedLocation={place} />
+        {place && <ShowWhich selectedLocation={place} />}{" "}
+        {/* Place가 있을 때만 ShowWhich 렌더링 */}
       </div>
-      <Button type="primary" onClick={onNext}>
-        선택
-      </Button>
-    </CreateDaysStyled>
+    </CreateStayStyled>
   );
 };
 
-export default CreateDays;
+export default CreateStay;

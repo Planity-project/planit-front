@@ -5,6 +5,7 @@ import { Createpage } from "./styled";
 import { DateRange } from "react-day-picker";
 import ChoiceWhich from "./ChoiceWhich";
 import CreateDays from "./CreateDays";
+import CreateStay from "./CreateStay";
 
 const CreateDatePage: React.FC = () => {
   const [current, setCurrent] = useState(0);
@@ -63,7 +64,9 @@ const CreateDatePage: React.FC = () => {
           setChoiceWhich={setChiocewhich}
         />
       )}
-      {current === 2 && <CreateDays selectedPlace={choicewhich} />}
+      {current === 2 && (
+        <CreateDays selectedPlace={choicewhich} onNext={handleNextStep} />
+      )}
     </Createpage>
   );
 };
