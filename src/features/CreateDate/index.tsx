@@ -6,6 +6,7 @@ import { DateRange } from "react-day-picker";
 import ChoiceWhich from "./ChoiceWhich";
 import CreateDays from "./CreateDays";
 import CreateStay from "./CreateStay";
+import ChoiceTime from "./ChoiceTime";
 
 const CreateDatePage: React.FC = () => {
   const [current, setCurrent] = useState(0);
@@ -48,8 +49,10 @@ const CreateDatePage: React.FC = () => {
           onChange={onChange}
           items={[
             { title: "날짜 입력" },
+            { title: "Step 1" },
             { title: "Step 2" },
             { title: "Step 3" },
+            { title: "Step 4" },
           ]}
         />
       </div>
@@ -57,16 +60,18 @@ const CreateDatePage: React.FC = () => {
       {current === 0 && (
         <DateChoice range={range} setRange={setRange} onNext={handleNextStep} />
       )}
-      {current === 1 && (
+      {current === 1 && <ChoiceTime city={"부산"} range={range} />}
+      {current === 2 && (
         <ChoiceWhich
           setSelectedPlace={setSelectedPlace}
           onNext={handleNextStep}
           setChoiceWhich={setChiocewhich}
         />
       )}
-      {current === 2 && (
+      {current === 3 && (
         <CreateDays selectedPlace={choicewhich} onNext={handleNextStep} />
       )}
+      {current === 4 && <CreateStay selectedPlace={choicewhich} />}
     </Createpage>
   );
 };
