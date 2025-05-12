@@ -90,16 +90,4 @@ export const AlbumTitleStyled = styled.div`
     justify-content: center;
     align-items: center;
   }
-  .AlbumTitle-closeBtn {
-    position: absolute;
-    top: 12px;
-    right: 18px;
-    font-size: 24px;
-    cursor: pointer;
-    color: #aaa;
-    transition: color 0.2s ease-in-out;
-  }
-  .AlbumTitle-closeBtn:hover {
-    color: #333;
-  }
 `;
