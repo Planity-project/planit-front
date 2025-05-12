@@ -22,7 +22,7 @@ interface TimeSelectProps {
 
 const TimeSelect = ({ value, onChange, minTime, maxTime }: TimeSelectProps) => {
   const hours = Array.from({ length: 12 }, (x, i) => i + 1); // 시 1~12 배열 생성
-  const minutes = [0, 15, 30]; // 분
+  const minutes = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55]; // 분
   const meridiems: TimeOption["meridiem"][] = ["오전", "오후"];
 
   const [openType, setOpenType] = useState<

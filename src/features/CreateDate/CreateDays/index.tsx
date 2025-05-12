@@ -6,6 +6,7 @@ import { Button } from "antd";
 interface CreateDaysProps {
   selectedPlace: any;
   onNext: () => void;
+  range: any;
   children?: React.ReactNode;
 }
 
@@ -18,7 +19,13 @@ interface DataType {
   title: string;
 }
 
-const CreateDays = ({ selectedPlace, onNext, children }: CreateDaysProps) => {
+const CreateDays = ({
+  selectedPlace,
+  onNext,
+  range,
+  children,
+}: CreateDaysProps) => {
+  console.log(range);
   const [places, setPlaces] = useState<DataType[]>([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);

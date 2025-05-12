@@ -48,11 +48,11 @@ const CreateDatePage: React.FC = () => {
           current={current}
           onChange={onChange}
           items={[
-            { title: "날짜 입력" },
             { title: "Step 1" },
             { title: "Step 2" },
             { title: "Step 3" },
             { title: "Step 4" },
+            { title: "Step 5" },
           ]}
         />
       </div>
@@ -60,16 +60,21 @@ const CreateDatePage: React.FC = () => {
       {current === 0 && (
         <DateChoice range={range} setRange={setRange} onNext={handleNextStep} />
       )}
-      {current === 1 && <ChoiceTime city={"부산"} range={range} />}
-      {current === 2 && (
+      {current === 1 && (
         <ChoiceWhich
           setSelectedPlace={setSelectedPlace}
           onNext={handleNextStep}
           setChoiceWhich={setChiocewhich}
         />
       )}
+      {current === 2 && <ChoiceTime city={"부산"} range={range} />}
+
       {current === 3 && (
-        <CreateDays selectedPlace={choicewhich} onNext={handleNextStep} />
+        <CreateDays
+          selectedPlace={choicewhich}
+          onNext={handleNextStep}
+          range={range}
+        />
       )}
       {current === 4 && <CreateStay selectedPlace={choicewhich} />}
     </Createpage>

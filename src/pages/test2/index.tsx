@@ -5,7 +5,7 @@ import api from "@/util/api"; // axios 인스턴스
 export default function PaymentTestPage() {
   const requestPayment = () => {
     const IMP = (window as any).IMP;
-    IMP.init("imp12345678"); // 가맹점 식별 코드
+    IMP.init("imp15832056"); // 가맹점 식별 코드
 
     IMP.request_pay(
       {
