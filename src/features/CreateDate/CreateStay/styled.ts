@@ -28,6 +28,7 @@ export const CreateStayStyled = styled.div`
     background-color: #f6f6f6;
   }
   .create-left {
+    width: 100%;
     display: flex;
     gap: 10px;
   }
@@ -36,12 +37,13 @@ export const CreateStayStyled = styled.div`
   }
 
   .create-placecard {
+    width: 100%;
     display: flex;
-    align-items: center;
-    gap: 5px;
+    align-items: flex-start;
+    gap: 10px;
     background-color: #f6f6f6;
     padding: 10px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     border-radius: 8px;
   }
 

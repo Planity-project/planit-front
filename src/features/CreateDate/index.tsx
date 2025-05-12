@@ -76,7 +76,13 @@ const CreateDatePage: React.FC = () => {
           range={range}
         />
       )}
-      {current === 4 && <CreateStay selectedPlace={choicewhich} />}
+      {current === 4 && (
+        <CreateStay
+          selectedPlace={choicewhich}
+          range={range}
+          onNext={handleNextStep}
+        />
+      )}
     </Createpage>
   );
 };

@@ -1,12 +1,13 @@
-// CreateStay.tsx
-
 import React, { useCallback, useEffect, useState } from "react";
 import api from "@/util/api";
 import { CreateStayStyled } from "./styled";
 import ShowWhich from "@/components/ShowWhich";
-
+import { Button, Skeleton } from "antd";
+import basicImg from "@/assets/images/close.png";
 interface CreateDaysProps {
   selectedPlace: any;
+  onNext: () => void;
+  range: any;
   children?: React.ReactNode;
 }
 
@@ -19,7 +20,13 @@ interface DataType {
   title: string;
 }
 
-const CreateStay = ({ selectedPlace, children }: CreateDaysProps) => {
+const CreateStay = ({
+  selectedPlace,
+  onNext,
+  range,
+  children,
+}: CreateDaysProps) => {
+  console.log(range);
   const [places, setPlaces] = useState<DataType[]>([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -27,9 +34,8 @@ const CreateStay = ({ selectedPlace, children }: CreateDaysProps) => {
   const [place, setPlace] = useState<any | null>(selectedPlace);
   const [str, setStr] = useState("");
   const [data, setData] = useState<DataType[]>([]);
-
   const fetchNearbyPlaces = useCallback(async () => {
-    if (!selectedPlace) return; // selectedPlace가 없으면 요청을 보내지 않음
+    if (!selectedPlace) return;
 
     setLoading(true);
     try {
@@ -38,7 +44,6 @@ const CreateStay = ({ selectedPlace, children }: CreateDaysProps) => {
       });
 
       const newPlaces = res.data.locations;
-      console.log(newPlaces, "ASDFASDFAS");
       if (newPlaces.length === 0) setHasMore(false);
       else setPlaces((prev) => [...prev, ...newPlaces]);
     } catch (err) {
@@ -65,7 +70,7 @@ const CreateStay = ({ selectedPlace, children }: CreateDaysProps) => {
   };
 
   const searchInput = async (str: string) => {
-    setStr(str);
+    setStr(str); // 상태 업데이트
     if (!selectedPlace) return;
 
     try {
@@ -78,13 +83,12 @@ const CreateStay = ({ selectedPlace, children }: CreateDaysProps) => {
         },
       });
       const filteredPlaces = res.data.locations;
-      setPlaces(filteredPlaces);
-      setHasMore(false);
+      setPlaces(filteredPlaces); // 결과 덮어쓰기
+      setHasMore(false); // 검색 결과는 더 불러오지 않도록
     } catch (err) {
       console.log("검색 오류", err);
     }
   };
-
   const handleSearchClick = () => {
     searchInput(str);
     setCurrentPage(1);
@@ -120,7 +124,12 @@ const CreateStay = ({ selectedPlace, children }: CreateDaysProps) => {
       <div className="create-wrap">
         <div className="create-container">
           <div>
-            <input value={str} onChange={(e) => setStr(e.target.value)} />
+            <input
+              value={str}
+              onChange={(e) => {
+                setStr(e.target.value);
+              }}
+            />
             <button onClick={handleSearchClick}>검색</button>
           </div>
           <div className="create-left">
@@ -134,12 +143,16 @@ const CreateStay = ({ selectedPlace, children }: CreateDaysProps) => {
                   key={i}
                   onClick={() => handlePlaceClick(i)}
                 >
-                  <img
-                    src={place.imageSrc ? place.imageSrc : "/defaultImage.png"}
-                    alt={place.title ? place.title : "default"}
-                    className="create-image"
-                  />
-                  <div>
+                  {
+                    <img
+                      src={
+                        place.imageSrc ? place.imageSrc : "/defaultImage.png"
+                      }
+                      alt={place.title ? place.title : "default"}
+                      className="create-image"
+                    />
+                  }
+                  <div style={{ flex: 1 }}>
                     <div className="create-title">{place.title}</div>
                     <div className="create-info">
                       카테고리: {place.category}
@@ -151,7 +164,25 @@ const CreateStay = ({ selectedPlace, children }: CreateDaysProps) => {
                   </div>
                 </div>
               ))}
-              {loading && <p className="create-loading">로딩 중...</p>}
+              {loading && (
+                <>
+                  {[...Array(5)].map((_, index) => (
+                    <div className="create-placecard" key={index}>
+                      <div style={{ width: "100%" }}>
+                        <Skeleton
+                          active
+                          title={{ width: "60%" }}
+                          paragraph={{
+                            rows: 3,
+                            width: ["80%", "50%", "40%"],
+                          }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </>
+              )}
+
               {!loading && hasMore && (
                 <button className="create-loadmore" onClick={loadMore}>
                   더보기
@@ -169,12 +200,16 @@ const CreateStay = ({ selectedPlace, children }: CreateDaysProps) => {
                   key={i}
                   onClick={() => handlePlaceClick(i)}
                 >
-                  <img
-                    src={place.imageSrc ? place.imageSrc : "/defaultImage.png"}
-                    alt={place.title ? place.title : "default"}
-                    className="create-image"
-                  />
-                  <div>
+                  {
+                    <img
+                      src={
+                        place.imageSrc ? place.imageSrc : "/defaultImage.png"
+                      }
+                      alt={place.title ? place.title : "default"}
+                      className="create-image"
+                    />
+                  }
+                  <div className="">
                     <div className="create-title">{place.title}</div>
                     <div className="create-info">
                       카테고리: {place.category}
@@ -189,9 +224,11 @@ const CreateStay = ({ selectedPlace, children }: CreateDaysProps) => {
             </div>
           </div>
         </div>
-        {place && <ShowWhich selectedLocation={place} />}{" "}
-        {/* Place가 있을 때만 ShowWhich 렌더링 */}
+        <ShowWhich selectedLocation={place} />
       </div>
+      <Button type="primary" onClick={onNext}>
+        선택
+      </Button>
     </CreateStayStyled>
   );
 };

@@ -9,9 +9,10 @@ interface ShowWhichProps {
     lat: number;
     lng: number;
   };
+  isPlace?: boolean; // true면 가게, false면 지역
 }
 
-const ShowWhich = ({ selectedLocation }: ShowWhichProps) => {
+const ShowWhich = ({ selectedLocation, isPlace }: ShowWhichProps) => {
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<any>(null);
   const markerRef = useRef<any>(null);
@@ -28,13 +29,14 @@ const ShowWhich = ({ selectedLocation }: ShowWhichProps) => {
   const initMap = () => {
     if (!window.naver || !mapContainer.current) return;
 
-    mapContainer.current.innerHTML = ""; // 기존 지도 지우기
+    mapContainer.current.innerHTML = "";
 
     const { lat, lng } = selectedLocation;
+    const zoomLevel = isPlace ? 15 : 8; // 가게는 더 확대
 
     const map = new window.naver.maps.Map(mapContainer.current, {
       center: new window.naver.maps.LatLng(lat, lng),
-      zoom: 8,
+      zoom: zoomLevel,
     });
 
     const marker = new window.naver.maps.Marker({

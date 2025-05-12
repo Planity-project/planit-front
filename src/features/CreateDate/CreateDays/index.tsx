@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useState } from "react";
 import api from "@/util/api";
 import { CreateDaysStyled } from "./styled";
 import ShowWhich from "@/components/ShowWhich";
-import { Button } from "antd";
+import { Button, Skeleton } from "antd";
+import basicImg from "@/assets/images/close.png";
 interface CreateDaysProps {
   selectedPlace: any;
   onNext: () => void;
@@ -151,7 +152,7 @@ const CreateDays = ({
                       className="create-image"
                     />
                   }
-                  <div className="">
+                  <div style={{ flex: 1 }}>
                     <div className="create-title">{place.title}</div>
                     <div className="create-info">
                       카테고리: {place.category}
@@ -163,7 +164,25 @@ const CreateDays = ({
                   </div>
                 </div>
               ))}
-              {loading && <p className="create-loading">로딩 중...</p>}
+              {loading && (
+                <>
+                  {[...Array(5)].map((_, index) => (
+                    <div className="create-placecard" key={index}>
+                      <div style={{ width: "100%" }}>
+                        <Skeleton
+                          active
+                          title={{ width: "60%" }}
+                          paragraph={{
+                            rows: 3,
+                            width: ["80%", "50%", "40%"],
+                          }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </>
+              )}
+
               {!loading && hasMore && (
                 <button className="create-loadmore" onClick={loadMore}>
                   더보기
@@ -174,7 +193,6 @@ const CreateDays = ({
               )}
             </div>
             <div className="create-daylistBox">
-              {" "}
               {data.length === 0 && !loading && <p></p>}
               {data.map((place, i) => (
                 <div
@@ -206,7 +224,7 @@ const CreateDays = ({
             </div>
           </div>
         </div>
-        <ShowWhich selectedLocation={place} />
+        <ShowWhich selectedLocation={place} isPlace={true} />
       </div>
       <Button type="primary" onClick={onNext}>
         선택
