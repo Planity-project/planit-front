@@ -17,6 +17,7 @@ export const SnsPostStyled = styled.div<{ $variant?: "default" | "album" }>`
   }
 
   .sns-postBox {
+    cursor: pointer;
     width: calc(50% - 10px);
     aspect-ratio: 1/0.8;
     display: flex;
@@ -36,8 +37,9 @@ export const SnsPostStyled = styled.div<{ $variant?: "default" | "album" }>`
   .sns-imgBox {
     display: grid;
     gap: 2px; /* 기존 1px에서 2px로 늘리면 더욱 구분감 생김 */
-    background-color: #eaeaea; /* 틈 사이 회색 배경 느낌 추가 */
-    width: 100%;
+    background-color: white; /* 틈 사이 회색 배경 느낌 추가 */
+    border-bottom: ${(props) =>
+      props.$variant === "album" ? "1px solid rgba(0, 0, 0, 0.1);" : ""};
     height: ${(props) => (props.$variant === "album" ? "80%" : "60%")};
     overflow: hidden;
     /* 왼쪽 위 모서리만 둥글게 */
@@ -115,13 +117,15 @@ export const SnsPostStyled = styled.div<{ $variant?: "default" | "album" }>`
   .sns-textBox {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: ${(props) =>
+      props.$variant === "album" ? "flex-end" : "center"};
     gap: 5px;
-    padding: 10px 5px;
+    padding: ${(props) => (props.$variant === "album" ? "5px" : "10px 5px;")};
     background-color: white;
   }
 
   .sns-title {
+    text-align: ${(props) => (props.$variant === "album" ? "center" : "")};
     font-size: 16px;
     font-weight: 500;
   }

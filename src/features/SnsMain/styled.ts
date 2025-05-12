@@ -34,15 +34,12 @@ export const SnsStyled = styled.div`
 
   .sns-imgBox {
     display: grid;
-    gap: 2px; /* 기존 1px에서 2px로 늘리면 더욱 구분감 생김 */
-    background-color: #eaeaea; /* 틈 사이 회색 배경 느낌 추가 */
+    gap: 2px;
+    background-color: #eaeaea;
     width: 100%;
     height: 60%;
     overflow: hidden;
-    /* 왼쪽 위 모서리만 둥글게 */
     border-top-left-radius: 5px;
-
-    /* 오른쪽 위 모서리만 둥글게 */
     border-top-right-radius: 5px;
   }
 

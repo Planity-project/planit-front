@@ -26,7 +26,7 @@ const AlbumTitle = ({ setModal }: any) => {
     }
     const encodedName = encodeURIComponent(albumName);
     const randomNum = Math.floor(100 + Math.random() * 900); // 100 ~ 999
-    const url = `${window.location.origin}/invite?name=${encodedName}${randomNum}`;
+    const url = `${window.location.origin}/invite?name=${encodedName}${randomNum}${user?.id}`;
     setInviteUrl(url);
   };
   const handleCopy = async () => {
@@ -39,7 +39,7 @@ const AlbumTitle = ({ setModal }: any) => {
   };
   const getMaxLength = () => {
     const width = window.innerWidth;
-    if (width >= 1024) return 30; // 데스크탑
+    if (width >= 1024) return 28; // 데스크탑
     if (width >= 768) return 25; // 태블릿
     return 15; // 모바일
   };
@@ -57,9 +57,21 @@ const AlbumTitle = ({ setModal }: any) => {
       });
     }
     api
-      .post("/album/submit", { userId: user?.id, title: albumName })
+      .post("/album/submit", {
+        userId: user?.id,
+        title: albumName,
+        url: inviteUrl,
+      })
       .then((res) => {
-        console.log(res.data);
+        if (res.data.result === true) {
+          Modal.warning({
+            centered: true,
+            title: "앨범이 생성되었습니다.",
+            onOk: () => {
+              window.location.reload();
+            },
+          });
+        }
       });
   };
   return (

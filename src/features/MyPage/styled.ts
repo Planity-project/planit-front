@@ -29,6 +29,17 @@ export const MypageStyled = styled.div`
     display: flex;
     justify-content: flex-start;
   }
+  .mypage-sideBar div {
+    font-weight: normal;
+    color: #888;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .mypage-sideBar div.active {
+    font-weight: bold;
+    color: #000; /* 원하는 진한 색상 */
+  }
   @media (max-width: 1024px) {
     .mypage-sideBar {
       display: flex;
