@@ -25,7 +25,7 @@ const Invite = () => {
       router.push(`/login?redirect=/invite?name=${name}`);
     } else {
       api.post("/album/groupjoin", { userId: user.id }).then((res) => {
-        if (res.data === "200") {
+        if (res.data === true) {
           Modal.warning({
             centered: true,
             title: "그룹 참여 성공",
@@ -54,7 +54,7 @@ const Invite = () => {
         <div className="invite-album-title">{dummy[0].title}</div>
         <div className="invite-owner">그룹장 : {dummy[0].owner} 님</div>
 
-        <Button>공유앨범 참여하기</Button>
+        <Button onClick={loginCheck}>공유앨범 참여하기</Button>
       </div>
     </InviteStyled>
   );
