@@ -6,6 +6,7 @@ const api = axios.create({
   withCredentials: true, // 필요한 경우 쿠키 포함 요청
 });
 
+export const serverUrl = "http://locahost:5001";
 // api.interceptors.response.use(
 //   (response) => response,
 //   (error) => {

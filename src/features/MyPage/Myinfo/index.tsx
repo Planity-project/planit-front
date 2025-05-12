@@ -43,22 +43,17 @@ const Myinfo = ({ user }: infoprops) => {
     }
 
     const formData = new FormData();
-    formData.append("image", selectedFile);
 
+    formData.append("profileImage", selectedFile);
+    formData.append("userId", user.id);
     try {
-      await api.post(
-        `/users/profile`,
-        { formData, userId: user.id },
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      Modal.warning({
-        centered: true,
-        title: "프로필 이미지가 성공적으로 변경되었습니다.",
-      });
+      const res = await api.put(`/user/me/profile-image`, formData);
+      if (res.data.result) {
+        Modal.warning({
+          centered: true,
+          title: "프로필 이미지가 성공적으로 변경되었습니다.",
+        });
+      }
 
       // 서버에서 변경된 URL을 받아서 다시 세팅할 수도 있음
     } catch (error) {
@@ -89,9 +84,9 @@ const Myinfo = ({ user }: infoprops) => {
 
     try {
       await api
-        .post("user/changeNick", { nickname: name, userId: user.id })
+        .post("user/update", { nickname: name, userId: user.id })
         .then((res) => {
-          if (res.data === "중복") {
+          if (res.data.result === false) {
             Modal.warning({
               centered: true,
               title: "이미 사용중인 닉네임입니다.",
@@ -111,6 +106,17 @@ const Myinfo = ({ user }: infoprops) => {
       });
     }
   };
+
+  //프로필 이미지 삭제 요청
+  const profileDelete = async () => {
+    await api.delete(`/user/me/profile-image?userId=${user.id}`);
+  };
+
+  //회원탈퇴
+  const userexit = async () => {
+    await api.delete("user/destroy/:id");
+  };
+
   return (
     <MyinfoStyled>
       <div className="myinfo-wrap">

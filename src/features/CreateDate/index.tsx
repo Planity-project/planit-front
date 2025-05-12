@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Divider, Modal, Steps } from "antd";
 import DateChoice from "./DateChoice";
 import { Createpage } from "./styled";
@@ -7,12 +7,29 @@ import ChoiceWhich from "./ChoiceWhich";
 import CreateDays from "./CreateDays";
 import CreateStay from "./CreateStay";
 import ChoiceTime from "./ChoiceTime";
+import GenerateDate from "./GenerateDate";
+export interface ScheduleType {
+  dataTime: any[];
+  dataPlace: any[];
+  dataStay: any[];
+}
 
+export interface TimeType {
+  hrs: number;
+  mins: number;
+}
 const CreateDatePage: React.FC = () => {
   const [current, setCurrent] = useState(0);
   const [range, setRange] = useState<DateRange | undefined>();
   const [selectedPlace, setSelectedPlace] = useState<string | null>(null); // ⬅ 추가
   const [choicewhich, setChiocewhich] = useState<any>("");
+  const [time, setTime] = useState<TimeType>();
+
+  const [schedule, setSchedule] = useState<ScheduleType>({
+    dataTime: [],
+    dataPlace: [],
+    dataStay: [],
+  });
 
   const isRangeValid =
     range?.from instanceof Date &&
@@ -32,7 +49,9 @@ const CreateDatePage: React.FC = () => {
   const handleNextStep = () => {
     setCurrent((prev) => prev + 1);
   };
-
+  useEffect(() => {
+    console.log(schedule, "asdfadf 확인용");
+  }, [schedule]);
   return (
     <Createpage>
       <div className="createpage-text">
@@ -67,21 +86,37 @@ const CreateDatePage: React.FC = () => {
           setChoiceWhich={setChiocewhich}
         />
       )}
-      {current === 2 && <ChoiceTime city={"부산"} range={range} />}
+      {current === 2 && (
+        <ChoiceTime
+          city={"부산"}
+          range={range}
+          setTime={setTime}
+          setSchedule={setSchedule}
+        />
+      )}
 
       {current === 3 && (
         <CreateDays
           selectedPlace={choicewhich}
           onNext={handleNextStep}
           range={range}
+          time={time}
+          schedule={schedule}
+          setSchedule={setSchedule}
         />
       )}
       {current === 4 && (
         <CreateStay
           selectedPlace={choicewhich}
           range={range}
+          time={time}
           onNext={handleNextStep}
+          schedule={schedule}
+          setSchedule={setSchedule}
         />
+      )}
+      {current === 5 && (
+        <GenerateDate schedule={schedule} setSchedule={setSchedule} />
       )}
     </Createpage>
   );

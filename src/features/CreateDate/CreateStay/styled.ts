@@ -87,4 +87,35 @@ export const CreateStayStyled = styled.div`
   .create-loadmore:hover {
     background-color: #3ba1d3;
   }
+
+  .create-dayBox {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+
+  .day-label {
+    font-size: 20px;
+    font-weight: bold;
+    margin-right: 12px;
+  }
+
+  .day-content {
+    flex: 1;
+  }
+
+  .day-title {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .day-empty {
+    color: #999;
+    font-style: italic;
+  }
 `;

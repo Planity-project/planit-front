@@ -6,7 +6,8 @@ import { ko } from "date-fns/locale";
 import { CalendarOutlined } from "@ant-design/icons";
 import { ChioceTimeStyled } from "./styled";
 import TimeSelect from "./timeSelect/timeSelect";
-
+import { ScheduleType } from "..";
+import { TimeType } from "..";
 export interface TimeOption {
   meridiem: "오전" | "오후";
   hour: number;
@@ -16,25 +17,20 @@ export interface TimeOption {
 interface ChoiceTimeProps {
   city: string;
   range?: DateRange;
+  setTime: (time: TimeType) => void;
+  setSchedule: React.Dispatch<React.SetStateAction<ScheduleType>>;
 }
 
-// interface timeProps {
-//   value: TimeOption;
-//   onChange: (val: TimeOption) => void;
-//   disabled?: boolean;
-// }
-
-// 오전이면 그대로 분으로 변경 오후면 12시간을 더한 뒤에 분으로 변경해서 시간 계산
 const timeOptionToMinutes = (option: TimeOption): number => {
   let hour = option.hour % 12;
   if (option.meridiem === "오후") hour += 12;
   return hour * 60 + option.minute;
 };
 
-const ChoiceTime = ({ city, range }: ChoiceTimeProps) => {
+const ChoiceTime = ({ city, range, setTime, setSchedule }: ChoiceTimeProps) => {
   const [timeTable, setTimeTable] = useState<{
     [dateStr: string]: { start: TimeOption; end: TimeOption };
-  }>({}); // 총 시간
+  }>({});
 
   const days = useMemo(() => {
     if (!range?.from || !range?.to) return [];
@@ -45,7 +41,6 @@ const ChoiceTime = ({ city, range }: ChoiceTimeProps) => {
     );
   }, [range]);
 
-  // 총 시간 계산 (timeTable 변경시마다 새로 계산)
   const totalMinutes = useMemo(() => {
     let total = 0;
     Object.values(timeTable).forEach(({ start, end }) => {
@@ -54,7 +49,14 @@ const ChoiceTime = ({ city, range }: ChoiceTimeProps) => {
     return total;
   }, [timeTable]);
 
-  // 초기 timeTable 설정 (초기 렌더링 시 총 시간을 계산하려면 초기값 설정)
+  const hrs = Math.floor(totalMinutes / 60);
+  const mins = totalMinutes % 60;
+
+  useEffect(() => {
+    setTime({ hrs, mins });
+  }, [totalMinutes, setTime]);
+
+  // 초기 렌더링 시 timeTable과 schedule 모두 설정
   useEffect(() => {
     if (range?.from && range?.to) {
       const initialTable: {
@@ -67,14 +69,30 @@ const ChoiceTime = ({ city, range }: ChoiceTimeProps) => {
           end: { meridiem: "오후", hour: 9, minute: 0 },
         };
       });
+
       setTimeTable(initialTable);
+
+      const newDataTime = days.map((day) => {
+        const dateStr = format(day, "yyyy-MM-dd");
+        const entry = initialTable[dateStr];
+
+        return {
+          date: format(day, "yyyy-MM-dd(eee)", { locale: ko }),
+          start: entry.start,
+          end: entry.end,
+        };
+      });
+
+      setSchedule((prev) => ({
+        ...prev,
+        dataTime: newDataTime,
+      }));
+
+      // 초기 시간도 전달
+      setTime({ hrs: hrs, mins: mins });
     }
   }, [days, range]);
 
-  const hrs = Math.floor(totalMinutes / 60); // 시간
-  const mins = totalMinutes % 60; // 분
-
-  // 시간 변경 함수 props에 시간 담아서 종료 시간보다 시작 시간이 앞서지 못하게 막기
   const handleTimeChange = (
     date: Date,
     type: "start" | "end",
@@ -86,7 +104,6 @@ const ChoiceTime = ({ city, range }: ChoiceTimeProps) => {
       end: { meridiem: "오후", hour: 10, minute: 0 },
     };
 
-    // 시작 시간이 종료 시간보다 클 경우 종료 시간을 변경하지 않음
     if (
       type === "start" &&
       timeOptionToMinutes(value) >= timeOptionToMinutes(prev.end)
@@ -95,7 +112,6 @@ const ChoiceTime = ({ city, range }: ChoiceTimeProps) => {
       return;
     }
 
-    // 종료 시간이 시작 시간보다 빠를 수 없도록 제한
     if (
       type === "end" &&
       timeOptionToMinutes(value) <= timeOptionToMinutes(prev.start)
@@ -103,14 +119,37 @@ const ChoiceTime = ({ city, range }: ChoiceTimeProps) => {
       alert("종료 시간이 시작 시간보다 빠를 수 없습니다.");
       return;
     }
-    //시간 계산용
-    setTimeTable((prevTable) => ({
-      ...prevTable,
-      [dateStr]: {
+
+    setTimeTable((prevTable) => {
+      const updatedTable = {
+        ...prevTable,
+        [dateStr]: {
+          ...prev,
+          [type]: value,
+        },
+      };
+
+      const newDataTime = days
+        .map((day) => {
+          const dateStr = format(day, "yyyy-MM-dd");
+          const entry = updatedTable[dateStr];
+          if (!entry) return null;
+
+          return {
+            date: format(day, "yyyy-MM-dd(eee)", { locale: ko }),
+            start: entry.start,
+            end: entry.end,
+          };
+        })
+        .filter(Boolean);
+
+      setSchedule((prev) => ({
         ...prev,
-        [type]: value,
-      },
-    }));
+        dataTime: newDataTime,
+      }));
+
+      return updatedTable;
+    });
   };
 
   return (
@@ -145,13 +184,13 @@ const ChoiceTime = ({ city, range }: ChoiceTimeProps) => {
               <TimeSelect
                 value={selected.start}
                 onChange={(val) => handleTimeChange(d, "start", val)}
-                maxTime={selected.end} // end 시간을 기준으로 start 시간을 제한
+                maxTime={selected.end}
               />
               <span>→</span>
               <TimeSelect
                 value={selected.end}
                 onChange={(val) => handleTimeChange(d, "end", val)}
-                minTime={selected.start} // start 시간을 기준으로 end 시간을 제한
+                minTime={selected.start}
               />
             </div>
           </div>
