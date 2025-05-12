@@ -101,11 +101,16 @@ const SideBar = ({ isOpen, setIsOpen }: SideBarProps) => {
       </div>
       <div className="sideBar-container">
         <div className="sideBar-profileBox">
+          <Image
+            src={user?.profile_img ?? "/defaultImage.png"} // null, undefined 방지
+            alt="사용자 프로필"
+            className="sideBar-userProfile"
+            width={50}
+            height={50}
+          />
           <div>
-            <div className="sideBar-nickName">{user?.nickname}님</div>
-            <div>연동 계정</div>
+            <div className="sideBar-nickName">{user?.nickname} 님</div>
           </div>
-          <div>프로필</div>
         </div>
         <StyledMenu
           mode="inline"

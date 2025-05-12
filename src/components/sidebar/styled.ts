@@ -24,7 +24,7 @@ export const SidebarStyled = styled.div<{ $isOpen: boolean }>`
     gap: 15px;
   }
   .sideBar-profileBox {
-    margin-left: 15px;
+    margin-left: 20px;
     display: flex;
     gap: 40px;
     align-items: center;
@@ -34,5 +34,14 @@ export const SidebarStyled = styled.div<{ $isOpen: boolean }>`
     margin-top: 40px;
     text-align: center;
     cursor: pointer;
+  }
+  .sideBar-loginType {
+    font-weight: 500;
+    font-size: 10px;
+    text-align: center;
+  }
+  .sideBar-userProfile {
+    border: 1px solid black;
+    border-radius: 50%;
   }
 `;

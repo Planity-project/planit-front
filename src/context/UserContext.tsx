@@ -13,6 +13,8 @@ interface User {
   id: number;
   email: string;
   nickname: string;
+  type: string;
+  profile_img: string | null;
 }
 
 const UserContext = createContext<User | null>(null);
