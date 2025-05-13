@@ -4,21 +4,37 @@ import { useRouter } from "next/router";
 import api from "@/util/api";
 import Image from "next/image";
 import { CommentOutlined, HeartFilled } from "@ant-design/icons";
+import { Button } from "antd";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, A11y } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import PhotoDetail from "./PhotoDetail";
 interface arr {
   comment: [];
   group: [];
   image: [];
 }
+
 const AlbumDetail = () => {
   const [arr, setArr] = useState<arr>();
+  const [viewMode, setViewMode] = useState<"grid" | "slide">("grid");
+  const [modal, setModal] = useState<boolean>(false);
+  const [albumId, setAlbumId] = useState<number>(0);
   const router = useRouter();
   const { id } = router.query;
-  //앨범 상세페이지 이동 시 앨범 아이디 담아서 요청 , 이미지 좋아요 수 댓글 수
+
   const dummyData = [
-    { img: "/defaultImage.png", likeCnt: 12, commentCnt: 32 },
-    { img: "/defaultImage.png", likeCnt: 12, commentCnt: 32 },
-    { img: "/defaultImage.png", likeCnt: 12, commentCnt: 32 },
+    { id: 1, img: "/defaultImage.png", likeCnt: 12, commentCnt: 32 },
+    { id: 2, img: "/defaultImage.png", likeCnt: 12, commentCnt: 32 },
+    { id: 3, img: "/defaultImage.png", likeCnt: 12, commentCnt: 32 },
   ];
+
+  const movePhoto = (id: number) => {
+    setModal(true);
+    setAlbumId(id);
+  };
 
   useEffect(() => {
     api
@@ -33,9 +49,28 @@ const AlbumDetail = () => {
 
   return (
     <AlbumDetailStyled>
+      <div className="view-toggle">
+        <Button
+          onClick={() => setViewMode("grid")}
+          type={viewMode === "grid" ? "primary" : "default"}
+        >
+          사진 앨범
+        </Button>
+        <Button
+          onClick={() => setViewMode("slide")}
+          type={viewMode === "slide" ? "primary" : "default"}
+        >
+          그룹 멤버
+        </Button>
+      </div>
+
       <div className="AlbumDetail-photoWrap">
-        {dummyData.map((x: any, i: number) => (
-          <div key={i} className="AlbumDetail-photoBox">
+        {dummyData.map((x, i) => (
+          <div
+            key={i}
+            onClick={() => movePhoto(x.id)}
+            className="AlbumDetail-photoBox"
+          >
             <Image
               className="AlbumDetail-img"
               src={x.img}
@@ -57,6 +92,9 @@ const AlbumDetail = () => {
             </div>
           </div>
         ))}
+      </div>
+      <div>
+        <PhotoDetail modal={modal} setModal={setModal} albumId={albumId} />
       </div>
     </AlbumDetailStyled>
   );

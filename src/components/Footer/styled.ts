@@ -2,10 +2,10 @@ import styled from "styled-components";
 
 export const FooterStyled = styled.div`
   display: flex;
+  align-items: baseline;
   width: 100%;
-  height: 100px;
-  align-items: center;
+  height: 80px;
+  margin-top: 100px;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
-  background-color: rgba(238, 237, 237, 0.1);
-  margin-top: 50px;
+  background-color: rgba(238, 237, 237);
 `;

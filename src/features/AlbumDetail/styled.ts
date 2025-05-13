@@ -1,41 +1,28 @@
 import styled from "styled-components";
 
 export const AlbumDetailStyled = styled.div`
-  margin-top: 70px;
+  margin-top: 100px;
   width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  .AlbumDetail-photoWrap {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 20px;
-    width: 50%;
-    max-width: 1280px;
-  }
-  .AlbumDetail-photoBox {
-    cursor: pointer;
-    width: calc(30% - 10px);
-    aspect-ratio: 1/0.8;
+
+  .view-toggle {
+    margin-bottom: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-    box-sizing: border-box;
-    border-radius: 8px;
-    border: 1px solid lightgray;
-    background-color: #fff;
-    box-shadow: 0 4px 12px rgba(250, 250, 250, 0.1);
+    gap: 10px;
   }
-  .AlbumDetail-img {
-    width: 100%;
-    height: 100%;
-  }
+
+  /* ▶ 기본 보기 (grid) */
   .AlbumDetail-photoWrap {
     display: flex;
     flex-wrap: wrap;
     gap: 16px;
+    justify-content: center;
+    width: 80%;
+    max-width: 1280px;
   }
 
   .AlbumDetail-photoBox {
@@ -44,6 +31,10 @@ export const AlbumDetailStyled = styled.div`
     height: 200px;
     overflow: hidden;
     cursor: pointer;
+    border-radius: 8px;
+    border: 1px solid lightgray;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   }
 
   .AlbumDetail-img {

@@ -56,11 +56,14 @@ export default function App({ Component, pageProps }: AppProps) {
       <Head>
         <title>PLANIT</title>
       </Head>
-
       <UserProvider>
-        <Header />
-        {loading ? <Loding /> : <Component {...pageProps} />}
-        {!excludedFooterPages.includes(router.pathname) && <Footer />}
+        <div className="app">
+          <Header />
+          <main className="main-content">
+            {loading ? <Loding /> : <Component {...pageProps} />}
+          </main>
+          {!excludedFooterPages.includes(router.pathname) && <Footer />}
+        </div>
       </UserProvider>
     </>
   );
