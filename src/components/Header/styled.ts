@@ -15,6 +15,10 @@ export const HeaderStyled = styled.div`
     align-items: center;
     margin: 0px 50px;
   }
+  .Header-alarmIcon {
+    margin-top: 3px;
+    font-size: 21px;
+  }
   .Header-sideIcon {
     font-size: 22px;
   }
