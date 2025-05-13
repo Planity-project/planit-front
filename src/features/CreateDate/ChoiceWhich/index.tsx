@@ -7,17 +7,20 @@ import Image from "next/image";
 import ShowWhich from "../../../components/ShowWhich";
 import api from "@/util/api";
 import { RSC_HEADER } from "next/dist/client/components/app-router-headers";
+import { ScheduleType } from "..";
 
 interface ChoiceWhichProps {
   setSelectedPlace: (place: string) => void;
   onNext: () => void;
   setChoiceWhich: (place: []) => void;
+  setSchedule: React.Dispatch<React.SetStateAction<ScheduleType>>;
 }
 
 const ChoiceWhich = ({
   setSelectedPlace,
   onNext,
   setChoiceWhich,
+  setSchedule,
 }: ChoiceWhichProps) => {
   const [location, setLocation] = useState<any[]>([]);
   const [inputValue, setInputValue] = useState<string>("");

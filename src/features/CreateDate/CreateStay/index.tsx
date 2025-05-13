@@ -26,6 +26,7 @@ interface DataType {
   lon: string;
   tel: string;
   title: string;
+  address: string;
 }
 
 const CreateStay = ({
@@ -141,6 +142,7 @@ const CreateStay = ({
       category: selected.category,
       tel: selected.tel,
       imageSrc: selected.imageSrc,
+      address: selected.address,
     };
 
     setPlace({

@@ -23,6 +23,7 @@ interface DataType {
   lon: string;
   tel: string;
   title: string;
+  address: string;
   minutes: number;
 }
 
@@ -116,6 +117,7 @@ const CreateDays = ({
       category: selected.category,
       tel: selected.tel,
       imageSrc: selected.imageSrc,
+      address: selected.address,
       minutes: 120,
     };
 

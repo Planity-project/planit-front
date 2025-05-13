@@ -12,6 +12,8 @@ export interface ScheduleType {
   dataTime: any[];
   dataPlace: any[];
   dataStay: any[];
+  location?: string | null;
+  userId?: number;
 }
 
 export interface TimeType {
@@ -50,8 +52,14 @@ const CreateDatePage: React.FC = () => {
     setCurrent((prev) => prev + 1);
   };
   useEffect(() => {
-    console.log(schedule, "asdfadf 확인용");
-  }, [schedule]);
+    setSchedule((prev) => {
+      return {
+        ...prev,
+        location: selectedPlace,
+      };
+    });
+    console.log("선택 지역", selectedPlace);
+  }, [selectedPlace]);
   return (
     <Createpage>
       <div className="createpage-text">
@@ -84,6 +92,7 @@ const CreateDatePage: React.FC = () => {
           setSelectedPlace={setSelectedPlace}
           onNext={handleNextStep}
           setChoiceWhich={setChiocewhich}
+          setSchedule={setSchedule}
         />
       )}
       {current === 2 && (
