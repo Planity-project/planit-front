@@ -41,10 +41,14 @@ export const CreateStayStyled = styled.div`
     display: flex;
     align-items: flex-start;
     gap: 10px;
-    background-color: #f6f6f6;
+    /* background-color: #f6f6f6; */
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 8px;
+    position: relative;
+  }
+  .create-placecard:hover {
+    cursor: pointer;
   }
 
   .create-image {
@@ -94,10 +98,17 @@ export const CreateStayStyled = styled.div`
     margin-bottom: 1rem;
     background: #fff;
     border-radius: 12px;
-    padding: 16px;
+    padding: 8px 16px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   }
 
+  .day-delBtn {
+    border: none;
+    background-color: white;
+  }
+  .day-delBtn:hover {
+    cursor: pointer;
+  }
   .day-label {
     font-size: 20px;
     font-weight: bold;
@@ -112,6 +123,8 @@ export const CreateStayStyled = styled.div`
     font-size: 16px;
     font-weight: 500;
     margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
   }
 
   .day-empty {

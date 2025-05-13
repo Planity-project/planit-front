@@ -5,7 +5,7 @@ import ShowWhich from "@/components/ShowWhich";
 import { Button, Skeleton } from "antd";
 import basicImg from "@/assets/images/close.png";
 import { ScheduleType } from "..";
-
+import { UnassignedPlaceCard, AssignedPlaceCard } from "./contentBox";
 interface CreateDaysProps {
   selectedPlace: any;
   onNext: () => void;
@@ -46,6 +46,7 @@ const CreateDays = ({
   const [editingIndex, setEditingIndex] = useState<number | null>(null); // 수정 중인 인덱스를 저장
   const [editedMinutes, setEditedMinutes] = useState<number>(120); // 수정할 시간을 저장
 
+  //주변 장소 받아오는 함수
   const fetchNearbyPlaces = useCallback(async () => {
     if (!selectedPlace) return;
 
@@ -58,7 +59,7 @@ const CreateDays = ({
       const newPlaces = res.data.locations;
       if (newPlaces.length === 0) setHasMore(false);
       else setPlaces((prev) => [...prev, ...newPlaces]);
-      console.log("응답", places);
+      console.log("응답", newPlaces);
     } catch (err) {
       console.log(err);
     } finally {
@@ -207,27 +208,11 @@ const CreateDays = ({
                 <p>장소를 불러올 수 없습니다.</p>
               )}
               {places.map((place, i) => (
-                <div
-                  className="create-placecard"
+                <UnassignedPlaceCard
                   key={i}
+                  place={place}
                   onClick={() => handlePlaceClick(i)}
-                >
-                  <img
-                    src={place.imageSrc ? place.imageSrc : "/defaultImage.png"}
-                    alt={place.title ? place.title : "default"}
-                    className="create-image"
-                  />
-                  <div style={{ flex: 1 }}>
-                    <div className="create-title">{place.title}</div>
-                    <div className="create-info">
-                      카테고리: {place.category}
-                    </div>
-                    <div className="create-info">전화번호: {place.tel}</div>
-                    <div className="create-info">
-                      위도: {place.lat} / 경도: {place.lon}
-                    </div>
-                  </div>
-                </div>
+                />
               ))}
               {loading && (
                 <>
@@ -260,53 +245,17 @@ const CreateDays = ({
             <div className="create-daylistBox">
               {schedule.dataPlace.length === 0 && !loading && <p></p>}
               {schedule.dataPlace.map((place, i) => (
-                <div className="create-placecard" key={i}>
-                  <img
-                    src={place.imageSrc ? place.imageSrc : "/defaultImage.png"}
-                    alt={place.title ? place.title : "default"}
-                    className="create-image"
-                  />
-                  <div className="">
-                    <div className="create-title">{place.title}</div>
-                    <div className="create-info">
-                      카테고리: {place.category}
-                    </div>
-                    <div className="create-info">전화번호: {place.tel}</div>
-                    <div className="create-info">
-                      위도: {place.lat} / 경도: {place.lon}
-                    </div>
-                    <div className="create-info">
-                      {editingIndex === i ? (
-                        <>
-                          <input
-                            type="number"
-                            value={editedMinutes}
-                            onChange={(e) =>
-                              setEditedMinutes(Number(e.target.value))
-                            }
-                            min={10}
-                            step={10}
-                          />
-                          분
-                          <button onClick={() => handleTimeUpdate(i)}>
-                            완료
-                          </button>
-                        </>
-                      ) : (
-                        <>
-                          머무는 시간: {Math.floor(place.minutes / 60)}시간{" "}
-                          {String(place.minutes % 60).padStart(2, "0")}분
-                          <button
-                            onClick={() => handleTimeChange(i, place.minutes)}
-                          >
-                            변경
-                          </button>
-                        </>
-                      )}
-                    </div>
-                    <button onClick={() => handleDeleteBox(i)}>삭제</button>
-                  </div>
-                </div>
+                <AssignedPlaceCard
+                  key={i}
+                  place={place}
+                  index={i}
+                  editingIndex={editingIndex}
+                  editedMinutes={editedMinutes}
+                  setEditedMinutes={setEditedMinutes}
+                  handleTimeChange={handleTimeChange}
+                  handleTimeUpdate={handleTimeUpdate}
+                  handleDeleteBox={handleDeleteBox}
+                />
               ))}
             </div>
           </div>

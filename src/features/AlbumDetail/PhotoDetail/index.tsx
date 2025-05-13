@@ -63,23 +63,28 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
     });
   };
   // 댓글 등록 요청 mini가 있으면 대댓글 없으면 댓글
-  const commentpost = (albumId: number) => {
-    if (comment.length < 1) {
-      return;
+  const commentpost = async (albumId: number) => {
+    if (comment.trim().length < 1) {
+      return; // 댓글 내용이 없으면 무시
     }
-    if (mini === "") {
-      api.post("/album/commentPost", {
-        albumId: albumId,
+
+    try {
+      await api.post("/album/commentPost", {
         userId: user?.id,
+        content: comment, // 댓글 본문
+        postId: undefined, // 게시글이 아니므로 undefined
+        albumId: albumId, // 앨범 ID
+        parentId: mini || undefined, // 대댓글이면 parentId로 전달
       });
-    } else {
-      api.post("/album/commentPost", {
-        albumId: albumId,
-        userId: user?.id,
-        mini: mini,
-      });
+
+      // 전송 후 초기화 or 알림 등
+      setComment(""); // 입력창 비우기 등
+    } catch (err) {
+      console.error("댓글 등록 실패", err);
+      alert("댓글 등록에 실패했습니다.");
     }
   };
+
   const handleBackgroundClick = () => {
     setModal(false); // 바깥 영역 클릭 시 모달 닫기
   };
