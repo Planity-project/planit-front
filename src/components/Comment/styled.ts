@@ -2,21 +2,35 @@ import styled from "styled-components";
 
 export const CommentStyled = styled.div`
   .comment-minicommentDiv {
-    font-size: 12px;
+    margin-left: 9px;
+    font-size: 10px;
     margin-bottom: 5px;
+    cursor: pointer;
   }
   .comment-chatMapDiv {
     position: relative;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: 5px;
   }
   .comment-miniPost {
+    margin-left: 40px;
     display: flex;
     align-items: baseline;
     font-size: 11px;
+    gap: 10px;
+  }
+  .comment-heartIcon {
     position: absolute;
     right: 0;
+    top: 10px;
+    color: red;
+  }
+  .comment-nameDiv {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: 5px;
   }
   .comment-chatDiv {
     font-size: 14px;
@@ -29,6 +43,7 @@ export const CommentStyled = styled.div`
     border-radius: 50%;
   }
   .comment-miniMapDiv {
+    margin-left: 5px;
     display: flex;
     align-items: center;
     font-size: 12px;

@@ -25,10 +25,10 @@ export const PhotoStyled = styled.div<{ $modal?: true | false }>`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.1);
     width: 60%;
     height: 100%;
-    border-right: 1px solid rgba(0, 0, 0, 0.01);
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
   }
   .photo-commentzone {
     width: 40%;
@@ -81,6 +81,7 @@ export const PhotoStyled = styled.div<{ $modal?: true | false }>`
   }
   .comment-likeIcon {
     font-size: 20px;
+    color: red;
   }
   .comment-inputDiv {
     display: flex;
@@ -101,6 +102,13 @@ export const PhotoStyled = styled.div<{ $modal?: true | false }>`
       width: 50%;
       height: 100%;
       border-right: 1px solid rgba(0, 0, 0, 0.2);
+    }
+    .photo-commentzone {
+      width: 50%;
+      padding: 10px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
     }
     .photo-image {
       width: 90%;
