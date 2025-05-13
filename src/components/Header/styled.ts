@@ -15,6 +15,9 @@ export const HeaderStyled = styled.div`
     align-items: center;
     margin: 0px 50px;
   }
+  .Header-sideIcon {
+    font-size: 22px;
+  }
   .Header-loginText {
     font-size: 13px;
     font-weight: 400;
@@ -32,6 +35,7 @@ export const HeaderStyled = styled.div`
   }
   .Header-sideText,
   .Header-logo,
+  .Header-alarmIcon,
   .Header-sideImg {
     cursor: pointer;
   }
