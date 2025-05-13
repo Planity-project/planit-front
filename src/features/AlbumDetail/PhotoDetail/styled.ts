@@ -16,7 +16,7 @@ export const PhotoStyled = styled.div<{ $modal?: true | false }>`
     background-color: white;
     border-radius: 10px;
     width: 65%;
-    height: 75%;
+    height: 85%;
     overflow-y: auto;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     display: flex;
@@ -32,7 +32,7 @@ export const PhotoStyled = styled.div<{ $modal?: true | false }>`
   }
   .photo-commentzone {
     width: 40%;
-    padding: 10px;
+    padding: 15px;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -105,7 +105,7 @@ export const PhotoStyled = styled.div<{ $modal?: true | false }>`
     }
     .photo-commentzone {
       width: 50%;
-      padding: 10px;
+      padding: 15px;
       position: relative;
       display: flex;
       flex-direction: column;
@@ -134,7 +134,7 @@ export const PhotoStyled = styled.div<{ $modal?: true | false }>`
     }
     .photo-commentzone {
       width: 100%;
-      padding: 10px;
+      padding: 15px;
     }
     .photo-image {
       width: 90%;
@@ -160,7 +160,7 @@ export const PhotoStyled = styled.div<{ $modal?: true | false }>`
     }
     .photo-commentzone {
       width: 100%;
-      padding: 10px;
+      padding: 15px;
     }
     .photo-image {
       width: 100%;

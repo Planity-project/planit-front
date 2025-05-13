@@ -15,7 +15,6 @@ export const AlbumDetailStyled = styled.div`
     gap: 10px;
   }
 
-  /* ▶ 기본 보기 (grid) */
   .AlbumDetail-photoWrap {
     display: flex;
     flex-wrap: wrap;
