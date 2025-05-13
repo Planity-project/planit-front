@@ -2,9 +2,10 @@ import styled from "styled-components";
 
 export const NotificationStyled = styled.div`
   position: fixed;
-  top: 60px; /* 헤더 바로 아래로 위치 (헤더 높이만큼 조절) */
+  top: 60px;
   left: 0;
   width: 177%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -20,9 +21,10 @@ export const NotificationStyled = styled.div`
     padding: 15px;
     overflow-y: auto;
     border: 1px solid rgba(0, 0, 0, 0.2);
-    margin-top: 10px; /* 꼬리와 간격 확보 */
+    margin-top: 10px;
 
-    /* 꼬리 (말풍선 삼각형) */
+    /* 꼬리 */
+    /* 말풍선 꼬리 만들어야함 */
     &::before {
       content: "";
       position: absolute;
@@ -33,7 +35,7 @@ export const NotificationStyled = styled.div`
       height: 0;
       border-left: 10px solid transparent;
       border-right: 10px solid transparent;
-      border-bottom: 10px solid white;
+      border-bottom: 10px solid black;
     }
 
     &::after {
