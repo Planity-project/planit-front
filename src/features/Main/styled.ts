@@ -7,9 +7,13 @@ export const MainStyled = styled.div`
     justify-content: space-around;
   }
   .main-titleBox {
-    margin-top: 100px;
+    margin-top: 155px;
   }
   .main-title {
+    font-size: 65px;
+    font-weight: 700;
+  }
+  .main-title2 {
     font-size: 65px;
     font-weight: 700;
   }

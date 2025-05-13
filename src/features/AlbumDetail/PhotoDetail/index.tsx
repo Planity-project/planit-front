@@ -231,6 +231,7 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
                 style={{
                   color: comment.length < 1 ? "lightgray" : "black",
                   cursor: "pointer",
+                  marginBottom: "3px",
                 }}
               >
                 게시

@@ -9,7 +9,7 @@ const MainPage = () => {
         <div>
           <div className="main-titleBox">
             <div className="main-title">추억 저장만 하면 뭐해 </div>
-            <div className="main-title">공유가 국룰이지</div>
+            <div className="main-title2">공유가 국룰이지</div>
           </div>
           <div className="main-btnBox">
             <Button

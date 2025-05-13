@@ -17,6 +17,7 @@ export const SidebarStyled = styled.div<{ $isOpen: boolean }>`
     position: relative;
     top: 0;
     left: 180px;
+    cursor: pointer;
   }
   .sideBar-container {
     display: flex;
