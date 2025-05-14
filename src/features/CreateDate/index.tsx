@@ -21,7 +21,7 @@ export interface TimeType {
   mins: number;
 }
 const CreateDatePage: React.FC = () => {
-  const [current, setCurrent] = useState(0);
+  const [current, setCurrent] = useState<number>(0);
   const [range, setRange] = useState<DateRange | undefined>();
   const [selectedPlace, setSelectedPlace] = useState<string | null>(null); // ⬅ 추가
   const [choicewhich, setChiocewhich] = useState<any>("");
@@ -97,10 +97,12 @@ const CreateDatePage: React.FC = () => {
       )}
       {current === 2 && (
         <ChoiceTime
-          city={"부산"}
+          city={selectedPlace}
           range={range}
           setTime={setTime}
           setSchedule={setSchedule}
+          current={current}
+          setCurrent={setCurrent}
         />
       )}
 
