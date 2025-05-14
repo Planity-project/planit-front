@@ -9,7 +9,7 @@ export default function PaymentTestPage() {
 
     IMP.request_pay(
       {
-        pg: "html5_inicis", // 아임포트 PG사 코드
+        pg: "inicis", // 아임포트 PG사 코드
         pay_method: "card",
         merchant_uid: `mid_${new Date().getTime()}`, // 고유 주문번호
         name: "앨범 결제 테스트",
