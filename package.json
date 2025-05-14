@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
     "@types/navermaps": "^3.7.9",
     "antd": "^4.24.13",
     "axios": "^1.9.0",

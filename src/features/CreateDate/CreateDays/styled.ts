@@ -41,10 +41,13 @@ export const CreateDaysStyled = styled.div`
     display: flex;
     align-items: flex-start;
     gap: 10px;
-    background-color: #f6f6f6;
+    background-color: white;
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 8px;
+  }
+  .create-placecard:hover {
+    cursor: pointer;
   }
 
   .create-image {
@@ -84,7 +87,35 @@ export const CreateDaysStyled = styled.div`
     cursor: pointer;
   }
 
+  .create-delBtn {
+    border: none;
+    background-color: white;
+  }
+  .create-delBtn:hover {
+    cursor: pointer;
+  }
+
   .create-loadmore:hover {
     background-color: #3ba1d3;
   }
+  .create-titleBox {
+    display: flex;
+    justify-content: space-between;
+  }
+`;
+
+const categoryColors: { [key: string]: string } = {
+  관광지: "#3ba1d3",
+  음식점: "#f28b82",
+  쇼핑: "#fbbc04",
+  문화시설: "#34a853",
+  기타: "#9e9e9e",
+};
+
+export const CategoryBadge = styled.span<{ category: string }>`
+  background-color: ${({ category }) => categoryColors[category] || "#888"};
+  color: white;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 4px;
 `;
