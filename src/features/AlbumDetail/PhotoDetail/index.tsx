@@ -13,7 +13,7 @@ import {
 } from "@ant-design/icons";
 import { Input, Modal } from "antd";
 import { useUser } from "@/context/UserContext";
-
+import Travel from "@/assets/images/travel.jpg";
 interface Albumprops {
   modal: boolean;
   setModal: (value: boolean) => void;
@@ -89,16 +89,16 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
   };
 
   const dummy: {
-    titleImg: string;
-    comment: any;
-    likeCnt: number;
+    id: number;
+    titleImg: any;
     user: string;
     userImg: string;
     like: boolean;
-    id: number;
+    comment: CommentType[];
+    likeCnt: number;
   } = {
     id: 1,
-    titleImg: "/defaultImage.png",
+    titleImg: Travel,
     // 글 올린 사람
     user: "진순흠",
     userImg: "/defaultImage.png",
