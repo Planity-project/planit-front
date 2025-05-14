@@ -23,6 +23,7 @@ export const Createpage = styled.div`
     font-weight: 700;
     text-align: center;
   }
+
   @media (max-width: 768px) {
     .ant-steps {
       display: none;

@@ -14,7 +14,7 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { ScheduleType } from "..";
-import SortableDayBox from "./stayBox";
+import { SortableDayBox, UnassignedPlaceCard } from "./stayBox";
 interface CreateDaysProps {
   selectedPlace: any;
   onNext: () => void;
@@ -162,27 +162,10 @@ const CreateStay = ({
           <div className="create-left">
             <div className="create-choiceBox">
               {places.map((place, i) => (
-                <div
-                  key={i}
-                  className="create-placecard"
+                <UnassignedPlaceCard
+                  place={place}
                   onClick={() => handlePlaceClick(i)}
-                >
-                  <img
-                    src={place.imageSrc || "/defaultImage.png"}
-                    alt={place.title}
-                    className="create-image"
-                  />
-                  <div>
-                    <div className="create-title">{place.title}</div>
-                    <div className="create-info">
-                      카테고리: {place.category}
-                    </div>
-                    <div className="create-info">전화번호: {place.tel}</div>
-                    <div className="create-info">
-                      위도: {place.lat} / 경도: {place.lon}
-                    </div>
-                  </div>
-                </div>
+                />
               ))}
               {loading && <Skeleton active paragraph={{ rows: 3 }} />}
               {!loading && hasMore && (

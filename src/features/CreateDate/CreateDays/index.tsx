@@ -197,6 +197,10 @@ const CreateDays = ({
             />
             <button onClick={handleSearchClick}>검색</button>
             <button>장소 등록</button>
+            <button>음식점</button>
+            <button>쇼핑</button>
+            <button>활동</button>
+            <button>관광</button>
           </div>
           <span>
             {totalHours}시간 {String(totalMinutes).padStart(2, "0")}분 /총{" "}
