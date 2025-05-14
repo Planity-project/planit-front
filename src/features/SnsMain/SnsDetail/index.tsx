@@ -10,7 +10,7 @@ const SnsDetail = () => {
   useEffect(() => {
     // api
     //   .get("/post/detailData", {
-    //     params: { SnsId: id },
+    //     params: { postId : id },
     //   })
     //   .then((res) => {
     //     console.log(res.data);

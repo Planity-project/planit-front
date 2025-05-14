@@ -15,10 +15,12 @@ export interface TimeOption {
 }
 
 interface ChoiceTimeProps {
-  city: string;
+  city: string | null;
   range?: DateRange;
   setTime: (time: TimeType) => void;
   setSchedule: React.Dispatch<React.SetStateAction<ScheduleType>>;
+  current: number;
+  setCurrent: (current: number) => void;
 }
 
 const timeOptionToMinutes = (option: TimeOption): number => {
@@ -27,7 +29,14 @@ const timeOptionToMinutes = (option: TimeOption): number => {
   return hour * 60 + option.minute;
 };
 
-const ChoiceTime = ({ city, range, setTime, setSchedule }: ChoiceTimeProps) => {
+const ChoiceTime = ({
+  city,
+  range,
+  setTime,
+  setSchedule,
+  current,
+  setCurrent,
+}: ChoiceTimeProps) => {
   const [timeTable, setTimeTable] = useState<{
     [dateStr: string]: { start: TimeOption; end: TimeOption };
   }>({});
@@ -151,7 +160,9 @@ const ChoiceTime = ({ city, range, setTime, setSchedule }: ChoiceTimeProps) => {
       return updatedTable;
     });
   };
-
+  const handleBack = () => {
+    setCurrent(0);
+  };
   return (
     <ChioceTimeStyled>
       <h1>{city}</h1>
@@ -159,7 +170,7 @@ const ChoiceTime = ({ city, range, setTime, setSchedule }: ChoiceTimeProps) => {
         <h4>
           {format(range.from, "yyyy.MM.dd(eee)", { locale: ko })} –{" "}
           {format(range.to, "yyyy.MM.dd(eee)", { locale: ko })}{" "}
-          <CalendarOutlined />
+          <CalendarOutlined onClick={handleBack} />
         </h4>
       )}
 
