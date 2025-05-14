@@ -1,4 +1,3 @@
-// styled.ts
 import styled from "styled-components";
 
 export const ChioceTimeStyled = styled.div`
@@ -6,6 +5,7 @@ export const ChioceTimeStyled = styled.div`
   margin: 0 auto;
   font-family: sans-serif;
   padding: 1rem;
+  margin-top: 50px;
 
   /* 헤더 */
   h1 {
@@ -49,7 +49,6 @@ export const ChioceTimeStyled = styled.div`
     display: flex;
     align-items: center;
     padding: 0.75rem 0;
-    border-bottom: 1px solid #eee;
 
     .date {
       width: 120px;

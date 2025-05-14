@@ -55,7 +55,7 @@ const GenerateDate = ({ schedule, setSchedule }: Props) => {
     }));
   }, []);
 
-  //  일정 미리보기 요청
+  //  일정 미리보기 요청(수치)
   const previewCallender = async () => {
     setLoading(true);
     setProgress(0);
@@ -104,14 +104,13 @@ const GenerateDate = ({ schedule, setSchedule }: Props) => {
       <p>{text}</p>
       <button onClick={getCallender}>일정 가져오기</button>
       <button onClick={previewCallender}>일정 미리보기</button>
-
       {loading && (
         <div style={{ marginTop: "10px", textAlign: "center" }}>
           <p>일정 생성 중... {progress}%</p>
           <progress value={progress} max="100" style={{ width: "60%" }} />
         </div>
       )}
-
+      x
       {previewData && (
         <div>
           <PreviewSchedule previewData={previewData} />

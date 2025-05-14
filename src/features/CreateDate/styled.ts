@@ -14,6 +14,7 @@ export const Createpage = styled.div`
     justify-content: center;
     align-items: flex-end;
   }
+
   .createpage-text {
     display: flex;
     align-items: center;
@@ -22,6 +23,37 @@ export const Createpage = styled.div`
     font-size: 24px;
     font-weight: 700;
     text-align: center;
+  }
+
+  // ✅ Steps 색상 커스터마이징
+  .ant-steps-item-process .ant-steps-item-icon {
+    background-color: rgba(83, 183, 232, 0.6);
+    border-color: rgba(147, 205, 234, 0.6);
+  }
+
+  .ant-steps-item-process .ant-steps-item-title {
+    color: rgba(83, 183, 232, 0.6);
+  }
+
+  .ant-steps-item-finish .ant-steps-item-icon {
+    border-color: rgba(83, 183, 232, 0.6);
+    background-color: rgba(83, 183, 232, 0.6);
+  }
+
+  .ant-steps-item-finish .ant-steps-item-title {
+    color: rgba(83, 183, 232, 0.6);
+  }
+
+  // ✅ ✅ 스텝 간 선(-) 색상 적용 (정확한 타겟)
+  .ant-steps-item-finish
+    > .ant-steps-item-container
+    > .ant-steps-item-content
+    > .ant-steps-item-title::after {
+    background-color: rgba(83, 183, 232, 0.6) !important;
+  }
+
+  .ant-steps-item-icon > .ant-steps-icon {
+    color: white;
   }
 
   @media (max-width: 768px) {
