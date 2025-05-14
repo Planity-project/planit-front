@@ -8,6 +8,7 @@ import { ChioceTimeStyled } from "./styled";
 import TimeSelect from "./timeSelect/timeSelect";
 import { ScheduleType } from "..";
 import { TimeType } from "..";
+
 export interface TimeOption {
   meridiem: "오전" | "오후";
   hour: number;
@@ -181,6 +182,16 @@ const ChoiceTime = ({
         </span>
       </div>
 
+      {/* 시작시간, 종료시간 */}
+      <div className="start-endpoint">
+        <div className="time-block">
+          <p>시작 시간</p>
+        </div>
+        <div className="time-block">
+          <p>종료 시간</p>
+        </div>
+      </div>
+
       {days.map((d) => {
         const dateStr = format(d, "yyyy-MM-dd");
         const selected = timeTable[dateStr] || {
@@ -198,6 +209,7 @@ const ChoiceTime = ({
                 maxTime={selected.end}
               />
               <span>→</span>
+
               <TimeSelect
                 value={selected.end}
                 onChange={(val) => handleTimeChange(d, "end", val)}

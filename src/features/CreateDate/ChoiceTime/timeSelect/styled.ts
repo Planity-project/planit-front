@@ -4,6 +4,7 @@ export const CustomTimeSelect = styled.div`
   display: flex;
   gap: 6px;
   position: relative;
+  border-bottom: 1px solid rgb(0, 0, 0, 0.2);
 `;
 
 export const SelectBox = styled.div`
@@ -13,7 +14,6 @@ export const SelectBox = styled.div`
 
 export const Selected = styled.div`
   padding: 4px 8px;
-  border: 1px solid #ccc;
   background: white;
   border-radius: 4px;
   min-width: 50px;

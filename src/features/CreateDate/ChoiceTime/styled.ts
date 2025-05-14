@@ -1,11 +1,16 @@
 import styled from "styled-components";
 
 export const ChioceTimeStyled = styled.div`
-  max-width: 800px;
-  margin: 0 auto;
+  max-width: 500px;
+  width: 100%;
+  margin: 50px auto 0 auto;
+  padding: 10px;
   font-family: sans-serif;
-  padding: 1rem;
-  margin-top: 50px;
+  box-sizing: border-box;
+
+  /* display: flex;
+  flex-direction: column;
+  align-items: center; */
 
   /* 헤더 */
   h1 {
@@ -44,6 +49,22 @@ export const ChioceTimeStyled = styled.div`
     }
   }
 
+  /* 시작시간, 종료시간 */
+  .start-endpoint {
+    display: flex;
+    gap: 140px;
+    padding-left: 160px;
+    margin-top: 30px;
+  }
+
+  .time-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-weight: bold;
+    font-size: 18px;
+  }
+
   /* 일별 행 */
   .day-row {
     display: flex;
@@ -52,7 +73,7 @@ export const ChioceTimeStyled = styled.div`
 
     .date {
       width: 120px;
-      font-weight: 500;
+      font-weight: bold;
     }
 
     .times {
@@ -66,7 +87,6 @@ export const ChioceTimeStyled = styled.div`
       }
 
       span {
-        margin: 0 0.5rem;
         font-size: 1.2rem;
       }
     }

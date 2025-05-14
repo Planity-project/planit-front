@@ -3,16 +3,18 @@ import styled from "styled-components";
 export const ChioceWhiceStyled = styled.div`
   .which-container {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
+    gap: 0px;
     margin-top: 50px;
   }
+
   .which-leftcontainer {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    width: 50%;
+    width: 45%;
   }
   .which-inputBox {
     width: 100%;
