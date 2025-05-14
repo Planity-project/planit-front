@@ -9,8 +9,9 @@ import {
 import { ko } from "date-fns/locale";
 import { Placecard } from "./styled";
 import { DeleteOutlined } from "@ant-design/icons";
+import { CategoryBadge } from "../styled";
 //드래그앤 드롭 가능한 박스
-const SortableDayBox = ({ dayData, index, onDelete }: any) => {
+export const SortableDayBox = ({ dayData, index, onDelete }: any) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: dayData.date });
 
@@ -67,4 +68,37 @@ const SortableDayBox = ({ dayData, index, onDelete }: any) => {
   );
 };
 
-export default SortableDayBox;
+interface Place {
+  title: string;
+  imageSrc?: string;
+  category: string;
+  tel: string;
+  address: string;
+}
+
+interface Props {
+  place: Place;
+  onClick: () => void;
+}
+
+export const UnassignedPlaceCard = ({ place, onClick }: Props) => {
+  return (
+    <div className="create-placecard" onClick={onClick}>
+      <img
+        src={place.imageSrc || "/defaultImage.png"}
+        alt={place.title}
+        className="create-image"
+      />
+      <div>
+        <div className="create-title">{place.title}</div>
+        <div>
+          <CategoryBadge category={place.category}>
+            {place.category}
+          </CategoryBadge>
+          <span>{place.address}</span>
+        </div>
+        <div className="create-info">{place.tel}</div>
+      </div>
+    </div>
+  );
+};

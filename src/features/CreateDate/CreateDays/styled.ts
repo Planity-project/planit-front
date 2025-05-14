@@ -105,11 +105,14 @@ export const CreateDaysStyled = styled.div`
 `;
 
 const categoryColors: { [key: string]: string } = {
-  관광지: "#3ba1d3",
-  음식점: "#f28b82",
-  쇼핑: "#fbbc04",
-  문화시설: "#34a853",
-  기타: "#9e9e9e",
+  관광지: "#3ba1d3", // '12'
+  문화: "#34a853", // '14'
+  레포츠: "#a142f4", // '28'
+  쇼핑: "#fbbc04", // '38'
+  음식점: "#f28b82", // '39'
+  숙소: "rgb(83, 183, 232, 0.6)", // '32'
+  행사: "#ff6d00", // '15'
+  기타: "#bdbdbd", // 매핑 안된 경우
 };
 
 export const CategoryBadge = styled.span<{ category: string }>`
