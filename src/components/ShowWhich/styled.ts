@@ -13,8 +13,16 @@ export const ShowWhichStyled = styled.div`
   .show-div {
     width: 100%;
     aspect-ratio: 1/0.8;
-    min-height: 400px;
+    min-height: 450px;
     border-radius: 8px;
+  }
+  @media (max-width: 1100px) {
+    .show-div {
+      width: 80%;
+      aspect-ratio: 1/0.8;
+      min-height: 400px;
+      border-radius: 8px;
+    }
   }
   @media (max-width: 550px) {
     .show-div {
