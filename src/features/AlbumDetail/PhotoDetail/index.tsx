@@ -153,6 +153,7 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
   return (
     <PhotoStyled $modal={modal} onClick={handleBackgroundClick}>
       <div
+        style={{ cursor: "pointer" }}
         onClick={(e) => {
           handleContentClick(e);
           setId(id + 1);
@@ -246,6 +247,7 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
         </div>
       </div>
       <div
+        style={{ cursor: "pointer" }}
         onClick={(e) => {
           handleContentClick(e);
           setId(id + 1);
