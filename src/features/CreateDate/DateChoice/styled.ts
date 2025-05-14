@@ -59,6 +59,12 @@ export const DateChoiceStyled = styled.div`
       transparent
     );
   }
+  .rdp-day_disabled {
+    background-color: rgba(200, 200, 200, 0.3);
+    color: #aaa;
+    cursor: not-allowed;
+  }
+
   .choice-btnDiv {
     margin-top: 20px;
     width: 70%;
