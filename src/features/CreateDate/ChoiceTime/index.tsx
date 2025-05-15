@@ -8,6 +8,8 @@ import { ChioceTimeStyled } from "./styled";
 import TimeSelect from "./timeSelect/timeSelect";
 import { ScheduleType } from "..";
 import { TimeType } from "..";
+import { Button } from "antd";
+
 export interface TimeOption {
   meridiem: "오전" | "오후";
   hour: number;
@@ -163,6 +165,11 @@ const ChoiceTime = ({
   const handleBack = () => {
     setCurrent(0);
   };
+
+  const onNext = () => {
+    setCurrent(current + 1);
+  };
+
   return (
     <ChioceTimeStyled>
       <h1>{city}</h1>
@@ -179,6 +186,16 @@ const ChoiceTime = ({
         <span>
           총 {hrs}시간 {String(mins).padStart(2, "0")}분
         </span>
+      </div>
+
+      {/* 시작시간, 종료시간 */}
+      <div className="start-endpoint">
+        <div className="time-block">
+          <p>시작 시간</p>
+        </div>
+        <div className="time-block">
+          <p>종료 시간</p>
+        </div>
       </div>
 
       {days.map((d) => {
@@ -198,6 +215,7 @@ const ChoiceTime = ({
                 maxTime={selected.end}
               />
               <span>→</span>
+
               <TimeSelect
                 value={selected.end}
                 onChange={(val) => handleTimeChange(d, "end", val)}
@@ -207,6 +225,12 @@ const ChoiceTime = ({
           </div>
         );
       })}
+
+      <div className="choice-btnDiv">
+        <Button type="primary" onClick={onNext}>
+          다음
+        </Button>
+      </div>
     </ChioceTimeStyled>
   );
 };

@@ -7,6 +7,7 @@ const api = axios.create({
 });
 
 export const serverUrl = "http://locahost:5001";
+export const clientUrl = "http://localhost:3000";
 // api.interceptors.response.use(
 //   (response) => response,
 //   (error) => {

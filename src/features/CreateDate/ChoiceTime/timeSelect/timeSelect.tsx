@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   CustomTimeSelect,
   SelectBox,
@@ -16,18 +16,34 @@ interface TimeOption {
 interface TimeSelectProps {
   value: TimeOption;
   onChange: (val: TimeOption) => void;
-  minTime?: TimeOption; // 최소 시간을 prop으로 받음
-  maxTime?: TimeOption; // 최대 시간을 prop으로 받음
+  minTime?: TimeOption;
+  maxTime?: TimeOption;
 }
 
 const TimeSelect = ({ value, onChange, minTime, maxTime }: TimeSelectProps) => {
-  const hours = Array.from({ length: 12 }, (x, i) => i + 1); // 시 1~12 배열 생성
-  const minutes = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55]; // 분
+  const hours = Array.from({ length: 12 }, (_, i) => i + 1);
+  const minutes = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
   const meridiems: TimeOption["meridiem"][] = ["오전", "오후"];
 
   const [openType, setOpenType] = useState<
     "meridiem" | "hour" | "minute" | null
-  >(null); // 드롭다운 메뉴 선택시 사용할 타입
+  >(null);
+
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(e.target as Node)
+      ) {
+        setOpenType(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const toggleDropdown = (type: typeof openType) => {
     setOpenType((prev) => (prev === type ? null : type));
@@ -49,7 +65,6 @@ const TimeSelect = ({ value, onChange, minTime, maxTime }: TimeSelectProps) => {
     else if (type === "hour") updated.hour = val as number;
     else if (type === "minute") updated.minute = val as number;
 
-    // 선택된 시간이 minTime보다 작은지 확인
     if (
       minTime &&
       timeOptionToMinutes(updated) < timeOptionToMinutes(minTime)
@@ -58,7 +73,6 @@ const TimeSelect = ({ value, onChange, minTime, maxTime }: TimeSelectProps) => {
       return;
     }
 
-    // 선택된 시간이 maxTime보다 큰지 확인
     if (
       maxTime &&
       timeOptionToMinutes(updated) > timeOptionToMinutes(maxTime)
@@ -72,38 +86,66 @@ const TimeSelect = ({ value, onChange, minTime, maxTime }: TimeSelectProps) => {
   };
 
   return (
-    <CustomTimeSelect>
-      {["meridiem", "hour", "minute"].map((type) => (
-        <SelectBox key={type}>
-          <Selected
-            className="selected"
-            onClick={() => toggleDropdown(type as any)}
-          >
-            {type === "meridiem" && value.meridiem}
-            {type === "hour" && String(value.hour).padStart(2, "0")}
-            {type === "minute" && String(value.minute).padStart(2, "0")}
-          </Selected>
+    <CustomTimeSelect ref={wrapperRef}>
+      {/* 오전/오후 */}
+      <SelectBox>
+        <Selected onClick={() => toggleDropdown("meridiem")}>
+          {value.meridiem}
+        </Selected>
+        {openType === "meridiem" && (
+          <Dropdown>
+            {meridiems.map((item) => (
+              <DropdownItem
+                key={item}
+                onClick={() => handleSelect("meridiem", item)}
+              >
+                {item}
+              </DropdownItem>
+            ))}
+          </Dropdown>
+        )}
+      </SelectBox>
 
-          {openType === type && (
-            <Dropdown className="dropdown">
-              {(type === "meridiem"
-                ? meridiems
-                : type === "hour"
-                ? hours
-                : minutes
-              ).map((item) => (
-                <DropdownItem
-                  key={item}
-                  className="dropdown-item"
-                  onClick={() => handleSelect(type as any, item)}
-                >
-                  {String(item).padStart(2, "0")}
-                </DropdownItem>
-              ))}
-            </Dropdown>
-          )}
-        </SelectBox>
-      ))}
+      {/* 시 */}
+      <SelectBox>
+        <Selected onClick={() => toggleDropdown("hour")}>
+          {String(value.hour).padStart(2, "0")}
+        </Selected>
+        {openType === "hour" && (
+          <Dropdown>
+            {hours.map((item) => (
+              <DropdownItem
+                key={item}
+                onClick={() => handleSelect("hour", item)}
+              >
+                {String(item).padStart(2, "0")}
+              </DropdownItem>
+            ))}
+          </Dropdown>
+        )}
+      </SelectBox>
+
+      {/* 콜론 */}
+      <span style={{ fontWeight: 600 }}>:</span>
+
+      {/* 분 */}
+      <SelectBox>
+        <Selected onClick={() => toggleDropdown("minute")}>
+          {String(value.minute).padStart(2, "0")}
+        </Selected>
+        {openType === "minute" && (
+          <Dropdown>
+            {minutes.map((item) => (
+              <DropdownItem
+                key={item}
+                onClick={() => handleSelect("minute", item)}
+              >
+                {String(item).padStart(2, "0")}
+              </DropdownItem>
+            ))}
+          </Dropdown>
+        )}
+      </SelectBox>
     </CustomTimeSelect>
   );
 };

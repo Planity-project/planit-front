@@ -1,53 +1,61 @@
-import { useEffect } from "react";
-import Script from "next/script";
-import api from "@/util/api"; // axios 인스턴스
-
+import * as PortOne from "@portone/browser-sdk/v2";
+import api from "@/util/api";
+import { serverUrl, clientUrl } from "@/util/api";
 export default function PaymentTestPage() {
-  const requestPayment = () => {
-    const IMP = (window as any).IMP;
-    IMP.init("imp15832056"); // 가맹점 식별 코드
+  const shortUuid = crypto.randomUUID().slice(0, 24);
+  const handlePayment = async () => {
+    try {
+      const albumId = 1;
+      const userId = 1;
 
-    IMP.request_pay(
-      {
-        pg: "inicis", // 아임포트 PG사 코드
-        pay_method: "card",
-        merchant_uid: `mid_${new Date().getTime()}`, // 고유 주문번호
-        name: "앨범 결제 테스트",
-        amount: 1000,
-        buyer_email: "test@example.com",
-        buyer_name: "홍길동",
-        buyer_tel: "01012345678",
-        buyer_addr: "서울특별시 강남구",
-        buyer_postcode: "123-456",
-      },
-      async (rsp: any) => {
-        if (rsp.success) {
-          try {
-            // 결제 성공 후 imp_uid만 서버에 전송
-            const res = await api.post("/payments/verify", {
-              impuid: rsp.imp_uid, // 서버로 전달할 결제 고유 번호
-              albumId: 1, // 결제 할 앨범
-              userId: 1, // 결제 한 유저
-            });
-
-            alert("결제 성공! 서버 응답: " + JSON.stringify(res.data));
-          } catch (err) {
-            alert("서버 통신 오류: " + err);
-          }
-        } else {
-          alert("결제 실패: " + rsp.error_msg);
-        }
+      const paymentResult: any = await PortOne.requestPayment({
+        storeId: "store-1bb9d540-a71d-4d62-b468-4457faae2c26", // 실제 상점 아이디로 교체
+        channelKey: "channel-key-e0f2e877-f689-4b1f-8d3d-d15c0835da51", // PortOne 콘솔에서 발급받은 채널 키
+        paymentId: `payment-${shortUuid}`,
+        orderName: "Planit Share Album",
+        totalAmount: 1000,
+        currency: "CURRENCY_KRW",
+        payMethod: "CARD",
+        customer: {
+          fullName: "안상현",
+          phoneNumber: "010-4908-8337",
+          email: "test@example.com",
+        },
+        redirectUrl: "http://localhost:3000/payment/verify",
+      });
+      console.log(paymentResult, "결제 정보");
+      if (paymentResult) {
+        const res = await api.post("/payments/verify", {
+          paymentId: paymentResult.paymentId,
+          albumId: 1,
+          userId: 1,
+          txId: paymentResult.txId,
+          type: "desktop",
+        });
+        console.log(res.data);
       }
-    );
+
+      // 결제 성공 후 서버에 결제정보 전달
+      // const res = await api.post("/payments/verify", {
+      //   impuid: paymentResult.impUid,
+      //   albumId: 1,
+      //   userId: 1,
+      // });
+
+      // alert("결제 성공! 서버 응답: " + JSON.stringify(res.data));
+    } catch (error: any) {
+      if (error.code === "USER_CANCEL") {
+        alert("사용자가 결제를 취소했습니다.");
+      } else {
+        alert("결제 실패: " + error.message);
+      }
+    }
   };
 
   return (
-    <>
-      <Script src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js" />
-      <div style={{ padding: "2rem" }}>
-        <h1>결제 테스트 페이지</h1>
-        <button onClick={requestPayment}>결제하기</button>
-      </div>
-    </>
+    <div style={{ padding: "2rem" }}>
+      <h1>결제 테스트 페이지</h1>
+      <button onClick={handlePayment}>결제하기</button>
+    </div>
   );
 }

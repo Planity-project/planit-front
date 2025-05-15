@@ -4,6 +4,7 @@ export const CustomTimeSelect = styled.div`
   display: flex;
   gap: 6px;
   position: relative;
+  border-bottom: 1px solid rgb(0, 0, 0, 0.2);
 `;
 
 export const SelectBox = styled.div`
@@ -13,7 +14,6 @@ export const SelectBox = styled.div`
 
 export const Selected = styled.div`
   padding: 4px 8px;
-  border: 1px solid #ccc;
   background: white;
   border-radius: 4px;
   min-width: 50px;
@@ -31,7 +31,6 @@ export const Dropdown = styled.div`
   overflow-y: auto;
   width: 100%;
 
-  /* WebKit 스크롤바 스타일 */
   &::-webkit-scrollbar {
     width: 4px;
   }
@@ -45,6 +44,7 @@ export const Dropdown = styled.div`
     background: transparent;
   }
 `;
+
 export const DropdownItem = styled.div`
   padding: 6px;
   text-align: center;

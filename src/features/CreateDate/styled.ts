@@ -25,7 +25,6 @@ export const Createpage = styled.div`
     text-align: center;
   }
 
-  // ✅ Steps 색상 커스터마이징
   .ant-steps-item-process .ant-steps-item-icon {
     background-color: rgba(83, 183, 232, 0.6);
     border-color: rgba(147, 205, 234, 0.6);
@@ -44,7 +43,6 @@ export const Createpage = styled.div`
     color: rgba(83, 183, 232, 0.6);
   }
 
-  // ✅ ✅ 스텝 간 선(-) 색상 적용 (정확한 타겟)
   .ant-steps-item-finish
     > .ant-steps-item-container
     > .ant-steps-item-content
