@@ -369,7 +369,7 @@ const SnsDetail = () => {
       </div>
       <div className="snspost-bottomcontainer">
         <div className="snspost-mydaysbar">
-          <div>일정</div>
+          <div className="snspost-mydaytext">일정</div>
           <MyDaysComponent schedule={schedule} />
         </div>
         <div className="snspost-mydayright">

@@ -1,8 +1,10 @@
 import styled from "styled-components";
 
 export const MyDaysStyled = styled.div`
-  width: 100%;
-  margin-bottom: 200px;
+  height: 80vh; // 또는 적절한 높이
+  overflow-y: auto;
+  position: relative;
+  padding-bottom: 700px;
   .plan-list {
     position: relative;
   }

@@ -5,22 +5,22 @@ export const SnsDetailStyled = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 100px;
 
   .snspost-wrap {
     margin-top: 30px;
-    width: 80%;
+    width: 100%;
     height: 85vh; /* 화면 전체 높이 차지 */
     display: flex;
+    align-items: flex-end;
     flex-direction: column;
     border-radius: 15px;
-
-    overflow: hidden;
   }
 
   .snspost-topcontainer {
     display: flex;
-    width: 100%;
-    height: 100%; /* 화면의 약 80% 차지 */
+    width: 70%;
+    height: 100%;
   }
 
   .snspost-topwrap {
@@ -101,17 +101,19 @@ export const SnsDetailStyled = styled.div`
   .snspost-bottomcontainer {
     width: 100%;
     display: flex;
-    padding: 30px 20px;
+    padding: 10px 30px;
     background-color: #fff;
     box-sizing: border-box;
     position: relative;
     z-index: 10;
-    margin-top: 40px;
+    margin-top: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
   }
   .snspost-mydaysbar {
     width: 25%;
+    position: fixed;
+    top: 100px;
   }
   .snspost-mydayright {
     width: 75%;
@@ -147,5 +149,9 @@ export const SnsDetailStyled = styled.div`
     width: 80%;
     border: none;
     border-bottom: 1px solid black;
+  }
+  .snspost-mydaytext {
+    font-size: 18px;
+    font-weight: 700;
   }
 `;

@@ -21,25 +21,31 @@ interface MyDaysProps {
 const MyDaysComponent = ({ schedule }: MyDaysProps) => {
   const [currentDayIndex, setCurrentDayIndex] = useState(0);
   const containerRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
     const handleScroll = () => {
       containerRefs.current.forEach((ref, i) => {
         if (ref) {
           const rect = ref.getBoundingClientRect();
-          if (rect.top <= 150) {
+          const containerTop = container.getBoundingClientRect().top;
+          if (rect.top - containerTop <= 150) {
             setCurrentDayIndex(i);
           }
         }
       });
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    container.addEventListener("scroll", handleScroll);
+    return () => container.removeEventListener("scroll", handleScroll);
   }, []);
 
+  console.log(schedule);
   return (
-    <MyDaysStyled>
+    <MyDaysStyled ref={scrollContainerRef}>
       <div className="sticky-day-title">{` Day ${currentDayIndex + 1}`}</div>
       {schedule.map((day, index) => (
         <div
