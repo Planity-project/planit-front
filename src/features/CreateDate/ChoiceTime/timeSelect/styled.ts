@@ -31,7 +31,6 @@ export const Dropdown = styled.div`
   overflow-y: auto;
   width: 100%;
 
-  /* WebKit 스크롤바 스타일 */
   &::-webkit-scrollbar {
     width: 4px;
   }
@@ -45,6 +44,7 @@ export const Dropdown = styled.div`
     background: transparent;
   }
 `;
+
 export const DropdownItem = styled.div`
   padding: 6px;
   text-align: center;

@@ -8,6 +8,7 @@ import { ChioceTimeStyled } from "./styled";
 import TimeSelect from "./timeSelect/timeSelect";
 import { ScheduleType } from "..";
 import { TimeType } from "..";
+import { Button } from "antd";
 
 export interface TimeOption {
   meridiem: "오전" | "오후";
@@ -164,6 +165,11 @@ const ChoiceTime = ({
   const handleBack = () => {
     setCurrent(0);
   };
+
+  const onNext = () => {
+    setCurrent(current + 1);
+  };
+
   return (
     <ChioceTimeStyled>
       <h1>{city}</h1>
@@ -219,6 +225,12 @@ const ChoiceTime = ({
           </div>
         );
       })}
+
+      <div className="choice-btnDiv">
+        <Button type="primary" onClick={onNext}>
+          다음
+        </Button>
+      </div>
     </ChioceTimeStyled>
   );
 };
