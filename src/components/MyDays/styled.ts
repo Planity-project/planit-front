@@ -1,12 +1,11 @@
 import styled from "styled-components";
 
 export const MyDaysStyled = styled.div`
-  height: 80vh; // 또는 적절한 높이
-  overflow-y: auto;
+  overflow-y: scroll;
   position: relative;
-  padding-bottom: 700px;
-  .plan-list {
-    position: relative;
+  height: 100%;
+  .days-bigBox {
+    padding-bottom: 600px;
   }
   .plan-item {
     display: flex;
@@ -87,5 +86,20 @@ export const MyDaysStyled = styled.div`
     font-size: 20px;
     padding: 10px;
     border-bottom: 1px solid #ccc;
+  }
+  /* Webkit 스크롤바 전체 영역 */
+  &::-webkit-scrollbar {
+    width: 3px; /* 세로 스크롤 너비 */
+  }
+
+  /* 스크롤바 손잡이 */
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(188, 188, 188, 0.72);
+    border-radius: 10px;
+  }
+
+  /* 스크롤바 트랙(배경) */
+  &::-webkit-scrollbar-track {
+    background-color: white;
   }
 `;

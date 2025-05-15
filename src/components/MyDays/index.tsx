@@ -47,48 +47,51 @@ const MyDaysComponent = ({ schedule }: MyDaysProps) => {
   return (
     <MyDaysStyled ref={scrollContainerRef}>
       <div className="sticky-day-title">{` Day ${currentDayIndex + 1}`}</div>
-      {schedule.map((day, index) => (
-        <div
-          className="day-container"
-          key={index}
-          ref={(el) => {
-            containerRefs.current[index] = el;
-          }}
-        >
-          <div className="plan-dayDiv">{`Day ${index + 1}`}</div>
-          <div className="plan-list">
-            {day.plan.map((item, i) => (
-              <div className="plan-item" key={i}>
-                <div className="plan-numberDiv">
-                  <div className="plan-number">{i + 1}</div>
-                </div>
-                <div className="plan-text">
-                  <div className="plan-timeDiv">
-                    <div className="plan-time">
-                      {item.startTime.slice(0, 5)} ~ {item.endTime.slice(0, 5)}
+      <div className="days-bigBox">
+        {schedule.map((day, index) => (
+          <div
+            className="day-container"
+            key={index}
+            ref={(el) => {
+              containerRefs.current[index] = el;
+            }}
+          >
+            <div className="plan-dayDiv">{`Day ${index + 1}`}</div>
+            <div className="plan-list">
+              {day.plan.map((item, i) => (
+                <div className="plan-item" key={i}>
+                  <div className="plan-numberDiv">
+                    <div className="plan-number">{i + 1}</div>
+                  </div>
+                  <div className="plan-text">
+                    <div className="plan-timeDiv">
+                      <div className="plan-time">
+                        {item.startTime.slice(0, 5)} ~{" "}
+                        {item.endTime.slice(0, 5)}
+                      </div>
+                      <div className="paln-name">{item.name}</div>
                     </div>
-                    <div className="paln-name">{item.name}</div>
-                  </div>
-                  <div
-                    className="plan-category"
-                    style={{
-                      color:
-                        item.category === "식당"
-                          ? "rgb(255,64,129)"
-                          : item.category === "명소"
-                          ? "rgb(46,182,125)"
-                          : "rgb(229,195,75)",
-                    }}
-                  >
-                    {item.category}
+                    <div
+                      className="plan-category"
+                      style={{
+                        color:
+                          item.category === "식당"
+                            ? "rgb(255,64,129)"
+                            : item.category === "명소"
+                            ? "rgb(46,182,125)"
+                            : "rgb(229,195,75)",
+                      }}
+                    >
+                      {item.category}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-            <div className="plan-line"></div>
+              ))}
+              <div className="plan-line"></div>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </MyDaysStyled>
   );
 };
