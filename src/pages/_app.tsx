@@ -11,11 +11,15 @@ import { useRouter } from "next/router";
 import Script from "next/script";
 import { UserProvider } from "@/context/UserContext";
 import Loding from "@/components/Loding"; // 스피너 컴포넌트
-
+import { usePathname } from "next/navigation";
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const pathname = usePathname();
   const excludedFooterPages = ["/", "/login", "/signup"];
+  const isFooterExcluded =
+    excludedFooterPages.includes(pathname) ||
+    pathname.startsWith("/snsmainpage/snsdetail");
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -62,7 +66,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <main className="main-content">
             {loading ? <Loding /> : <Component {...pageProps} />}
           </main>
-          {!excludedFooterPages.includes(router.pathname) && <Footer />}
+          {!isFooterExcluded && <Footer />}
         </div>
       </UserProvider>
     </>
