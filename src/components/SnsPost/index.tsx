@@ -1,20 +1,23 @@
 import { SnsPostStyled } from "./styled";
 import Image from "next/image";
 import { useRouter } from "next/router";
-
+import { useState } from "react";
+import SnsDetail from "@/features/SnsMain/SnsDetail";
 interface snspostprops {
   data: any;
   variant?: "default" | "album";
 }
 
 const SnsPost = ({ data, variant }: snspostprops) => {
+  const [modal, setModal] = useState(false);
+  const [id, setId] = useState(0);
   const router = useRouter();
 
   const handleClick = (id: number) => {
     if (variant === "album") {
       router.push(`/album/detail/${id}`);
     } else {
-      router.push(`/snsmainpage/detail/${id}`);
+      router.push(`/snsmainpage/snsdetail/${id}`);
     }
   };
 

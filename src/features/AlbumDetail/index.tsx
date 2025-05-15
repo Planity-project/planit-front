@@ -83,6 +83,7 @@ const AlbumDetail = () => {
   };
 
   const movePhoto = (id: number) => {
+    console.log(modal);
     setModal(true);
     setAlbumId(id);
   };
@@ -221,6 +222,7 @@ const AlbumDetail = () => {
           ))}
         </div>
       )}
+      <PhotoDetail modal={modal} setModal={setModal} albumId={albumId} />
     </AlbumDetailStyled>
   );
 };

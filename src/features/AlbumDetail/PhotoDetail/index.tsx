@@ -44,6 +44,7 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
   const [comment, setComment] = useState<string>("");
   const [mini, setMini] = useState<string>("");
   const [num, setNum] = useState<number>(0);
+  console.log(modal, "dsadasd");
 
   useEffect(() => {
     // api.get("/album/photoinfo", { params: { albumId: albumId } }).then((res) => {
