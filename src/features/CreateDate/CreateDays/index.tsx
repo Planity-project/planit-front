@@ -6,6 +6,11 @@ import { Button, Skeleton } from "antd";
 import basicImg from "@/assets/images/close.png";
 import { ScheduleType } from "..";
 import { UnassignedPlaceCard, AssignedPlaceCard } from "./contentBox";
+import { Input } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
+import { CheckOutlined } from "@ant-design/icons";
+import PlaceModal from "@/features/CreateDate/CreateDays/AddPlace/index";
+
 interface CreateDaysProps {
   selectedPlace: any;
   onNext: () => void;
@@ -43,8 +48,10 @@ const CreateDays = ({
   const [place, setPlace] = useState<any | null>(selectedPlace);
   const [str, setStr] = useState("");
   const [totalTime, setTotalTime] = useState(0);
-  const [editingIndex, setEditingIndex] = useState<number | null>(null); // 수정 중인 인덱스를 저장
-  const [editedMinutes, setEditedMinutes] = useState<number>(120); // 수정할 시간을 저장
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  const [editedMinutes, setEditedMinutes] = useState<number>(120);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   //주변 장소 받아오는 함수
   const fetchNearbyPlaces = useCallback(async () => {
@@ -84,7 +91,7 @@ const CreateDays = ({
   };
 
   const searchInput = async (str: string) => {
-    setStr(str); // 상태 업데이트
+    setStr(str);
     if (!selectedPlace) return;
 
     try {
@@ -97,15 +104,25 @@ const CreateDays = ({
         },
       });
       const filteredPlaces = res.data.locations;
-      setPlaces(filteredPlaces); // 결과 덮어쓰기
-      setHasMore(false); // 검색 결과는 더 불러오지 않도록
+      setPlaces(filteredPlaces);
+      setHasMore(false);
     } catch (err) {
       console.log("검색 오류", err);
     }
   };
+
   const handleSearchClick = () => {
     searchInput(str);
     setCurrentPage(1);
+  };
+
+  // 버튼 중복 선택
+  const toggleCategory = (category: string) => {
+    setSelectedCategories((prev) =>
+      prev.includes(category)
+        ? prev.filter((c) => c !== category)
+        : [...prev, category]
+    );
   };
 
   const handlePlaceClick = (i: number) => {
@@ -156,7 +173,7 @@ const CreateDays = ({
       dataPlace: updated,
     }));
 
-    setEditingIndex(null); // 수정 모드 종료
+    setEditingIndex(null);
   };
 
   const handleDeleteBox = (i: number) => {
@@ -169,6 +186,7 @@ const CreateDays = ({
       };
     });
   };
+
   useEffect(() => {
     console.log("최종 schedule 상태:", schedule);
   }, [schedule]);
@@ -188,24 +206,61 @@ const CreateDays = ({
     <CreateDaysStyled>
       <div className="create-wrap">
         <div className="create-container">
-          <div>
-            <input
+          <div className="create-input">
+            <Input
+              placeholder="장소명을 검색하세요"
               value={str}
-              onChange={(e) => {
-                setStr(e.target.value);
-              }}
+              onChange={(e) => setStr(e.target.value)}
+              onPressEnter={handleSearchClick}
+              className="custom-input"
             />
-            <button onClick={handleSearchClick}>검색</button>
-            <button>장소 등록</button>
-            <button>음식점</button>
-            <button>쇼핑</button>
-            <button>활동</button>
-            <button>관광</button>
+            <SearchOutlined
+              className="search-icon"
+              onClick={handleSearchClick}
+            />
           </div>
-          <span>
-            {totalHours}시간 {String(totalMinutes).padStart(2, "0")}분 /총{" "}
-            {time.hrs}시간 {String(time.mins).padStart(2, "0")}분
-          </span>
+
+          <div className="create-all">
+            <div className="create-topleft">
+              {["장소 등록", "명소", "식당", "카페"].map((label) => (
+                <button
+                  key={label}
+                  onClick={() =>
+                    label === "장소 등록"
+                      ? setIsModalOpen(true)
+                      : toggleCategory(label)
+                  }
+                  className={`create-button-item ${
+                    selectedCategories.includes(label) ? "active" : ""
+                  }`}
+                >
+                  {label}
+                  {["명소", "식당", "카페"].includes(label) &&
+                    selectedCategories.includes(label) && (
+                      <CheckOutlined className="check-icon" />
+                    )}
+                </button>
+              ))}
+            </div>
+
+            <div
+              className={`create-time ${
+                totalTime > time.hrs * 60 + time.mins ? "over-time" : ""
+              }`}
+            >
+              <span>
+                {totalHours}시간 {String(totalMinutes).padStart(2, "0")}분 / 총{" "}
+                {time.hrs}시간 {String(time.mins).padStart(2, "0")}분
+              </span>
+            </div>
+          </div>
+
+          {/* 장소 등록 모달 */}
+          <PlaceModal
+            visible={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+          />
+
           <div className="create-left">
             <div className="create-choiceBox">
               {places.length === 0 && !loading && (
@@ -228,7 +283,7 @@ const CreateDays = ({
                           title={{ width: "60%" }}
                           paragraph={{
                             rows: 3,
-                            width: ["80%", "50%", "40%"],
+                            width: ["75%", "50%", "30%"],
                           }}
                         />
                       </div>
@@ -246,6 +301,7 @@ const CreateDays = ({
                 <p className="create-end">더 이상 장소가 없습니다.</p>
               )}
             </div>
+
             <div className="create-daylistBox">
               {schedule.dataPlace.length === 0 && !loading && <p></p>}
               {schedule.dataPlace.map((place, i) => (
@@ -266,9 +322,12 @@ const CreateDays = ({
         </div>
         <ShowWhich selectedLocation={place} isPlace={true} />
       </div>
-      <Button type="primary" onClick={onNext}>
-        선택
-      </Button>
+
+      <div className="choice-btnDiv">
+        <Button type="primary" onClick={onNext}>
+          다음
+        </Button>
+      </div>
     </CreateDaysStyled>
   );
 };
