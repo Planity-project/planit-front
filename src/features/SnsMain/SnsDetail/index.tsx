@@ -135,6 +135,8 @@ const SnsDetail = () => {
         image: "/defaultImage.png",
         startTime: "11:30:00",
         endTime: "13:30:00",
+        lat: 37.5326,
+        lng: 127.0246,
       },
       {
         id: 2,
@@ -144,26 +146,32 @@ const SnsDetail = () => {
         image: "/defaultImage.png",
         startTime: "13:30:00",
         endTime: "15:30:00",
+        lat: 35.8354,
+        lng: 129.2639,
       },
       {
-        id: 1,
-        todayOrder: 1,
+        id: 3,
+        todayOrder: 3,
         name: "남경전복",
         category: "카페",
         image: "/defaultImage.png",
         startTime: "15:30:00",
         endTime: "17:30:00",
+        lat: 33.5097,
+        lng: 126.5219,
       },
     ],
     day2: [
       {
-        id: 1,
+        id: 3,
         todayOrder: 1,
         name: "남경전복",
         category: "식당",
         image: "/defaultImage.png",
         startTime: "11:30:00",
         endTime: "13:30:00",
+        lat: 44.5097,
+        lng: 126.5219,
       },
       {
         id: 2,
@@ -173,15 +181,19 @@ const SnsDetail = () => {
         image: "/defaultImage.png",
         startTime: "13:30:00",
         endTime: "15:30:00",
+        lat: 42.8354,
+        lng: 129.2639,
       },
       {
         id: 1,
-        todayOrder: 1,
+        todayOrder: 3,
         name: "남경전복",
         category: "카페",
         image: "/defaultImage.png",
         startTime: "15:30:00",
         endTime: "17:30:00",
+        lat: 40.5326,
+        lng: 127.0246,
       },
     ],
   };
@@ -213,6 +225,12 @@ const SnsDetail = () => {
 
   const schedule = formatSchedule(dummy);
 
+  const selectedDaySchedule =
+    schedule.find((s) => {
+      const dayNumber = Number(s.date.split("-")[2]); // 날짜에서 '일'만 추출 (대략)
+      return schedule.indexOf(s) === day - 1;
+    })?.plan || [];
+
   return (
     <SnsDetailStyled>
       <div className="snspost-mydaysbar">
@@ -228,7 +246,12 @@ const SnsDetail = () => {
 
       <div className="snspost-mydayright">
         <div className="snspost-whichdiv">
-          <GoogleMapComponent />
+          <GoogleMapComponent
+            schedule={selectedDaySchedule}
+            title={daydetail.name}
+            lng={daydetail.lng}
+            lat={daydetail.lat}
+          />
         </div>
         <div className="snspost-daysdetail">
           <div className="snspost-daydetailbox">

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Divider, Modal, Steps } from "antd";
+import { Modal, Steps } from "antd";
 import DateChoice from "./DateChoice";
 import { Createpage } from "./styled";
 import { DateRange } from "react-day-picker";
