@@ -20,15 +20,36 @@ export const PhotoStyled = styled.div<{ $modal?: true | false }>`
     overflow-y: auto;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     display: flex;
+    position: relative;
+  }
+  .arrow-icon {
+    font-size: 26px;
+    z-index: 10001;
+    position: absolute;
+    top: 50%;
+  }
+  .arrow-icon-right {
+    font-size: 26px;
+    z-index: 10001;
+    position: absolute;
+    top: 50%;
+    right: 0;
   }
   .photo-photozone {
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.01);
     width: 60%;
     height: 100%;
     border-right: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  .slider-container {
+    display: flex;
+    transition: transform 0.5s ease;
+    height: 100%;
+    width: 100%;
   }
   .photo-commentzone {
     width: 40%;
@@ -59,9 +80,7 @@ export const PhotoStyled = styled.div<{ $modal?: true | false }>`
     border: 1px solid rgba(0, 0, 0, 0.4);
     border-radius: 50%;
   }
-  .arrow-icon {
-    font-size: 32px;
-  }
+
   .comment-bottomDiv {
     display: flex;
     flex-direction: column;

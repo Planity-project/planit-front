@@ -44,7 +44,7 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
   const [comment, setComment] = useState<string>("");
   const [mini, setMini] = useState<string>("");
   const [num, setNum] = useState<number>(0);
-  console.log(modal, "dsadasd");
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   useEffect(() => {
     // api.get("/album/photoinfo", { params: { albumId: albumId } }).then((res) => {
@@ -94,6 +94,16 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
     e.stopPropagation(); // 내부 클릭 시 닫히지 않도록
   };
 
+  const goToNextImage = () => {
+    setCurrentIndex((prev) => (prev + 1) % dummy.titleImg.length);
+  };
+
+  const goToPreviousImage = () => {
+    setCurrentIndex((prev) =>
+      prev === 0 ? dummy.titleImg.length - 1 : prev - 1
+    );
+  };
+
   const dummy: {
     id: number;
     titleImg: any;
@@ -104,7 +114,7 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
     likeCnt: number;
   } = {
     id: 1,
-    titleImg: Travel,
+    titleImg: [Travel, Travel, Travel, Travel, Travel, Travel],
     // 글 올린 사람
     user: "진순흠",
     userImg: "/defaultImage.png",
@@ -153,24 +163,62 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
 
   return (
     <PhotoStyled $modal={modal} onClick={handleBackgroundClick}>
-      <div
-        style={{ cursor: "pointer" }}
-        onClick={(e) => {
-          handleContentClick(e);
-          setId(id + 1);
-        }}
-      >
-        <LeftOutlined className="arrow-icon" />
-      </div>
       <div className="photo-wrap" onClick={handleContentClick}>
         <div className="photo-photozone">
-          <Image
-            className="photo-image"
-            src={dummy.titleImg}
-            alt=""
-            width={100}
-            height={300}
-          />
+          <div
+            className="slider-container"
+            style={{
+              display: "flex",
+              transition: "transform 0.5s ease",
+              transform: `translateX(-${currentIndex * 100}%)`,
+              width: `100%`,
+            }}
+          >
+            {dummy.titleImg.map((img: string, idx: number) => (
+              <div
+                key={idx}
+                style={{
+                  width: "100%",
+                  flexShrink: 0,
+                  height: "100%",
+                  position: "relative",
+                }}
+              >
+                {/* 왼쪽 화살표 (처음일 땐 안 보이게) */}
+                {currentIndex > 0 && (
+                  <LeftOutlined
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setCurrentIndex(currentIndex - 1);
+                    }}
+                    className="arrow-icon"
+                  />
+                )}
+                <Image
+                  className="photo-image"
+                  src={img}
+                  alt={`image-${idx}`}
+                  width={100}
+                  height={300}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "contain",
+                  }}
+                />
+                {/* 오른쪽 화살표 (마지막일 땐 안 보이게) */}
+                {currentIndex < dummy.titleImg.length - 1 && (
+                  <RightOutlined
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setCurrentIndex(currentIndex + 1);
+                    }}
+                    className="arrow-icon-right"
+                  />
+                )}
+              </div>
+            ))}
+          </div>
         </div>
         <div className="photo-commentzone">
           <div className="photo-user">
@@ -246,15 +294,6 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
             </div>
           </div>
         </div>
-      </div>
-      <div
-        style={{ cursor: "pointer" }}
-        onClick={(e) => {
-          handleContentClick(e);
-          setId(id + 1);
-        }}
-      >
-        <RightOutlined className="arrow-icon" />
       </div>
     </PhotoStyled>
   );

@@ -40,11 +40,15 @@ const SnsPost = ({ data, variant }: snspostprops) => {
               onClick={() => handleClick(x.id)}
             >
               <div
-                onClick={(e) => {
-                  e.stopPropagation(); // 상위 div 클릭 방지
-                  setList(imgList); // 이미지 리스트 설정
-                  setImgModal(true); // 모달 열기
-                }}
+                onClick={
+                  variant === "album"
+                    ? undefined
+                    : (e) => {
+                        e.stopPropagation(); // 상위 div 클릭 방지
+                        setList(imgList); // 이미지 리스트 설정
+                        setImgModal(true); // 모달 열기
+                      }
+                }
                 className="sns-imgBox"
                 data-img-count={imgList.length}
               >

@@ -42,7 +42,7 @@ export const SnsDetailStyled = styled.div`
     bottom: 10px;
   }
   .snspost-daydetailbox {
-    width: 90%;
+    width: 95%;
     height: 100%;
     border-radius: 10px;
     background-color: white;
