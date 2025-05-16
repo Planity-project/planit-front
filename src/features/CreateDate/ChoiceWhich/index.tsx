@@ -34,7 +34,11 @@ const ChoiceWhich = ({
     setLocation(filtered);
   };
 
-  const placeOnClick = (place: string) => {};
+  const placeOnClick = (place: string) => {
+    api.get("map/place", {
+      params: { name: place },
+    });
+  };
 
   useEffect(() => {
     const fetchData = async () => {
