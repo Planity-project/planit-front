@@ -1,9 +1,9 @@
 import { SnsPostStyled } from "./styled";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SnsDetail from "@/features/SnsMain/SnsDetail";
-
+import SlideComponent from "@/features/SlideImg";
 interface snspostprops {
   data: any;
   variant?: "default" | "album";
@@ -11,6 +11,8 @@ interface snspostprops {
 
 const SnsPost = ({ data, variant }: snspostprops) => {
   const [modal, setModal] = useState(false);
+  const [imgModal, setImgModal] = useState(false);
+  const [list, setList] = useState<string[]>([]);
   const [id, setId] = useState(0);
   const router = useRouter();
 
@@ -30,13 +32,22 @@ const SnsPost = ({ data, variant }: snspostprops) => {
             x?.img && x.img.length > 0
               ? x.img
               : [x.titleImg ?? "/defaultImage.png"];
+
           return (
             <div
               className="sns-postBox"
               key={i}
               onClick={() => handleClick(x.id)}
             >
-              <div className="sns-imgBox" data-img-count={imgList.length}>
+              <div
+                onClick={(e) => {
+                  e.stopPropagation(); // 상위 div 클릭 방지
+                  setList(imgList); // 이미지 리스트 설정
+                  setImgModal(true); // 모달 열기
+                }}
+                className="sns-imgBox"
+                data-img-count={imgList.length}
+              >
                 {imgList.map((src: string, idx: number) => (
                   <div
                     key={idx}
@@ -55,12 +66,16 @@ const SnsPost = ({ data, variant }: snspostprops) => {
               <div className="sns-textBox">
                 <div className="sns-title">{x?.title}</div>
                 <div className="sns-hashtag">{x?.hashtag ?? ""}</div>
-                <div className="sns-comment">{x?.comment ?? ""}</div>
               </div>
             </div>
           );
         })}
       </div>
+      <SlideComponent
+        imgModal={imgModal}
+        setImgModal={setImgModal}
+        imglist={list}
+      />
     </SnsPostStyled>
   );
 };

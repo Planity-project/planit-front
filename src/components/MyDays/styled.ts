@@ -5,13 +5,15 @@ export const MyDaysStyled = styled.div`
   position: relative;
   height: 100%;
   .days-bigBox {
-    padding-bottom: 600px;
+    padding-bottom: calc(var(--vh, 1vh) * 90);
   }
   .plan-item {
     display: flex;
     gap: 21px;
     padding: 6px 20px 6px 24px;
     width: 100%;
+    margin-bottom: 10px;
+    margin-top: 20px;
   }
   .plan-dayDiv {
     font-size: 15px;
@@ -30,7 +32,6 @@ export const MyDaysStyled = styled.div`
     border-radius: 6px;
     padding: 10px 15px;
     width: 80%;
-
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
   }
   .plan-timeDiv {
@@ -86,6 +87,11 @@ export const MyDaysStyled = styled.div`
     font-size: 20px;
     padding: 10px;
     border-bottom: 1px solid #ccc;
+  }
+  .plan-item.active {
+    background-color: rgb(54, 143, 255, 0.06); /* 원하는 색상 */
+
+    transition: background-color 0.3s ease;
   }
   /* Webkit 스크롤바 전체 영역 */
   &::-webkit-scrollbar {

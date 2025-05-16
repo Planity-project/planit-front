@@ -18,8 +18,8 @@ export default function App({ Component, pageProps }: AppProps) {
   const pathname = usePathname();
   const excludedFooterPages = ["/", "/login", "/signup"];
   const isFooterExcluded =
-    excludedFooterPages.includes(pathname) ||
-    pathname.startsWith("/snsmainpage/snsdetail");
+    excludedFooterPages.includes(pathname ?? "") ||
+    (pathname?.startsWith("/snsmainpage/snsdetail") ?? false);
 
   useEffect(() => {
     window.scrollTo(0, 0);

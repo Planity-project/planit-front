@@ -44,13 +44,13 @@ const SnsDetail = () => {
   //sns 디테일 페이지 이동 시 데이터 요청 , 게시글 모든 데이터 필요(잘 정리해서 줄것: 맘에 안들면 다시 )
 
   useEffect(() => {
-    api
-      .get("/posts/detailData", {
-        params: { postId: id },
-      })
-      .then((res) => {
-        console.log(res.data);
-      });
+    // api
+    //   .get("/posts/detailData", {
+    //     params: { postId: id },
+    //   })
+    //   .then((res) => {
+    //     console.log(res.data);
+    //   });
   }, []);
 
   const dummy1: {
@@ -212,11 +212,11 @@ const SnsDetail = () => {
   }
 
   const schedule = formatSchedule(dummy);
-  console.log(daydetail);
+
   return (
     <SnsDetailStyled>
       <div className="snspost-mydaysbar">
-        <div className="snspost-mydaytext">일정</div>
+        <div className="snspost-mydaytext">{dummy.postTitle}</div>
         <MyDaysComponent
           schedule={schedule}
           day={day}
@@ -232,8 +232,24 @@ const SnsDetail = () => {
         </div>
         <div className="snspost-daysdetail">
           <div className="snspost-daydetailbox">
-            <div>{day}</div>
-            <div></div>
+            <div>Day{day}</div>
+            <div className="snspost-daydetailwrap">
+              <div>
+                <Image
+                  className="snspost-detailimg"
+                  src={daydetail.image}
+                  alt=""
+                  width={65}
+                  height={80}
+                />
+              </div>
+              <div>
+                <div className="daydetail-name">{daydetail.name}</div>
+                <div className="daydetail-category">{daydetail.category}</div>
+                <div className="daydetail-reviewcomment">리뷰 들어갈 자리</div>
+                <div className="daydetail-reviewcomment">별점 들어갈 자리</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

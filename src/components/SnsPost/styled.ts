@@ -19,7 +19,8 @@ export const SnsPostStyled = styled.div<{ $variant?: "default" | "album" }>`
   .sns-postBox {
     cursor: pointer;
     width: calc(50% - 10px);
-    aspect-ratio: 1/0.8;
+    aspect-ratio: ${(props) =>
+      props.$variant === "album" ? "1/0.8" : "1/0.7"};
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
@@ -31,7 +32,7 @@ export const SnsPostStyled = styled.div<{ $variant?: "default" | "album" }>`
 
   .sns-postBox:nth-child(even) {
     transform: ${(props) =>
-      props.$variant === "album" ? "translateY(0px)" : "translateY(5px)"};
+      props.$variant === "album" ? "translateY(0px)" : "translateY(1px)"};
   }
 
   .sns-imgBox {
@@ -40,7 +41,7 @@ export const SnsPostStyled = styled.div<{ $variant?: "default" | "album" }>`
     background-color: white; /* 틈 사이 회색 배경 느낌 추가 */
     border-bottom: ${(props) =>
       props.$variant === "album" ? "1px solid rgba(0, 0, 0, 0.1);" : ""};
-    height: ${(props) => (props.$variant === "album" ? "80%" : "60%")};
+    height: ${(props) => (props.$variant === "album" ? "80%" : "70%")};
     overflow: hidden;
     /* 왼쪽 위 모서리만 둥글게 */
     border-top-left-radius: 5px;

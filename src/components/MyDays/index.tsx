@@ -34,6 +34,7 @@ const MyDaysComponent = ({
   const containerRefs = useRef<(HTMLDivElement | null)[]>([]);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const planRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [activePlanIndex, setActivePlanIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const container = scrollContainerRef.current;
@@ -78,6 +79,16 @@ const MyDaysComponent = ({
         const flatPlans = schedule.flatMap((d) => d.plan);
         const dayItem = flatPlans[closestPlanIndex];
         setDaydetail(dayItem);
+        setActivePlanIndex(closestPlanIndex); // ✅ 활성 인덱스 저장
+      }
+      if (
+        container.scrollTop === 0 &&
+        schedule.length > 0 &&
+        schedule[0].plan.length > 0
+      ) {
+        setDaydetail(schedule[0].plan[0]);
+        setDay(1);
+        setActivePlanIndex(0);
       }
     };
 
@@ -108,7 +119,9 @@ const MyDaysComponent = ({
 
                 return (
                   <div
-                    className="plan-item"
+                    className={`plan-item ${
+                      activePlanIndex === globalIndex ? "active" : ""
+                    }`}
                     key={`day-${dayIndex}-plan-${planIndex}`}
                     ref={(el) => {
                       planRefs.current[globalIndex] = el;

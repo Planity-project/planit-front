@@ -12,6 +12,11 @@ export const SnsDetailStyled = styled.div`
     padding: 8px;
     box-sizing: border-box;
   }
+  .snspost-mydaytext {
+    padding: 5px;
+    font-size: 15px;
+    font-weight: 600;
+  }
 
   .snspost-mydayright {
     width: 75%;
@@ -41,5 +46,29 @@ export const SnsDetailStyled = styled.div`
     height: 100%;
     border-radius: 10px;
     background-color: white;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .snspost-detailimg {
+    border-radius: 5px;
+    border: 1px solid black;
+  }
+  .snspost-daydetailwrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .daydetail-name {
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .daydetail-category {
+    font-size: 10px;
+    color: gray;
+  }
+  .daydetail-reviewcomment {
+    font-size: 12px;
   }
 `;
