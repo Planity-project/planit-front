@@ -1,3 +1,5 @@
+export {};
+
 import { useEffect, useRef, useState } from "react";
 
 declare global {
@@ -24,7 +26,7 @@ const GoogleMapComponent = () => {
     }
 
     return () => {
-      window.initMap = undefined;
+      (window as any).initMap = initMap;
     };
   }, []);
 

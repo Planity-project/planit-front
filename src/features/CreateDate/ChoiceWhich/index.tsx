@@ -34,6 +34,8 @@ const ChoiceWhich = ({
     setLocation(filtered);
   };
 
+  const placeOnClick = (place: string) => {};
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -78,6 +80,7 @@ const ChoiceWhich = ({
                       setSelectedLocation(x);
                       setChoiceWhich(x);
                       setSelectedPlace(x.name); // ⬅ 선택 시 상위로 전달
+                      placeOnClick(x.name);
                     }}
                   >
                     <div className="which-gpsDiv">
