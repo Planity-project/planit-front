@@ -36,6 +36,8 @@ interface CommentType {
 }
 
 const SnsDetail = () => {
+  const [daydetail, setDaydetail] = useState<any>("");
+  const [day, setDay] = useState<number>(1);
   const router = useRouter();
   const { id } = router.query;
   const user = useUser();
@@ -210,19 +212,30 @@ const SnsDetail = () => {
   }
 
   const schedule = formatSchedule(dummy);
-
+  console.log(daydetail);
   return (
     <SnsDetailStyled>
       <div className="snspost-mydaysbar">
         <div className="snspost-mydaytext">일정</div>
-        <MyDaysComponent schedule={schedule} />
+        <MyDaysComponent
+          schedule={schedule}
+          day={day}
+          setDay={setDay}
+          daydetail={daydetail}
+          setDaydetail={setDaydetail}
+        />
       </div>
 
       <div className="snspost-mydayright">
         <div className="snspost-whichdiv">
           <GoogleMapComponent />
         </div>
-        <div></div>
+        <div className="snspost-daysdetail">
+          <div className="snspost-daydetailbox">
+            <div>{day}</div>
+            <div></div>
+          </div>
+        </div>
       </div>
     </SnsDetailStyled>
   );

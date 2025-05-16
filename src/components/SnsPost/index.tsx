@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import SnsDetail from "@/features/SnsMain/SnsDetail";
+
 interface snspostprops {
   data: any;
   variant?: "default" | "album";

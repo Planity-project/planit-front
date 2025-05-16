@@ -20,10 +20,26 @@ export const SnsDetailStyled = styled.div`
     flex-direction: column;
     justify-content: space-between;
     box-sizing: border-box;
+    position: relative;
   }
 
   .snspost-whichdiv {
     width: 100%;
     height: 100%;
+  }
+  .snspost-daysdetail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 20%;
+    position: absolute;
+    bottom: 10px;
+  }
+  .snspost-daydetailbox {
+    width: 90%;
+    height: 100%;
+    border-radius: 10px;
+    background-color: white;
   }
 `;
