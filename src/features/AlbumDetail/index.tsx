@@ -16,14 +16,9 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import PhotoDetail from "./PhotoDetail";
 import { useUser } from "@/context/UserContext";
-interface arr {
-  comment: [];
-  group: [];
-  image: [];
-}
 
 const AlbumDetail = () => {
-  const [arr, setArr] = useState<arr>();
+  const [arr, setArr] = useState();
   const [viewMode, setViewMode] = useState<"grid" | "slide">("grid");
   const [modal, setModal] = useState<boolean>(false);
   const [albumId, setAlbumId] = useState<number>(0);
@@ -50,11 +45,6 @@ const AlbumDetail = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  const dummyData = [
-    { id: 1, img: "/defaultImage.png", likeCnt: 12, commentCnt: 32 },
-    { id: 2, img: "/defaultImage.png", likeCnt: 12, commentCnt: 32 },
-    { id: 3, img: "/defaultImage.png", likeCnt: 12, commentCnt: 32 },
-  ];
   const groupdummy = {
     link: ["dasdasdadasd.dsadasdasd"], // 문자열 배열
     group: [
@@ -80,6 +70,11 @@ const AlbumDetail = () => {
         role: "user",
       },
     ],
+    image: [
+      { id: 1, img: "/defaultImage.png", likeCnt: 12, commentCnt: 32 },
+      { id: 2, img: "/defaultImage.png", likeCnt: 12, commentCnt: 32 },
+      { id: 3, img: "/defaultImage.png", likeCnt: 12, commentCnt: 32 },
+    ],
   };
 
   const movePhoto = (id: number) => {
@@ -93,18 +88,19 @@ const AlbumDetail = () => {
       .get("/album/detailData", {
         params: { AlbumId: id },
       })
-      .then((res) => {
+      .then((res: any) => {
         console.log(res.data);
         setArr(res.data);
       });
   }, []);
   // 해당 앨범에 대한 유저의 권한 요청
   useEffect(() => {
-    // api
-    //   .get("/album//userrole", { params: { userId: user?.id, AlbumId: id } })
-    //   .then((res) => {
-    //     setUserrole(res.data);
-    //   });
+    api
+      .get("/album//userrole", { params: { userId: user?.id, AlbumId: id } })
+      .then((res: any) => {
+        setUserrole(res.data);
+        console.log(res.data);
+      });
   }, []);
   const getMaxLength = () => {
     const width = window.innerWidth;
@@ -144,7 +140,7 @@ const AlbumDetail = () => {
 
       {viewMode === "grid" ? (
         <div className="AlbumDetail-photoWrap">
-          {dummyData.map((x, i) => (
+          {groupdummy.image.map((x, i) => (
             <div
               key={i}
               onClick={() => movePhoto(x.id)}
