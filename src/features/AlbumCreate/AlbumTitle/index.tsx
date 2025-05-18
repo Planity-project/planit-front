@@ -62,7 +62,7 @@ const AlbumTitle = ({ setModal }: any) => {
         title: albumName,
         url: inviteUrl,
       })
-      .then((res) => {
+      .then((res: any) => {
         if (res.data.result === true) {
           Modal.warning({
             centered: true,

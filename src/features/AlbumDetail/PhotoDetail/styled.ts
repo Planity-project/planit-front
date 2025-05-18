@@ -179,6 +179,7 @@ export const PhotoStyled = styled.div<{ $modal?: true | false }>`
     }
     .photo-commentzone {
       width: 100%;
+      height: 50%;
       padding: 15px;
     }
     .photo-image {
