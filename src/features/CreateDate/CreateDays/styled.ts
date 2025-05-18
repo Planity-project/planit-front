@@ -47,21 +47,6 @@ export const CreateDaysStyled = styled.div`
     box-shadow: none;
   }
 
-  .create-all {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 150px;
-    margin: 0;
-  }
-
-  .create-topleft {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
   .create-button-item {
     background-color: black;
     border: 1px solid;
@@ -73,9 +58,24 @@ export const CreateDaysStyled = styled.div`
     position: relative;
   }
 
+  .create-delBtn,
+  .create-info button {
+    background: transparent;
+    border: none;
+    padding: 4px 8px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+
   .create-button-item.active {
     background-color: white;
     color: black;
+  }
+
+  .create-topleft {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
   }
 
   .check-icon {
@@ -89,8 +89,14 @@ export const CreateDaysStyled = styled.div`
     color: black;
   }
 
-  .create-time.over-time {
+  .create-time .over-time {
     color: red;
+  }
+
+  .time-input {
+    width: 60px;
+    padding: 4px;
+    border-radius: 4px;
   }
 
   .create-choiceBox {
@@ -123,6 +129,15 @@ export const CreateDaysStyled = styled.div`
     background-color: whitesmoke;
   }
 
+  .create-all {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 150px;
+    margin: 0;
+  }
+
   .create-left {
     width: 100%;
     display: flex;
@@ -131,39 +146,6 @@ export const CreateDaysStyled = styled.div`
 
   .create-right {
     width: 48%;
-  }
-
-  .create-placecard {
-    width: 100%;
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    background-color: white;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 8px;
-  }
-
-  .create-placecard:hover {
-    cursor: pointer;
-  }
-
-  .create-image {
-    width: 25%;
-    aspect-ratio: 1/1;
-    border-radius: 4px;
-    margin-bottom: 10px;
-  }
-
-  .create-title {
-    font-weight: 700;
-    font-size: 16px;
-    margin-bottom: 5px;
-  }
-
-  .create-info {
-    font-size: 13px;
-    color: #555;
   }
 
   .create-loading,
@@ -188,7 +170,7 @@ export const CreateDaysStyled = styled.div`
   /* 버튼 */
   .choice-btnDiv {
     margin-top: 20px;
-    width: 55%;
+    width: 52%;
     display: flex;
     justify-content: end;
   }
@@ -203,27 +185,4 @@ export const CreateDaysStyled = styled.div`
     border: none;
     padding: 20px 20px;
   }
-
-  .create-titleBox {
-    display: flex;
-    justify-content: space-between;
-  }
-`;
-
-const categoryColors: { [key: string]: string } = {
-  관광지: "rgba(237, 66, 66, 0.81)", // '12'
-  문화: "#34a853", // '14'
-  레포츠: "#a142f4", // '28'
-  쇼핑: "rgb(201, 34, 201)", // '38'
-  음식점: "rgb(84, 166, 46)", // '39'
-  숙소: "rgb(83, 183, 232, 0.6)", // '32'
-  행사: "#ff6d00", // '15'
-  기타: "#bdbdbd", // 매핑 안된 경우
-};
-
-export const CategoryBadge = styled.span<{ category: string }>`
-  color: ${({ category }) => categoryColors[category] || "#888"};
-  font-size: 12px;
-  padding: 4px 8px;
-  border-radius: 4px;
 `;

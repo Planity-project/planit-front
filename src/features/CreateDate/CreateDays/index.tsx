@@ -9,7 +9,8 @@ import { UnassignedPlaceCard, AssignedPlaceCard } from "./contentBox";
 import { Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { CheckOutlined } from "@ant-design/icons";
-import PlaceModal from "@/features/CreateDate/CreateDays/AddPlace/index";
+import PlaceModal from "@/components/AddPlace/index";
+import PlaceDetail from "@/components/PlaceDetail";
 
 interface CreateDaysProps {
   selectedPlace: any;
@@ -52,6 +53,7 @@ const CreateDays = ({
   const [editedMinutes, setEditedMinutes] = useState<number>(120);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
 
   //주변 장소 받아오는 함수
   const fetchNearbyPlaces = useCallback(async () => {
@@ -85,9 +87,8 @@ const CreateDays = ({
   }, [selectedPlace, currentPage]);
 
   const loadMore = () => {
-    if (!loading && hasMore) {
-      setCurrentPage((prev) => prev + 1);
-    }
+    console.log("모달 열기"); // 확인용
+    setIsDetailModalOpen(true);
   };
 
   const searchInput = async (str: string) => {
@@ -243,13 +244,16 @@ const CreateDays = ({
               ))}
             </div>
 
-            <div
-              className={`create-time ${
-                totalTime > time.hrs * 60 + time.mins ? "over-time" : ""
-              }`}
-            >
+            <div className="create-time">
+              <span
+                className={
+                  totalTime > time.hrs * 60 + time.mins ? "over-time" : ""
+                }
+              >
+                {totalHours}시간 {String(totalMinutes).padStart(2, "0")}분
+              </span>
+              {" / 총 "}
               <span>
-                {totalHours}시간 {String(totalMinutes).padStart(2, "0")}분 / 총{" "}
                 {time.hrs}시간 {String(time.mins).padStart(2, "0")}분
               </span>
             </div>
@@ -292,11 +296,10 @@ const CreateDays = ({
                 </>
               )}
 
-              {!loading && hasMore && (
-                <button className="create-loadmore" onClick={loadMore}>
-                  더보기
-                </button>
-              )}
+              <button className="create-loadmore" onClick={loadMore}>
+                더보기
+              </button>
+
               {!hasMore && (
                 <p className="create-end">더 이상 장소가 없습니다.</p>
               )}
@@ -321,6 +324,11 @@ const CreateDays = ({
           </div>
         </div>
         <ShowWhich selectedLocation={place} isPlace={true} />
+
+        <PlaceDetail
+          visible={isDetailModalOpen}
+          onClose={() => setIsDetailModalOpen(false)}
+        />
       </div>
 
       <div className="choice-btnDiv">
