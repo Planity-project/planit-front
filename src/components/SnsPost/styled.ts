@@ -39,8 +39,7 @@ export const SnsPostStyled = styled.div<{ $variant?: "default" | "album" }>`
     display: grid;
     gap: 2px; /* 기존 1px에서 2px로 늘리면 더욱 구분감 생김 */
     background-color: white; /* 틈 사이 회색 배경 느낌 추가 */
-    border-bottom: ${(props) =>
-      props.$variant === "album" ? "1px solid rgba(0, 0, 0, 0.1);" : ""};
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     height: ${(props) => (props.$variant === "album" ? "80%" : "70%")};
     overflow: hidden;
     /* 왼쪽 위 모서리만 둥글게 */

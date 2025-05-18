@@ -30,7 +30,9 @@ const SnsPost = ({ data, variant }: snspostprops) => {
         {data?.map((x: any, i: number) => {
           const imgList =
             x?.img && x.img.length > 0
-              ? x.img
+              ? typeof x.img[0] === "string"
+                ? x.img[0].split(",") // 문자열을 배열로 변환
+                : x.img
               : [x.titleImg ?? "/defaultImage.png"];
 
           return (
