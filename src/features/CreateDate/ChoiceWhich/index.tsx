@@ -14,6 +14,7 @@ interface ChoiceWhichProps {
   onNext: () => void;
   setChoiceWhich: (place: []) => void;
   setSchedule: React.Dispatch<React.SetStateAction<ScheduleType>>;
+  placeOnClick: (place: string) => void;
 }
 
 const ChoiceWhich = ({
@@ -21,6 +22,7 @@ const ChoiceWhich = ({
   onNext,
   setChoiceWhich,
   setSchedule,
+  placeOnClick,
 }: ChoiceWhichProps) => {
   const [location, setLocation] = useState<any[]>([]);
   const [inputValue, setInputValue] = useState<string>("");
@@ -32,12 +34,6 @@ const ChoiceWhich = ({
     setInputValue(keyword);
     const filtered = array.filter((item: any) => item.name.includes(keyword));
     setLocation(filtered);
-  };
-
-  const placeOnClick = (place: string) => {
-    api.get("map/place", {
-      params: { name: place },
-    });
   };
 
   useEffect(() => {

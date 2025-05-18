@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import ShareSubmitModal from "./testComponent.tsx";
+import SubmitModal from "./testComponent.tsx";
 
 declare global {
   interface Window {
@@ -97,7 +97,7 @@ const GoogleMapComponent = () => {
 
   return (
     <div>
-      <ShareSubmitModal />
+      <SubmitModal />
       <div ref={mapRef} style={{ height: "100vh", width: "100%" }} />
     </div>
   );

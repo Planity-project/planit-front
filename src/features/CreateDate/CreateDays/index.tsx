@@ -19,6 +19,8 @@ interface CreateDaysProps {
   time: any;
   schedule: ScheduleType;
   setSchedule: React.Dispatch<React.SetStateAction<ScheduleType>>;
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
   children?: React.ReactNode;
 }
 
@@ -40,10 +42,11 @@ const CreateDays = ({
   time,
   schedule,
   setSchedule,
+  loading,
+  setLoading,
   children,
 }: CreateDaysProps) => {
   const [places, setPlaces] = useState<DataType[]>([]);
-  const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [place, setPlace] = useState<any | null>(selectedPlace);
@@ -60,9 +63,15 @@ const CreateDays = ({
     if (!selectedPlace) return;
 
     setLoading(true);
+
+    // selectedCategories 한글 → 구글 카테고리명 변환
     try {
-      const res = await api.get("/map/nearby", {
-        params: { address: selectedPlace.name, page: currentPage, type: 1 },
+      console.log(selectedCategories, "선택된 카테고리");
+      const res = await api.post("/map/nearby", {
+        address: selectedPlace.name,
+        page: currentPage,
+        type: 1,
+        categories: selectedCategories, // 배열 그대로 넘김
       });
 
       const newPlaces = res.data.locations;
@@ -74,7 +83,7 @@ const CreateDays = ({
     } finally {
       setLoading(false);
     }
-  }, [selectedPlace, currentPage]);
+  }, [selectedPlace, currentPage, selectedCategories]);
 
   useEffect(() => {
     setPlaces([]);
@@ -86,6 +95,11 @@ const CreateDays = ({
     if (selectedPlace) fetchNearbyPlaces();
   }, [selectedPlace, currentPage]);
 
+  useEffect(() => {
+    console.log(selectedCategories, "선택된 카테고리");
+    setPlaces([]);
+    if (selectedPlace) fetchNearbyPlaces();
+  }, [selectedCategories]);
   const loadMore = () => {
     console.log("모달 열기"); // 확인용
     setIsDetailModalOpen(true);

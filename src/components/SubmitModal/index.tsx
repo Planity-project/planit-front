@@ -10,7 +10,7 @@ import api from "@/util/api";
 
 interface Props {}
 
-const SubmitModal: React.FC<Props> = () => {
+const ShareSubmitModal: React.FC<Props> = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [hashtags, setHashtags] = useState<string[]>([]);
@@ -149,4 +149,4 @@ const SubmitModal: React.FC<Props> = () => {
   );
 };
 
-export default SubmitModal;
+export default ShareSubmitModal;
