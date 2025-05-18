@@ -22,6 +22,8 @@ interface CreateDaysProps {
   range: any;
   schedule: ScheduleType;
   setSchedule: React.Dispatch<React.SetStateAction<ScheduleType>>;
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
 }
 
 interface DataType {
@@ -41,9 +43,10 @@ const CreateStay = ({
   range,
   schedule,
   setSchedule,
+  loading,
+  setLoading,
 }: CreateDaysProps) => {
   const [places, setPlaces] = useState<DataType[]>([]);
-  const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [place, setPlace] = useState<any | null>(selectedPlace);

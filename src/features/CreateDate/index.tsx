@@ -8,6 +8,7 @@ import CreateDays from "./CreateDays";
 import CreateStay from "./CreateStay";
 import ChoiceTime from "./ChoiceTime";
 import GenerateDate from "./GenerateDate";
+import api from "@/util/api";
 export interface ScheduleType {
   dataTime: any[];
   dataPlace: any[];
@@ -26,13 +27,25 @@ const CreateDatePage: React.FC = () => {
   const [selectedPlace, setSelectedPlace] = useState<string | null>(null); // ⬅ 추가
   const [choicewhich, setChiocewhich] = useState<any>("");
   const [time, setTime] = useState<TimeType>();
-
+  const [loading, setLoading] = useState<boolean>(false);
   const [schedule, setSchedule] = useState<ScheduleType>({
     dataTime: [],
     dataPlace: [],
     dataStay: [],
   });
-
+  const placeOnClick = async (place: string) => {
+    try {
+      setLoading(true); // 요청 시작 시 로딩 true
+      const res = await api.get("map/place", {
+        params: { name: place },
+      });
+      console.log(res.data); // 받아온 데이터 활용
+    } catch (err) {
+      console.error("API 요청 실패:", err);
+    } finally {
+      setLoading(false); // 요청 끝났을 때 로딩 false
+    }
+  };
   const isRangeValid =
     range?.from instanceof Date &&
     range?.to instanceof Date &&
@@ -93,6 +106,7 @@ const CreateDatePage: React.FC = () => {
           onNext={handleNextStep}
           setChoiceWhich={setChiocewhich}
           setSchedule={setSchedule}
+          placeOnClick={placeOnClick}
         />
       )}
       {current === 2 && (
@@ -114,6 +128,8 @@ const CreateDatePage: React.FC = () => {
           time={time}
           schedule={schedule}
           setSchedule={setSchedule}
+          loading={loading}
+          setLoading={setLoading}
         />
       )}
       {current === 4 && (
@@ -124,6 +140,8 @@ const CreateDatePage: React.FC = () => {
           onNext={handleNextStep}
           schedule={schedule}
           setSchedule={setSchedule}
+          loading={loading}
+          setLoading={setLoading}
         />
       )}
       {current === 5 && (
