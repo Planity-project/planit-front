@@ -85,7 +85,7 @@ const Myinfo = ({ user }: infoprops) => {
     try {
       await api
         .post("user/update", { nickname: name, userId: user.id })
-        .then((res) => {
+        .then((res: any) => {
           if (res.data.result === false) {
             Modal.warning({
               centered: true,

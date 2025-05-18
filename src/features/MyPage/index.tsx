@@ -1,7 +1,9 @@
 import { MypageStyled } from "./styled";
 import { useUser } from "@/context/UserContext";
 import Myinfo from "./Myinfo";
+
 import { useState } from "react";
+import Myinfodays from "./MyDays";
 const MyPage = () => {
   const user = useUser();
   const [click, setClick] = useState(0);
@@ -29,7 +31,13 @@ const MyPage = () => {
           </div>
         </div>
         <div className="mypage-component">
-          {click === 0 ? <Myinfo user={user} /> : <></>}
+          {click === 0 ? (
+            <Myinfo user={user} />
+          ) : click === 1 ? (
+            <Myinfodays />
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </MypageStyled>
