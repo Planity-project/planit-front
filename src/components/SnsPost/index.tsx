@@ -28,12 +28,7 @@ const SnsPost = ({ data, variant }: snspostprops) => {
     <SnsPostStyled $variant={variant}>
       <div className="sns-wrap">
         {data?.map((x: any, i: number) => {
-          const imgList =
-            x?.img && x.img.length > 0
-              ? typeof x.img[0] === "string"
-                ? x.img[0].split(",") // 문자열을 배열로 변환
-                : x.img
-              : [x.titleImg ?? "/defaultImage.png"];
+          const imgList = x.img;
 
           return (
             <div
@@ -59,10 +54,9 @@ const SnsPost = ({ data, variant }: snspostprops) => {
                     key={idx}
                     className={`sns-imgWrapper ${idx === 0 ? "first" : ""}`}
                   >
-                    <Image
-                      src={src ?? "/defaultImage.png"}
+                    <img
+                      src={src ? src : "/defaultImage.png"}
                       alt={`img-${idx}`}
-                      fill
                       sizes="100%"
                     />
                   </div>

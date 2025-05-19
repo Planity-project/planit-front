@@ -24,7 +24,7 @@ const GoogleMapComponent = () => {
     if (!window.google) {
       const script = document.createElement("script");
       script.src =
-        "https://maps.googleapis.com/maps/api/js?key=AIzaSyBwPCALK2zkUNJ9BhIubOtR6Tr3BDaN7O8&callback=initMap";
+        "https://maps.googleapis.com/maps/api/js?key=AIzaSyAJysCXigbpsNUgiyK58bYcPnqNaBzzg1M&callback=initMap";
       script.defer = true;
       document.head.appendChild(script);
     } else {

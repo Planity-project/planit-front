@@ -7,6 +7,7 @@ import type {
 } from "antd/es/upload/interface";
 import { PlusOutlined } from "@ant-design/icons";
 import api from "@/util/api";
+import { useUser } from "@/context/UserContext";
 
 interface Props {}
 
@@ -17,6 +18,8 @@ const SubmitModal: React.FC<Props> = () => {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const showModal = () => setIsModalOpen(true);
+  const user = useUser();
+
   const handleOk = async () => {
     if (!title.trim() || !content.trim()) {
       message.error("제목과 소개글을 입력해주세요.");
@@ -29,6 +32,7 @@ const SubmitModal: React.FC<Props> = () => {
       formData.append("content", content);
       formData.append("hashtags", JSON.stringify(hashtags)); // 배열을 문자열로 전송
       formData.append("tripId", String(1));
+      formData.append("userId", String(user?.id));
       // fileList 중 서버에 업로드할 파일만 append (originFileObj가 실제 파일 객체)
       fileList.forEach((file) => {
         if (file.originFileObj) {
