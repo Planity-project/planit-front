@@ -1,4 +1,4 @@
-import { Button, Input, Modal } from "antd";
+import { Button, Input, Modal, Table } from "antd";
 import { MyinfoStyled } from "./styled";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
@@ -168,7 +168,7 @@ const Myinfo = ({ user }: infoprops) => {
             readOnly
           />
         </div>
-        <div></div>
+
         <div
           onClick={userexit}
           style={{ cursor: "pointer" }}

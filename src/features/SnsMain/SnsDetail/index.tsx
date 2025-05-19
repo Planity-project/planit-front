@@ -14,7 +14,8 @@ import {
 import MyDaysComponent from "@/components/MyDays";
 import { Input, Modal } from "antd";
 import { useUser } from "@/context/UserContext";
-import GoogleMapComponent from "@/components/ShowWhichGoogle";
+import GoogleMapComponent from "@/components/showWhichGoogle";
+import { useMemo } from "react";
 interface ImageSliderProps {
   images: string[];
 }
@@ -38,6 +39,7 @@ interface CommentType {
 const SnsDetail = () => {
   const [daydetail, setDaydetail] = useState<any>("");
   const [day, setDay] = useState<number>(1);
+  const [data, setData] = useState<any>("");
   const router = useRouter();
   const { id } = router.query;
   const user = useUser();
@@ -46,73 +48,16 @@ const SnsDetail = () => {
   useEffect(() => {
     if (!id || !user?.id) return; // 값이 없으면 요청 안함
 
-    console.log(id, user?.id, "요청 데이터 detailTrip");
-
     api
       .get("/posts/detailTrip", {
         params: { postId: id, userId: user.id },
       })
-      .then((res) => {
-        console.log(res.data);
+      .then((res: any) => {
+        console.log(res.data, "dsadasds");
+        setData(res.data.dayData);
       });
   }, [id, user?.id]);
 
-  const dummy1: {
-    id: number;
-    titleImg: any;
-    user: string;
-    userImg: string;
-    like: boolean;
-    comment: CommentType[];
-    likeCnt: number;
-  } = {
-    id: 1,
-    titleImg: "/defaultImage.png",
-    // 글 올린 사람
-    user: "진순흠",
-    userImg: "/defaultImage.png",
-    // 로그인 한 사람이 앨범에 좋아요 상태
-    like: true,
-    comment: [
-      {
-        id: 1,
-        userId: 1,
-        profileImg: "/defaultImage.png",
-        nickname: "진순흠",
-        chat: "ㅋㅋㅋ",
-        likeCnt: 2,
-        // 댓글 좋아요 상태
-        like: true,
-        miniComment: [
-          {
-            userId: 3,
-            profileImg: "/defaultImage.png",
-            nickname: "진순흠",
-            chat: "ㅋㅋㅋㅇㅈ",
-          },
-        ],
-      },
-      {
-        id: 3,
-        userId: 2,
-        profileImg: "/defaultImage.png",
-        nickname: "진순흠2",
-        chat: "ㅋㅋㅋ",
-        likeCnt: 2,
-        like: true,
-      },
-      {
-        id: 2,
-        userId: 3,
-        profileImg: "/defaultImage.png",
-        nickname: "진순흠3",
-        chat: "ㅋㅋㅋ",
-        likeCnt: 2,
-        like: false,
-      },
-    ],
-    likeCnt: 12,
-  };
   const dummy = {
     id: 2,
     createdAt: "2025-05-14T07:44:44.413Z",
@@ -227,18 +172,48 @@ const SnsDetail = () => {
     return schedule;
   }
 
-  const schedule = formatSchedule(dummy);
+  const schedule = useMemo(() => {
+    if (!data || !data.startDate || !data.endDate) return [];
 
-  const selectedDaySchedule =
-    schedule.find((s) => {
-      const dayNumber = Number(s.date.split("-")[2]); // 날짜에서 '일'만 추출 (대략)
-      return schedule.indexOf(s) === day - 1;
-    })?.plan || [];
+    const start = new Date(data.startDate);
+    const end = new Date(data.endDate);
+    const dayCount =
+      (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24) + 1;
 
+    const result = [];
+    for (let i = 0; i < dayCount; i++) {
+      const currentDate = new Date(start);
+      currentDate.setDate(start.getDate() + i);
+
+      const dateStr = currentDate.toISOString().split("T")[0];
+      const dayKey = `day${i + 1}`;
+
+      if (data[dayKey]) {
+        result.push({
+          date: dateStr,
+          plan: data[dayKey],
+        });
+      }
+    }
+
+    return result;
+  }, [data]);
+  useEffect(() => {
+    console.log("📌 daydetail changed:", data);
+  }, [data]);
+
+  useEffect(() => {
+    console.log("📌 schedule calculated:", schedule);
+  }, [schedule]);
+  const selectedDaySchedule = useMemo(() => {
+    return schedule[day - 1]?.plan || [];
+  }, [schedule, day]);
+  console.log(schedule);
+  console.log(daydetail.image, "image");
   return (
     <SnsDetailStyled>
       <div className="snspost-mydaysbar">
-        <div className="snspost-mydaytext">{dummy.postTitle}</div>
+        <div className="snspost-mydaytext">{daydetail.postTitle}</div>
         <MyDaysComponent
           schedule={schedule}
           day={day}
@@ -262,13 +237,22 @@ const SnsDetail = () => {
             <div>Day{day}</div>
             <div className="snspost-daydetailwrap">
               <div>
-                <Image
-                  className="snspost-detailimg"
-                  src={daydetail.image}
-                  alt=""
-                  width={65}
-                  height={80}
-                />
+                {daydetail.image ? (
+                  <Image
+                    className="snspost-detailimg"
+                    src={daydetail.image}
+                    alt=""
+                    width={65}
+                    height={80}
+                    unoptimized
+                  />
+                ) : (
+                  <div
+                    style={{ width: 65, height: 80, backgroundColor: "#ccc" }}
+                  >
+                    이미지 없음
+                  </div>
+                )}
               </div>
               <div>
                 <div className="daydetail-name">{daydetail.name}</div>

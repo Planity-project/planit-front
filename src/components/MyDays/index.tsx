@@ -36,10 +36,16 @@ const MyDaysComponent = ({
   const planRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [activePlanIndex, setActivePlanIndex] = useState<number | null>(null);
   useEffect(() => {
-    setDaydetail(schedule[0].plan[0]);
-    setDay(1);
-    setActivePlanIndex(0);
-  }, []);
+    if (
+      schedule.length > 0 &&
+      schedule[0].plan &&
+      schedule[0].plan.length > 0
+    ) {
+      setDaydetail(schedule[0].plan[0]);
+      setDay(1);
+      setActivePlanIndex(0);
+    }
+  }, [schedule]);
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container) return;

@@ -134,7 +134,7 @@ const GoogleMapComponent = ({ title, schedule, lng, lat }: googlemaprops) => {
     if (!existingScript) {
       const script = document.createElement("script");
       script.src =
-        "https://maps.googleapis.com/maps/api/js?key=AIzaSyApQqf32F5wFDdLFvnTGI6OUiyrT_5L6pY&callback=initMap";
+        "https://maps.googleapis.com/maps/api/js?key=AIzaSyAJysCXigbpsNUgiyK58bYcPnqNaBzzg1M&callback=initMap";
       script.async = true;
       script.defer = true;
 

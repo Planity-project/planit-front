@@ -23,12 +23,13 @@ const SnsPost = ({ data, variant }: snspostprops) => {
       router.push(`/snsmainpage/snsdetail/${id}`);
     }
   };
+  console.log(data, "img확인용");
 
   return (
     <SnsPostStyled $variant={variant}>
       <div className="sns-wrap">
         {data?.map((x: any, i: number) => {
-          const imgList = x.img;
+          const imgList = Array.isArray(x.img) ? x.img : [];
 
           return (
             <div
@@ -42,25 +43,25 @@ const SnsPost = ({ data, variant }: snspostprops) => {
                     ? undefined
                     : (e) => {
                         e.stopPropagation(); // 상위 div 클릭 방지
-                        setList(imgList); // 이미지 리스트 설정
+                        setList(
+                          imgList.length ? imgList : ["/defaultImage.png"]
+                        ); // 빈 배열이면 기본이미지로 대체
                         setImgModal(true); // 모달 열기
                       }
                 }
                 className="sns-imgBox"
-                data-img-count={imgList.length}
+                data-img-count={imgList.length || 1} // 기본이미지 1장이라 1로 처리
               >
-                {imgList.map((src: string, idx: number) => (
-                  <div
-                    key={idx}
-                    className={`sns-imgWrapper ${idx === 0 ? "first" : ""}`}
-                  >
-                    <img
-                      src={src ? src : "/defaultImage.png"}
-                      alt={`img-${idx}`}
-                      sizes="100%"
-                    />
-                  </div>
-                ))}
+                {(imgList.length ? imgList : ["/defaultImage.png"]).map(
+                  (src: string, idx: number) => (
+                    <div
+                      key={idx}
+                      className={`sns-imgWrapper ${idx === 0 ? "first" : ""}`}
+                    >
+                      <img src={src} alt={`img-${idx}`} sizes="100%" />
+                    </div>
+                  )
+                )}
               </div>
 
               <div className="sns-textBox">

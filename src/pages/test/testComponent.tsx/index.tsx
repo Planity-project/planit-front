@@ -9,9 +9,12 @@ import { PlusOutlined } from "@ant-design/icons";
 import api from "@/util/api";
 import { useUser } from "@/context/UserContext";
 
-interface Props {}
+interface SubmitModalProps {
+  postId: number;
+  userId: number;
+}
 
-const SubmitModal: React.FC<Props> = () => {
+const SubmitModal = ({ postId, userId }: SubmitModalProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [hashtags, setHashtags] = useState<string[]>([]);
@@ -31,7 +34,7 @@ const SubmitModal: React.FC<Props> = () => {
       formData.append("title", title);
       formData.append("content", content);
       formData.append("hashtags", JSON.stringify(hashtags)); // 배열을 문자열로 전송
-      formData.append("tripId", String(1));
+      formData.append("tripId", String(10));
       formData.append("userId", String(user?.id));
       // fileList 중 서버에 업로드할 파일만 append (originFileObj가 실제 파일 객체)
       fileList.forEach((file) => {
