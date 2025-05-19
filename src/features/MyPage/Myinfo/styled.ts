@@ -70,7 +70,8 @@ export const MyinfoStyled = styled.div`
   }
   .myinfo-useremail,
   .myinfo-logtype,
-  .myinfo-nickname {
+  .myinfo-nickname,
+  .myinfo-usercredit {
     text-align: start;
     gap: 5px;
     display: flex;
@@ -82,6 +83,13 @@ export const MyinfoStyled = styled.div`
   .myinfo-detailDiv {
     width: 11%;
   }
+  .myinfo-creditlist {
+    width: 18%;
+    text-align: center;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
   .myinfo-nickname Input {
     width: 80%;
     text-align: center;

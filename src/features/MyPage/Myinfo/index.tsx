@@ -11,6 +11,8 @@ interface infoprops {
 const Myinfo = ({ user }: infoprops) => {
   const [name, setName] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [paymentData, setPaymentData] = useState<any[]>([]);
   useEffect(() => {
     if (user?.nickname) {
       setName(user.nickname);
@@ -27,6 +29,10 @@ const Myinfo = ({ user }: infoprops) => {
     if (!file) return;
 
     handleProfileUpload(file);
+  };
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
   };
 
   // 서버로 프로필 이미지 업로드
@@ -126,6 +132,7 @@ const Myinfo = ({ user }: infoprops) => {
 
   //회원탈퇴
   const userexit = async () => {
+    console.log(user.id);
     try {
       const res = await api.delete(`users/me/destroy/${user.id}`);
       if (res.data.result) {
@@ -205,7 +212,49 @@ const Myinfo = ({ user }: infoprops) => {
             readOnly
           />
         </div>
-
+        <div className="myinfo-usercredit">
+          <div>내 결제</div>
+          <div className="myinfo-creditlist" onClick={handleOpenModal}>
+            내역 보기
+          </div>
+        </div>
+        <Modal
+          title="결제 내역"
+          centered
+          open={isModalOpen}
+          onCancel={() => setIsModalOpen(false)}
+          footer={null}
+          width={600}
+        >
+          <Table
+            dataSource={paymentData}
+            rowKey={(record) => record.id}
+            pagination={{ pageSize: 5 }}
+            columns={[
+              {
+                title: "앨범 이름",
+                dataIndex: "name",
+                key: "name",
+              },
+              {
+                title: "금액",
+                dataIndex: "amount",
+                key: "amount",
+                render: (amount: number) => `${amount.toLocaleString()}원`,
+              },
+              {
+                title: "결제 수단",
+                dataIndex: "credit",
+                key: "credit",
+              },
+              {
+                title: "결제일",
+                dataIndex: "date",
+                key: "date",
+              },
+            ]}
+          />
+        </Modal>
         <div
           onClick={userexit}
           style={{ cursor: "pointer" }}
