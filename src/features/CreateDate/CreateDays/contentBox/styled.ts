@@ -96,6 +96,7 @@ export const PlaceCardWrapper = styled.div`
     display: flex;
     width: 100%;
     justify-content: space-between;
+    align-items: center;
   }
 
   .create-delBtn {
@@ -104,6 +105,7 @@ export const PlaceCardWrapper = styled.div`
     color: #ff4d4f;
     font-size: 16px;
     cursor: pointer;
+    padding-bottom: 10px;
   }
 
   .create-info {
@@ -183,11 +185,11 @@ export const PlaceCardWrapper = styled.div`
 `;
 
 const categoryColors: { [key: string]: string } = {
-  관광지: "#3ba1d3", // '12'
-  문화: "#34a853", // '14'
+  명소: "#3ba1d3", // '12'
+  식당: "#34a853", // '14'
   레포츠: "#a142f4", // '28'
   쇼핑: "#fbbc04", // '38'
-  음식점: "#f28b82", // '39'
+  카페: "#f28b82", // '39'
   숙소: "rgb(83, 183, 232, 0.6)", // '32'
   행사: "#ff6d00", // '15'
   기타: "#bdbdbd", // 매핑 안된 경우

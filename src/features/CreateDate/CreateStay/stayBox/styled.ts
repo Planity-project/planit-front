@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Placecard = styled.div`
+export const PlaceCardWrapper = styled.div`
   .create-placecard {
     width: 100%;
     display: flex;
@@ -47,6 +47,13 @@ export const Placecard = styled.div`
     cursor: pointer;
   }
 
+  .create-placetitle {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
   .more-button {
     background-color: white;
     border: none;
@@ -56,33 +63,11 @@ export const Placecard = styled.div`
     cursor: pointer;
   }
 
-  .create-placetitle {
-    width: 70%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
-  .create-titleBox {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-  }
-
   .create-title {
     font-weight: 700;
     font-size: 16px;
     margin-bottom: 4px;
     margin-left: 8px;
-  }
-
-  .create-info {
-    font-size: 14px;
-    color: #555;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    flex-wrap: wrap;
   }
 
   .top-info {
@@ -94,8 +79,11 @@ export const Placecard = styled.div`
   }
 
   .create-address {
+    font-size: 13px;
+    color: #888;
+    margin-left: 8px;
+    margin-top: auto;
     display: -webkit-box;
-    margin-left: 10px;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
@@ -104,12 +92,29 @@ export const Placecard = styled.div`
     white-space: normal;
   }
 
+  .create-titleBox {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+
   .create-delBtn {
     background: none;
     border: none;
     color: #ff4d4f;
     font-size: 16px;
     cursor: pointer;
+    padding-bottom: 10px;
+  }
+
+  .create-info {
+    font-size: 14px;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
   }
 
   .create-time {
@@ -154,24 +159,73 @@ export const Placecard = styled.div`
     }
   }
 
+  .more-button {
+    border: none;
+    padding: 2px 11px;
+    font-weight: bold;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+
   .create-info {
     font-size: 13px;
     color: #555;
   }
+
+  .create-address {
+    display: -webkit-box;
+    margin-left: 10px;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+    white-space: normal;
+  }
+
+  .create-placeholder {
+    width: 100%;
+    padding: 16px;
+    /* background-color: #f0f2f5; */
+    border: 2px dashed #d9d9d9;
+    border-radius: 8px;
+    /* text-align: center; */
+    color: #999;
+    font-size: 14px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s;
+
+    /* &:hover {
+      background-color: #e6f7ff;
+      cursor: pointer;
+    } */
+  }
+
+  .placeholder-date {
+    font-weight: bold;
+    font-size: 15px;
+    color: #555;
+    margin-bottom: 6px;
+  }
+
+  .placeholder-message {
+    font-size: 14px;
+    color: #888;
+  }
 `;
 
 const categoryColors: { [key: string]: string } = {
-  관광지: "#3ba1d3", // '12'
-  문화: "#34a853", // '14'
+  명소: "#3ba1d3", // '12'
+  식당: "#34a853", // '14'
   레포츠: "#a142f4", // '28'
   쇼핑: "#fbbc04", // '38'
-  음식점: "#f28b82", // '39'
+  카페: "#f28b82", // '39'
   숙소: "rgb(83, 183, 232, 0.6)", // '32'
   행사: "#ff6d00", // '15'
   기타: "#bdbdbd", // 매핑 안된 경우
 };
 
-export const CategoryBadge = styled.span<{ category: string }>`
+export const CategoryBadge = styled.span<{ category: any }>`
   color: ${({ category }) => categoryColors[category] || "#888"};
   font-size: 13px;
   font-weight: bold;
