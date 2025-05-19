@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { GenerateStyled } from "./styled";
 type ScheduleItem = {
   title: string;
@@ -11,8 +10,6 @@ type Place = {
   name: string;
   category: string;
   address: string;
-  lat: number;
-  lng: number;
   todayOrder: number;
   image: string;
 };
@@ -57,8 +54,6 @@ const PreviewSchedule = ({ previewData }: Props) => {
                   <p className="title"> {item.title}</p>
                   <p className="title">주소: {day.places[idx].address}</p>
                   <p className="title">타입: {day.places[idx].category}</p>
-                  <p className="title">위도: {day.places[idx].lat}</p>
-                  <p className="title">경도: {day.places[idx].lng}</p>
                   <p>
                     <img
                       className="image"
