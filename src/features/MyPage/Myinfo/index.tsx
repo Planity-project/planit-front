@@ -126,7 +126,24 @@ const Myinfo = ({ user }: infoprops) => {
 
   //회원탈퇴
   const userexit = async () => {
-    await api.delete("users/destroy/:id");
+    try {
+      const res = await api.delete(`users/me/destroy/${user.id}`);
+      if (res.data.result) {
+        Modal.success({
+          centered: true,
+          title: "회원 탈퇴가 완료되었습니다.",
+          onOk: () => {
+            window.location.href = "/"; // 탈퇴 후 홈으로 리디렉션
+          },
+        });
+      }
+    } catch (error) {
+      console.error("회원 탈퇴 실패:", error);
+      Modal.error({
+        centered: true,
+        title: "회원 탈퇴에 실패했습니다.",
+      });
+    }
   };
 
   return (
