@@ -4,6 +4,7 @@ export const MyinfoStyled = styled.div`
   width: 100%;
 
   .myinfo-wrap {
+    position: relative;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -129,6 +130,13 @@ export const MyinfoStyled = styled.div`
   .ant-btn:hover {
     background-color: rgb(83, 183, 232, 0.9);
   }
+
+  .AddBanner {
+    width: 20%;
+    height: 500px;
+    position: absolute;
+    right: 20px;
+  }
   @media (max-width: 1310px) {
     .myinfo-wrap {
       width: 90%;
@@ -167,6 +175,9 @@ export const MyinfoStyled = styled.div`
       text-align: center;
       border-radius: 8px;
       font-weight: 400;
+    }
+    .AddBanner {
+      display: none;
     }
   }
   @media (max-width: 800px) {

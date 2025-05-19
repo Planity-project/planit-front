@@ -20,12 +20,9 @@ const Myinfodays = ({ user }: infoprops) => {
   return (
     <MyinfoDaysStyled>
       <div className="chat-section">
-        <div className="chat-titleDiv">
-          <div className="chat-title">📅 다가올 내 일정</div>
-          <div className="chat-title">📌 공유한 내 일정</div>
-        </div>
         <div className="chat-bubbleDiv">
           <div className="chat-width100">
+            <div className="chat-title">📅 다가올 내 일정</div>
             {upcoming.map((item, idx) => (
               <div key={idx} className="chat-bubble left">
                 <div>{item.title}</div>
@@ -34,6 +31,7 @@ const Myinfodays = ({ user }: infoprops) => {
             ))}
           </div>
           <div className="chat-width100">
+            <div className="chat-title">📌 공유한 내 일정</div>
             {past.map((item, idx) => (
               <div key={idx} className="chat-bubble right">
                 <div>{item.title}</div>

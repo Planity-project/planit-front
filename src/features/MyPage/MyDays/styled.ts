@@ -19,10 +19,10 @@ export const MyinfoDaysStyled = styled.div`
     justify-content: space-around;
   }
   .chat-title {
-    width: 40%;
+    width: 100%;
     font-weight: bold;
     font-size: 1rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.8rem;
   }
   .chat-bubbleDiv {
     width: 100%;
@@ -36,7 +36,6 @@ export const MyinfoDaysStyled = styled.div`
     width: 100%;
     padding: 10px;
     border-radius: 1rem;
-    border: 1px solid rgb(0, 0, 0, 0.1);
     position: relative;
     font-size: 0.95rem;
 
@@ -56,5 +55,22 @@ export const MyinfoDaysStyled = styled.div`
   .right {
     border-top-right-radius: 0;
     background-color: rgba(170, 170, 170, 0.2);
+  }
+  @media (max-width: 1010px) {
+    .chat-bubbleDiv {
+      display: flex;
+      flex-direction: column;
+      gap: 50px;
+    }
+  }
+  @media (max-width: 700px) {
+    .chat-width100 {
+      width: 70%;
+    }
+  }
+  @media (max-width: 450px) {
+    .chat-width100 {
+      width: 90%;
+    }
   }
 `;

@@ -1,7 +1,7 @@
 import { MypageStyled } from "./styled";
 import { useUser } from "@/context/UserContext";
 import Myinfo from "./Myinfo";
-
+import MyFav from "./MyFav";
 import { useState } from "react";
 import Myinfodays from "./MyDays";
 const MyPage = () => {
@@ -34,9 +34,9 @@ const MyPage = () => {
           {click === 0 ? (
             <Myinfo user={user} />
           ) : click === 1 ? (
-            <Myinfodays />
+            <Myinfodays user={user} />
           ) : (
-            <></>
+            <MyFav user={user} />
           )}
         </div>
       </div>

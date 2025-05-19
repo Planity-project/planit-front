@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import api from "@/util/api";
 import { CameraOutlined } from "@ant-design/icons";
-
+import AddBanner from "@/components/AddBanner";
 interface infoprops {
   user: any;
 }
@@ -174,6 +174,9 @@ const Myinfo = ({ user }: infoprops) => {
         </div>
         <div></div>
         <div className="myinfo-exit">회원 탈퇴</div>
+        <div className="AddBanner">
+          <AddBanner />
+        </div>
       </div>
     </MyinfoStyled>
   );
