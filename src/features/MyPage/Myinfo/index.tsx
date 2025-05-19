@@ -10,12 +10,6 @@ interface infoprops {
 }
 const Myinfo = ({ user }: infoprops) => {
   const [name, setName] = useState<string>("");
-  const [preview, setPreview] = useState<string>(
-    user?.profile_img
-      ? `http://localhost:5001/${user?.profile_img}`
-      : "/user-thumbnail.png"
-  );
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   useEffect(() => {
     if (user?.nickname) {
@@ -26,41 +20,37 @@ const Myinfo = ({ user }: infoprops) => {
   const handleImageClick = () => {
     fileInputRef.current?.click();
   };
-  // 파일 업로드 미리보기 함수
+
+  // 파일 선택 시 바로 업로드
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    setSelectedFile(file);
-    setPreview(URL.createObjectURL(file));
+
+    handleProfileUpload(file);
   };
 
-  //프로필 이미지 변경 요청
-  const handleProfileUpload = async () => {
-    if (!selectedFile) {
-      Modal.warning({
-        centered: true,
-        title: "변경할 이미지를 먼저 선택하세요.",
-      });
-      return;
-    }
-
+  // 서버로 프로필 이미지 업로드
+  const handleProfileUpload = async (file: File) => {
     const formData = new FormData();
+    formData.append("profileImage", file);
+    formData.append("userId", user.id); // user.id 확인 필요
 
-    formData.append("profileImage", selectedFile);
-    formData.append("userId", user.id);
     try {
       const res = await api.put(`/users/me/profile-image`, formData);
       if (res.data.result) {
-        Modal.warning({
+        Modal.success({
           centered: true,
           title: "프로필 이미지가 성공적으로 변경되었습니다.",
+          onOk: () => {
+            window.location.reload(); // 새로고침으로 반영
+          },
         });
+      } else {
+        throw new Error("업로드 실패");
       }
-
-      // 서버에서 변경된 URL을 받아서 다시 세팅할 수도 있음
     } catch (error) {
       console.error("프로필 업로드 실패:", error);
-      Modal.warning({
+      Modal.error({
         centered: true,
         title: "업로드에 실패했습니다.",
       });
@@ -128,7 +118,11 @@ const Myinfo = ({ user }: infoprops) => {
             <div className="myinfo-imgDiv" onClick={handleImageClick}>
               <div className="profile-image-container">
                 <Image
-                  src={preview}
+                  src={
+                    user?.profile_img
+                      ? `http://localhost:5001/${user.profile_img}`
+                      : "/user-thumbnail.png"
+                  }
                   alt="사용자 프로필"
                   className="sideBar-userProfile"
                   width={100}
@@ -147,7 +141,7 @@ const Myinfo = ({ user }: infoprops) => {
               </div>
             </div>
             <div className="myinfo-btnDiv">
-              <Button onClick={handleProfileUpload}>프로필 변경</Button>
+              <Button onClick={profileDelete}>프로필 삭제</Button>
             </div>
           </div>
         </div>
@@ -166,7 +160,7 @@ const Myinfo = ({ user }: infoprops) => {
           </div>
         </div>
         <div className="myinfo-useremail">
-          <div className="myinfo-detailDiv">내 이메일 </div>
+          <div className="myinfo-detailDiv">내 이메일</div>
           <Input
             className="custom-input"
             type="text"
@@ -175,7 +169,13 @@ const Myinfo = ({ user }: infoprops) => {
           />
         </div>
         <div></div>
-        <div className="myinfo-exit">회원 탈퇴</div>
+        <div
+          onClick={userexit}
+          style={{ cursor: "pointer" }}
+          className="myinfo-exit"
+        >
+          회원 탈퇴
+        </div>
         <div className="AddBanner">
           <AddBanner />
         </div>
