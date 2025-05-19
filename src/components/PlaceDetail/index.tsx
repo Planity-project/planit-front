@@ -1,5 +1,5 @@
 interface PlaceDetailProps {
-  place: {
+  place?: {
     title: string;
     category: string;
     tel: string;
@@ -13,11 +13,11 @@ interface PlaceDetailProps {
 const PlaceDetail = ({ place }: PlaceDetailProps) => {
   return (
     <div>
-      <p>{place.imageSrc}</p>
-      <p>제목: {place.title}</p>
-      <p>카테고리: {place.category}</p>
-      <p>주소: {place.address}</p>
-      <p>전화번호: {place.tel}</p>
+      <img src={place?.imageSrc} alt={`${place?.title}`} />
+      <p>제목: {place?.title}</p>
+      <p>카테고리: {place?.category}</p>
+      <p>주소: {place?.address}</p>
+      <p>전화번호: {place?.tel}</p>
     </div>
   );
 };

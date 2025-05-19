@@ -307,9 +307,11 @@ const CreateDays = ({
                 </>
               )}
 
-              <button className="create-loadmore" onClick={loadMore}>
-                더보기
-              </button>
+              {hasMore && (
+                <button className="create-loadmore" onClick={loadMore}>
+                  더보기
+                </button>
+              )}
 
               {!hasMore && (
                 <p className="create-end">더 이상 장소가 없습니다.</p>

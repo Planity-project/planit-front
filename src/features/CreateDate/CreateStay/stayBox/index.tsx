@@ -1,111 +1,147 @@
-import { format, addDays, differenceInCalendarDays } from "date-fns";
-import { CSS } from "@dnd-kit/utilities";
+import React, { useState } from "react";
 import {
-  SortableContext,
-  useSortable,
-  arrayMove,
-  verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
-import { ko } from "date-fns/locale";
-import { Placecard } from "./styled";
-import { DeleteOutlined } from "@ant-design/icons";
-import { CategoryBadge } from "../stayBox/styled";
+  EditOutlined,
+  CheckOutlined,
+  CloseOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons";
+import { Modal } from "antd";
+import { CategoryBadge } from "./styled";
+import { PlaceCardWrapper } from "./styled";
+import PlaceDetail from "@/components/PlaceDetail";
 
-export const SortableDayBox = ({ dayData, index, onDelete }: any) => {
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: dayData.date });
+// 전화번호 추가 (모달에서만 전화번호 보이게)
 
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
+interface PlaceCardProps {
+  place?: {
+    title: string;
+    category: string;
+    tel: string;
+    lat: string;
+    lon: string;
+    address: string;
+    imageSrc?: string;
   };
+  onClick?: () => void;
+}
+
+export const UnassignedPlaceCard = ({ place, onClick }: PlaceCardProps) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <Placecard>
-      <div
-        className="create-dayBox"
-        ref={setNodeRef}
-        style={style}
-        {...attributes}
-        {...listeners}
-      >
-        <div className="day-label">{index + 1}</div>
-        <div className="day-content">
-          <div className="day-title">
-            <div>
-              {format(new Date(dayData.date), "MM.dd(eee)", { locale: ko })} -
-              {format(addDays(new Date(dayData.date), 1), "MM.dd(eee)", {
-                locale: ko,
-              })}
-            </div>
-            <button
-              className="day-delBtn"
-              onClick={() => onDelete(index)}
-              onPointerDown={(e) => e.stopPropagation()}
-            >
-              <DeleteOutlined />
-            </button>
-          </div>
-          {dayData.place ? (
-            <div className="create-placecard">
+    <>
+      <PlaceCardWrapper>
+        {
+          <div
+            className="create-placecard unassigned-card"
+            onClick={onClick}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            style={{ position: "relative" }}
+          >
+            <div className="create-img">
               <img
-                src={dayData.place.imageSrc || "/defaultImage.png"}
-                alt={dayData.place.title || "default"}
+                src={place?.imageSrc || "/defaultImage.png"}
+                alt={place?.title || "default"}
                 className="create-image"
               />
-              <div>
-                <div className="create-title">{dayData.place.title}</div>
-                <div className="create-info">{dayData.place.address}</div>
-                <div className="create-info"> {dayData.place.tel}</div>
-              </div>
+
+              {isHovered && (
+                <div
+                  className="image-overlay"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <button
+                    className="more-button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsModalOpen(true);
+                    }}
+                  >
+                    더보기
+                  </button>
+                </div>
+              )}
             </div>
-          ) : (
-            <p className="day-empty">숙소를 추가해주세요.</p>
-          )}
-        </div>
-      </div>
-    </Placecard>
+            <div className="create-placetitle">
+              <div className="create-title">{place?.title}</div>
+              <div className="create-info top-info">
+                <CategoryBadge category={place?.category}>
+                  {place?.category}
+                </CategoryBadge>
+              </div>
+              <div className="create-info create-address">{place?.address}</div>
+              {place?.tel && <div className="create-info">{place?.tel}</div>}
+            </div>
+          </div>
+        }
+      </PlaceCardWrapper>
+
+      <Modal
+        open={isModalOpen}
+        onCancel={() => setIsModalOpen(false)}
+        footer={null}
+        title="장소 상세 정보"
+      >
+        <PlaceDetail place={place} />
+      </Modal>
+    </>
   );
 };
 
-interface Place {
-  title: string;
-  imageSrc?: string;
-  category: string;
-  tel: string;
-  address: string;
+interface AssignedPlaceCardProps {
+  place: any;
+  index: number;
+  date: any;
+  handleDeleteBox: (index: number) => void;
 }
 
-interface Props {
-  place: Place;
-  onClick: () => void;
-}
-
-export const UnassignedPlaceCard = ({ place, onClick }: Props) => {
+export const AssignedPlaceCard = ({
+  place,
+  index,
+  date,
+  handleDeleteBox,
+}: AssignedPlaceCardProps) => {
   return (
-    <div className="create-placecard" onClick={onClick}>
-      <div className="create-img">
-        <img
-          src={place.imageSrc || "/defaultImage.png"}
-          alt={place.title || "default"}
-          className="create-image"
-        />
-      </div>
-
-      <div className="create-placetitle">
-        <div className="create-titleBox">
-          <div className="create-title">{place.title}</div>
-
-          <div className="create-info top-info">
-            <CategoryBadge category={place.category}>
-              {place.category}
-            </CategoryBadge>
+    <PlaceCardWrapper>
+      {place !== null ? (
+        <div className="create-placecard" key={index}>
+          <div className="create-img">
+            <img
+              src={place.imageSrc || "/defaultImage.png"}
+              alt={place.title || "default"}
+              className="create-image"
+            />
           </div>
 
-          <div className="create-info create-address">{place.address}</div>
-          {place.tel && <div className="create-info">{place.tel}</div>}
+          <div className="create-placetitle">
+            <div className="create-titleBox">
+              <div className="create-title">{place.title}</div>
+              <button
+                className="create-delBtn"
+                onClick={() => handleDeleteBox(index)}
+                onPointerDown={(e) => e.stopPropagation()}
+              >
+                <DeleteOutlined />
+              </button>
+            </div>
+
+            <div className="create-info top-info">
+              <CategoryBadge category={place.category}>
+                {place.category}
+              </CategoryBadge>
+            </div>
+
+            <div className="create-info create-address">{place.address}</div>
+          </div>
         </div>
-      </div>
-    </div>
+      ) : (
+        <div className="create-placeholder" key={index}>
+          <div className="placeholder-date">{date}</div>
+          <div className="placeholder-message">숙소를 추가해주세요</div>
+        </div>
+      )}
+    </PlaceCardWrapper>
   );
 };

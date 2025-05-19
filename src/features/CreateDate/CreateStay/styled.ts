@@ -31,6 +31,12 @@ export const CreateStayStyled = styled.div`
     background-color: white;
   }
 
+  .search-icon {
+    font-size: 18px;
+    color: #888;
+    margin-right: 8px;
+  }
+
   .custom-input {
     border: none;
     box-shadow: none;
@@ -41,16 +47,29 @@ export const CreateStayStyled = styled.div`
     box-shadow: none;
   }
 
-  .search-icon {
-    font-size: 18px;
-    color: #888;
-    margin-right: 8px;
+  .create-button-item {
+    background-color: black;
+    border: 1px solid;
+    padding: 6px 12px;
+    border-radius: 6px;
+    color: white;
+    left: 10px;
+    cursor: pointer;
+    position: relative;
   }
 
-  .create-left {
-    width: 100%;
-    display: flex;
-    gap: 10px;
+  .create-delBtn,
+  .create-info button {
+    background: transparent;
+    border: none;
+    padding: 4px 8px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+
+  .create-button-item.active {
+    background-color: white;
+    color: black;
   }
 
   .create-topleft {
@@ -59,13 +78,25 @@ export const CreateStayStyled = styled.div`
     flex-wrap: wrap;
   }
 
-  .create-container {
-    width: 50%;
-    display: flex;
-    align-items: flex-start;
-    gap: 20px;
-    margin-top: 40px;
-    flex-wrap: wrap;
+  .check-icon {
+    margin-left: 4px;
+    font-size: 12px;
+  }
+
+  .create-time {
+    font-weight: bold;
+    white-space: nowrap;
+    color: black;
+  }
+
+  .create-time .over-time {
+    color: red;
+  }
+
+  .time-input {
+    width: 60px;
+    padding: 4px;
+    border-radius: 4px;
   }
 
   .create-choiceBox {
@@ -73,13 +104,20 @@ export const CreateStayStyled = styled.div`
     max-height: 500px;
     overflow-y: scroll;
   }
+
+  .create-daylistBox {
+    width: 50%;
+    max-height: 500px;
+    overflow-y: scroll;
+  }
+
   .create-choiceBox::-webkit-scrollbar,
   .create-daylistBox::-webkit-scrollbar {
     width: 8px;
   }
   .create-choiceBox::-webkit-scrollbar-thumb,
   .create-daylistBox::-webkit-scrollbar-thumb {
-    background-color: rgba(136, 136, 136, 0.3);
+    background-color: rgba(185, 177, 177, 0.3);
     border-radius: 10px;
   }
   .create-choiceBox.selected,
@@ -91,25 +129,23 @@ export const CreateStayStyled = styled.div`
     background-color: whitesmoke;
   }
 
-  .create-daylistBox {
-    width: 50%;
-    max-height: 500px;
-    overflow-y: scroll;
+  .create-all {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 150px;
+    margin: 0;
+  }
+
+  .create-left {
+    width: 100%;
+    display: flex;
+    gap: 10px;
   }
 
   .create-right {
     width: 48%;
-  }
-
-  .create-title {
-    font-weight: 700;
-    font-size: 16px;
-    margin-bottom: 5px;
-  }
-
-  .create-info {
-    font-size: 13px;
-    color: #555;
   }
 
   .create-loading,
@@ -129,45 +165,6 @@ export const CreateStayStyled = styled.div`
     border-radius: 8px;
     font-weight: bold;
     cursor: pointer;
-  }
-
-  .create-dayBox {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 1rem;
-    background: #fff;
-    border-radius: 12px;
-    padding: 8px 16px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  }
-
-  .day-delBtn {
-    border: none;
-    background-color: white;
-  }
-  .day-delBtn:hover {
-    cursor: pointer;
-  }
-  .day-label {
-    font-size: 20px;
-    font-weight: bold;
-    margin-right: 12px;
-  }
-
-  .day-content {
-    flex: 1;
-  }
-
-  .day-title {
-    font-size: 16px;
-    font-weight: 500;
-    margin-bottom: 8px;
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .day-empty {
-    color: #999;
   }
 
   /* 버튼 */
