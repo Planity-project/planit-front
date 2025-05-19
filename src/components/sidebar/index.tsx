@@ -105,7 +105,7 @@ const SideBar = ({ isOpen, setIsOpen }: SideBarProps) => {
             src={
               user?.profile_img
                 ? `http://localhost:5001/${user?.profile_img}`
-                : "/defaultImage.png"
+                : "/user-thumbnail.png"
             } // null, undefined 방지
             alt="사용자 프로필"
             className="sideBar-userProfile"

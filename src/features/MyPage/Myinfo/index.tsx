@@ -13,7 +13,7 @@ const Myinfo = ({ user }: infoprops) => {
   const [preview, setPreview] = useState<string>(
     user?.profile_img
       ? `http://localhost:5001/${user?.profile_img}`
-      : "/defaultImage.png"
+      : "/user-thumbnail.png"
   );
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);

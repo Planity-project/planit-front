@@ -62,9 +62,14 @@ const CreateDays = ({
     if (!selectedPlace) return;
 
     setLoading(true);
+    // selectedCategories 한글 → 구글 카테고리명 변환
     try {
-      const res = await api.get("/map/nearby", {
-        params: { address: selectedPlace.name, page: currentPage, type: 1 },
+      console.log(selectedCategories, "선택된 카테고리");
+      const res = await api.post("/map/nearby", {
+        address: selectedPlace.name,
+        page: currentPage,
+        type: 1,
+        categories: selectedCategories, // 배열 그대로 넘김
       });
 
       const newPlaces = res.data.locations;
@@ -76,22 +81,29 @@ const CreateDays = ({
     } finally {
       setLoading(false);
     }
-  }, [selectedPlace, currentPage]);
+  }, [selectedPlace, currentPage, selectedCategories]);
 
   useEffect(() => {
-    setPlaces([]);
-    setCurrentPage(1);
-    setHasMore(true);
+    if (selectedPlace) {
+      setPlaces([]);
+
+      setCurrentPage(1);
+      setHasMore(true);
+      // 다음 effect에서 1페이지로 다시 fetch
+    }
   }, [selectedPlace]);
 
   useEffect(() => {
     if (selectedPlace) fetchNearbyPlaces();
   }, [selectedPlace, currentPage]);
+
   useEffect(() => {
     console.log(selectedCategories, "선택된 카테고리");
     setPlaces([]);
+    setCurrentPage(1);
     if (selectedPlace) fetchNearbyPlaces();
   }, [selectedCategories]);
+
   const loadMore = () => {
     setCurrentPage((prev) => prev + 1);
   };
