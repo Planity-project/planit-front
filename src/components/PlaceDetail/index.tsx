@@ -1,15 +1,24 @@
-import { Modal } from "antd";
-
 interface PlaceDetailProps {
-  visible: boolean;
-  onClose: () => void;
+  place: {
+    title: string;
+    category: string;
+    tel: string;
+    lat: string;
+    lon: string;
+    address: string;
+    imageSrc?: string;
+  };
 }
 
-const PlaceDetail = ({ visible, onClose }: PlaceDetailProps) => {
+const PlaceDetail = ({ place }: PlaceDetailProps) => {
   return (
-    <Modal open={visible} onCancel={onClose} onOk={onClose} title="상세 페이지">
-      <p>여기에 등록 폼 넣기</p>
-    </Modal>
+    <div>
+      <p>{place.imageSrc}</p>
+      <p>제목: {place.title}</p>
+      <p>카테고리: {place.category}</p>
+      <p>주소: {place.address}</p>
+      <p>전화번호: {place.tel}</p>
+    </div>
   );
 };
 

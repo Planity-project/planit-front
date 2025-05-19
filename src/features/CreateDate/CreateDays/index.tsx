@@ -10,7 +10,6 @@ import { Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { CheckOutlined } from "@ant-design/icons";
 import PlaceModal from "@/components/AddPlace/index";
-import PlaceDetail from "@/components/PlaceDetail";
 
 interface CreateDaysProps {
   selectedPlace: any;
@@ -63,7 +62,6 @@ const CreateDays = ({
     if (!selectedPlace) return;
 
     setLoading(true);
-
     // selectedCategories 한글 → 구글 카테고리명 변환
     try {
       console.log(selectedCategories, "선택된 카테고리");
@@ -86,9 +84,13 @@ const CreateDays = ({
   }, [selectedPlace, currentPage, selectedCategories]);
 
   useEffect(() => {
-    setPlaces([]);
-    setCurrentPage(1);
-    setHasMore(true);
+    if (selectedPlace) {
+      setPlaces([]);
+
+      setCurrentPage(1);
+      setHasMore(true);
+      // 다음 effect에서 1페이지로 다시 fetch
+    }
   }, [selectedPlace]);
 
   useEffect(() => {
@@ -98,11 +100,12 @@ const CreateDays = ({
   useEffect(() => {
     console.log(selectedCategories, "선택된 카테고리");
     setPlaces([]);
+    setCurrentPage(1);
     if (selectedPlace) fetchNearbyPlaces();
   }, [selectedCategories]);
+
   const loadMore = () => {
-    console.log("모달 열기"); // 확인용
-    setIsDetailModalOpen(true);
+    setCurrentPage((prev) => prev + 1);
   };
 
   const searchInput = async (str: string) => {
@@ -273,12 +276,6 @@ const CreateDays = ({
             </div>
           </div>
 
-          {/* 장소 등록 모달 */}
-          <PlaceModal
-            visible={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
-          />
-
           <div className="create-left">
             <div className="create-choiceBox">
               {places.length === 0 && !loading && (
@@ -339,9 +336,10 @@ const CreateDays = ({
         </div>
         <ShowWhich selectedLocation={place} isPlace={true} />
 
-        <PlaceDetail
-          visible={isDetailModalOpen}
-          onClose={() => setIsDetailModalOpen(false)}
+        {/* 장소 등록 모달 */}
+        <PlaceModal
+          visible={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
         />
       </div>
 

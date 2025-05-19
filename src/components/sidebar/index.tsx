@@ -102,7 +102,11 @@ const SideBar = ({ isOpen, setIsOpen }: SideBarProps) => {
       <div className="sideBar-container">
         <div className="sideBar-profileBox">
           <Image
-            src={user?.profile_img ?? "/defaultImage.png"} // null, undefined 방지
+            src={
+              user?.profile_img
+                ? `http://localhost:5001/${user?.profile_img}`
+                : "/user-thumbnail.png"
+            } // null, undefined 방지
             alt="사용자 프로필"
             className="sideBar-userProfile"
             width={50}

@@ -14,7 +14,7 @@ import {
 import MyDaysComponent from "@/components/MyDays";
 import { Input, Modal } from "antd";
 import { useUser } from "@/context/UserContext";
-import GoogleMapComponent from "@/components/showWhichGoogle";
+import GoogleMapComponent from "@/components/ShowWhichGoogle";
 interface ImageSliderProps {
   images: string[];
 }
@@ -44,14 +44,18 @@ const SnsDetail = () => {
   //sns 디테일 페이지 이동 시 데이터 요청 , 게시글 모든 데이터 필요(잘 정리해서 줄것: 맘에 안들면 다시 )
 
   useEffect(() => {
-    // api
-    //   .get("/posts/detailData", {
-    //     params: { postId: id },
-    //   })
-    //   .then((res) => {
-    //     console.log(res.data);
-    //   });
-  }, []);
+    if (!id || !user?.id) return; // 값이 없으면 요청 안함
+
+    console.log(id, user?.id, "요청 데이터 detailTrip");
+
+    api
+      .get("/posts/detailTrip", {
+        params: { postId: id, userId: user.id },
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
+  }, [id, user?.id]);
 
   const dummy1: {
     id: number;

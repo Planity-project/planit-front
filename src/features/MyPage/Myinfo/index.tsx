@@ -11,7 +11,9 @@ interface infoprops {
 const Myinfo = ({ user }: infoprops) => {
   const [name, setName] = useState<string>("");
   const [preview, setPreview] = useState<string>(
-    user?.profile_img ?? "/defaultImage.png"
+    user?.profile_img
+      ? `http://localhost:5001/${user?.profile_img}`
+      : "/user-thumbnail.png"
   );
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -47,7 +49,7 @@ const Myinfo = ({ user }: infoprops) => {
     formData.append("profileImage", selectedFile);
     formData.append("userId", user.id);
     try {
-      const res = await api.put(`/user/me/profile-image`, formData);
+      const res = await api.put(`/users/me/profile-image`, formData);
       if (res.data.result) {
         Modal.warning({
           centered: true,

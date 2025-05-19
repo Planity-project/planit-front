@@ -2,11 +2,63 @@ import styled from "styled-components";
 
 export const CreateStayStyled = styled.div`
   width: 100%;
+
   .create-wrap {
     display: flex;
     justify-content: center;
+    gap: 30px;
+    margin-top: 10px;
+  }
+
+  .create-container {
+    width: 45%;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+  }
+
+  .create-input {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 24px;
+    padding: 8px 16px;
+    width: 47%;
+    max-width: 400px;
+    margin-left: 10px;
+    background-color: white;
+  }
+
+  .custom-input {
+    border: none;
+    box-shadow: none;
+  }
+
+  .custom-input:focus {
+    border: none;
+    box-shadow: none;
+  }
+
+  .search-icon {
+    font-size: 18px;
+    color: #888;
+    margin-right: 8px;
+  }
+
+  .create-left {
+    width: 100%;
+    display: flex;
     gap: 10px;
   }
+
+  .create-topleft {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
   .create-container {
     width: 50%;
     display: flex;
@@ -19,43 +71,34 @@ export const CreateStayStyled = styled.div`
   .create-choiceBox {
     width: 50%;
     max-height: 500px;
-    overflow-y: auto;
+    overflow-y: scroll;
   }
+  .create-choiceBox::-webkit-scrollbar,
+  .create-daylistBox::-webkit-scrollbar {
+    width: 8px;
+  }
+  .create-choiceBox::-webkit-scrollbar-thumb,
+  .create-daylistBox::-webkit-scrollbar-thumb {
+    background-color: rgba(136, 136, 136, 0.3);
+    border-radius: 10px;
+  }
+  .create-choiceBox.selected,
+  .create-daylistBox.selected {
+    background-color: rgb(83, 183, 232, 0.4);
+  }
+  .create-choiceBox::-webkit-scrollbar-track,
+  .create-daylistBox::-webkit-scrollbar-track {
+    background-color: whitesmoke;
+  }
+
   .create-daylistBox {
     width: 50%;
     max-height: 500px;
-    overflow-y: auto;
-    background-color: #f6f6f6;
+    overflow-y: scroll;
   }
-  .create-left {
-    width: 100%;
-    display: flex;
-    gap: 10px;
-  }
+
   .create-right {
     width: 48%;
-  }
-
-  .create-placecard {
-    width: 100%;
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    /* background-color: #f6f6f6; */
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    position: relative;
-  }
-  .create-placecard:hover {
-    cursor: pointer;
-  }
-
-  .create-image {
-    width: 25%;
-    aspect-ratio: 1/1;
-    border-radius: 4px;
-    margin-bottom: 10px;
   }
 
   .create-title {
@@ -80,16 +123,12 @@ export const CreateStayStyled = styled.div`
     width: 100%;
     margin-top: 20px;
     padding: 12px;
-    background-color: #53b7e8;
+    background-color: black;
     color: white;
     border: none;
     border-radius: 8px;
     font-weight: bold;
     cursor: pointer;
-  }
-
-  .create-loadmore:hover {
-    background-color: #3ba1d3;
   }
 
   .create-dayBox {
@@ -129,25 +168,24 @@ export const CreateStayStyled = styled.div`
 
   .day-empty {
     color: #999;
-    font-style: italic;
   }
-`;
 
-const categoryColors: { [key: string]: string } = {
-  관광지: "#3ba1d3", // '12'
-  문화: "#34a853", // '14'
-  레포츠: "#a142f4", // '28'
-  쇼핑: "#fbbc04", // '38'
-  음식점: "#f28b82", // '39'
-  숙소: "rgb(83, 183, 232, 0.6)", // '32'
-  행사: "#ff6d00", // '15'
-  기타: "#bdbdbd", // 매핑 안된 경우
-};
+  /* 버튼 */
+  .choice-btnDiv {
+    margin-top: 20px;
+    width: 52%;
+    display: flex;
+    justify-content: end;
+  }
 
-export const CategoryBadge = styled.span<{ category: string }>`
-  background-color: ${({ category }) => categoryColors[category] || "#888"};
-  color: white;
-  font-size: 12px;
-  padding: 4px 8px;
-  border-radius: 4px;
+  .choice-btnDiv Button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(83, 183, 232, 0.6);
+    border-radius: 5px;
+    color: white;
+    border: none;
+    padding: 20px 20px;
+  }
 `;
