@@ -18,6 +18,8 @@ interface CreateDaysProps {
   time: any;
   schedule: ScheduleType;
   setSchedule: React.Dispatch<React.SetStateAction<ScheduleType>>;
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
   children?: React.ReactNode;
 }
 
@@ -39,10 +41,11 @@ const CreateDays = ({
   time,
   schedule,
   setSchedule,
+  loading,
+  setLoading,
   children,
 }: CreateDaysProps) => {
   const [places, setPlaces] = useState<DataType[]>([]);
-  const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [place, setPlace] = useState<any | null>(selectedPlace);
@@ -84,7 +87,11 @@ const CreateDays = ({
   useEffect(() => {
     if (selectedPlace) fetchNearbyPlaces();
   }, [selectedPlace, currentPage]);
-
+  useEffect(() => {
+    console.log(selectedCategories, "선택된 카테고리");
+    setPlaces([]);
+    if (selectedPlace) fetchNearbyPlaces();
+  }, [selectedCategories]);
   const loadMore = () => {
     setCurrentPage((prev) => prev + 1);
   };
