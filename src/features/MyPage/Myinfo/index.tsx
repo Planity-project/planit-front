@@ -56,6 +56,7 @@ const Myinfo = ({ user }: infoprops) => {
       });
     }
   };
+
   // 닉네임 변경 함수
   const changeNick = async () => {
     if (name.length < 1) {
@@ -76,7 +77,7 @@ const Myinfo = ({ user }: infoprops) => {
 
     try {
       await api
-        .post("user/update", { nickname: name, userId: user.id })
+        .post("users/nicknameUpdate", { nickname: name, userId: user.id })
         .then((res: any) => {
           if (res.data.result === false) {
             Modal.warning({
@@ -101,12 +102,48 @@ const Myinfo = ({ user }: infoprops) => {
 
   //프로필 이미지 삭제 요청
   const profileDelete = async () => {
-    await api.delete(`/user/me/profile-image?userId=${user.id}`);
+    try {
+      const res = await api.delete(`users/me/profile-image?userId=${user.id}`);
+      if (res.data.result) {
+        Modal.success({
+          centered: true,
+          title: "프로필 이미지가 성공적으로 삭제되었습니다.",
+          onOk: () => {
+            window.location.reload();
+          },
+        });
+      } else {
+        throw new Error("삭제 실패");
+      }
+    } catch (error) {
+      console.error("프로필 이미지 삭제 실패:", error);
+      Modal.error({
+        centered: true,
+        title: "프로필 이미지 삭제에 실패했습니다.",
+      });
+    }
   };
 
   //회원탈퇴
   const userexit = async () => {
-    await api.delete("user/destroy/:id");
+    try {
+      const res = await api.delete(`users/me/destroy/${user.id}`);
+      if (res.data.result) {
+        Modal.success({
+          centered: true,
+          title: "회원 탈퇴가 완료되었습니다.",
+          onOk: () => {
+            window.location.href = "/"; // 탈퇴 후 홈으로 리디렉션
+          },
+        });
+      }
+    } catch (error) {
+      console.error("회원 탈퇴 실패:", error);
+      Modal.error({
+        centered: true,
+        title: "회원 탈퇴에 실패했습니다.",
+      });
+    }
   };
 
   return (
