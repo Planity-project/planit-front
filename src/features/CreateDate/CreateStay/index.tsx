@@ -4,7 +4,8 @@ import { CreateStayStyled } from "./styled";
 import ShowWhich from "@/components/ShowWhich";
 import { Button, Skeleton } from "antd";
 import { format, addDays, differenceInCalendarDays } from "date-fns";
-
+import { Input } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import {
   SortableContext,
@@ -47,6 +48,7 @@ const CreateStay = ({
   setLoading,
 }: CreateDaysProps) => {
   const [places, setPlaces] = useState<DataType[]>([]);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [place, setPlace] = useState<any | null>(selectedPlace);
@@ -79,6 +81,46 @@ const CreateStay = ({
       setLoading(false);
     }
   }, [selectedPlace, currentPage]);
+
+  // 숙소 검색
+  // const searchInput = useCallback(
+  //   async (searchStr: string) => {
+  //     if (!selectedPlace) return;
+  //     setLoading(true);
+  //     try {
+  //       const res = await api.get("/map/searchNearby", {
+  //         params: {
+  //           address: selectedPlace.name,
+  //           page: 1, // 검색은 항상 1페이지부터
+  //           str: searchStr,
+  //           type: 2,
+  //         },
+  //       });
+  //       const filteredPlaces = res.data.locations;
+  //       setPlaces(filteredPlaces);
+  //       setHasMore(false); // 검색은 페이징 없음(필요 시 수정)
+  //     } catch (err) {
+  //       console.error("검색 오류", err);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   },
+  //   [selectedPlace]
+  // );
+
+  const handleSearchClick = () => {
+    setCurrentPage(1); // 현재 페이지 초기화
+    // searchInput(str); // 검색 API 호출
+  };
+
+  useEffect(() => {
+    if (str.trim() === "" && selectedPlace) {
+      setPlaces([]);
+      setCurrentPage(1);
+      setHasMore(true);
+      fetchNearbyPlaces();
+    }
+  }, [selectedPlace, currentPage, str, fetchNearbyPlaces]);
 
   useEffect(() => {
     if (selectedPlace) {
@@ -158,12 +200,25 @@ const CreateStay = ({
     <CreateStayStyled>
       <div className="create-wrap">
         <div className="create-container">
-          <div>
-            <input value={str} onChange={(e) => setStr(e.target.value)} />
-            <button onClick={() => setCurrentPage(1)}>검색</button>
+          <div className="create-input">
+            <Input
+              placeholder="장소명을 검색하세요"
+              value={str}
+              onChange={(e) => setStr(e.target.value)}
+              onPressEnter={handleSearchClick}
+              className="custom-input"
+            />
+            <SearchOutlined
+              className="search-icon"
+              onClick={handleSearchClick}
+            />
           </div>
+
           <div className="create-left">
             <div className="create-choiceBox">
+              {places.length === 0 && !loading && (
+                <p>장소를 불러올 수 없습니다.</p>
+              )}
               {places.map((place, i) => (
                 <UnassignedPlaceCard
                   place={place}
@@ -172,11 +227,15 @@ const CreateStay = ({
               ))}
               {loading && <Skeleton active paragraph={{ rows: 3 }} />}
               {!loading && hasMore && (
-                <button onClick={() => setCurrentPage((prev) => prev + 1)}>
+                <button
+                  className="create-loadmore"
+                  onClick={() => setCurrentPage((prev) => prev + 1)}
+                >
                   더보기
                 </button>
               )}
             </div>
+
             <div className="create-daylistBox">
               <DndContext
                 collisionDetection={closestCenter}
@@ -201,9 +260,12 @@ const CreateStay = ({
         </div>
         <ShowWhich selectedLocation={place} />
       </div>
-      <Button type="primary" onClick={onNext}>
-        선택
-      </Button>
+
+      <div className="choice-btnDiv">
+        <Button type="primary" onClick={onNext}>
+          선택
+        </Button>
+      </div>
     </CreateStayStyled>
   );
 };

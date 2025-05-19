@@ -117,7 +117,7 @@ export const CreateDaysStyled = styled.div`
   }
   .create-choiceBox::-webkit-scrollbar-thumb,
   .create-daylistBox::-webkit-scrollbar-thumb {
-    background-color: rgba(136, 136, 136, 0.3);
+    background-color: rgba(185, 177, 177, 0.3);
     border-radius: 10px;
   }
   .create-choiceBox.selected,

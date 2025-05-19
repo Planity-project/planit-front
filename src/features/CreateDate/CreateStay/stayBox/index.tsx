@@ -9,8 +9,8 @@ import {
 import { ko } from "date-fns/locale";
 import { Placecard } from "./styled";
 import { DeleteOutlined } from "@ant-design/icons";
-import { CategoryBadge } from "../styled";
-//드래그앤 드롭 가능한 박스
+import { CategoryBadge } from "../stayBox/styled";
+
 export const SortableDayBox = ({ dayData, index, onDelete }: any) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: dayData.date });
@@ -84,20 +84,27 @@ interface Props {
 export const UnassignedPlaceCard = ({ place, onClick }: Props) => {
   return (
     <div className="create-placecard" onClick={onClick}>
-      <img
-        src={place.imageSrc || "/defaultImage.png"}
-        alt={place.title}
-        className="create-image"
-      />
-      <div>
-        <div className="create-title">{place.title}</div>
-        <div>
-          <CategoryBadge category={place.category}>
-            {place.category}
-          </CategoryBadge>
-          <span>{place.address}</span>
+      <div className="create-img">
+        <img
+          src={place.imageSrc || "/defaultImage.png"}
+          alt={place.title || "default"}
+          className="create-image"
+        />
+      </div>
+
+      <div className="create-placetitle">
+        <div className="create-titleBox">
+          <div className="create-title">{place.title}</div>
+
+          <div className="create-info top-info">
+            <CategoryBadge category={place.category}>
+              {place.category}
+            </CategoryBadge>
+          </div>
+
+          <div className="create-info create-address">{place.address}</div>
+          {place.tel && <div className="create-info">{place.tel}</div>}
         </div>
-        <div className="create-info">{place.tel}</div>
       </div>
     </div>
   );

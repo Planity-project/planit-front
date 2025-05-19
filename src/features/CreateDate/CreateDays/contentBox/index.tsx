@@ -5,8 +5,12 @@ import {
   CloseOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
+import { Modal } from "antd";
 import { CategoryBadge } from "./styled";
 import { PlaceCardWrapper } from "./styled";
+import PlaceDetail from "@/components/PlaceDetail";
+
+// 전화번호 추가 (모달에서만 전화번호 보이게)
 
 interface PlaceCardProps {
   place: {
@@ -26,47 +30,61 @@ export const UnassignedPlaceCard = ({ place, onClick }: PlaceCardProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <PlaceCardWrapper>
-      <div
-        className="create-placecard unassigned-card"
-        onClick={onClick}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        style={{ position: "relative" }}
-      >
-        <div className="create-img">
-          <img
-            src={place.imageSrc || "/defaultImage.png"}
-            alt={place.title || "default"}
-            className="create-image"
-          />
+    <>
+      <PlaceCardWrapper>
+        <div
+          className="create-placecard unassigned-card"
+          onClick={onClick}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          style={{ position: "relative" }}
+        >
+          <div className="create-img">
+            <img
+              src={place.imageSrc || "/defaultImage.png"}
+              alt={place.title || "default"}
+              className="create-image"
+            />
 
-          {isHovered && (
-            <div className="image-overlay" onClick={(e) => e.stopPropagation()}>
-              <button
-                className="more-button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setIsModalOpen(true);
-                }}
+            {isHovered && (
+              <div
+                className="image-overlay"
+                onClick={(e) => e.stopPropagation()}
               >
-                더보기
-              </button>
-            </div>
-          )}
-        </div>
-        <div className="create-placetitle">
-          <div className="create-title">{place.title}</div>
-          <div className="create-info top-info">
-            <CategoryBadge category={place.category}>
-              {place.category}
-            </CategoryBadge>
+                <button
+                  className="more-button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsModalOpen(true);
+                  }}
+                >
+                  더보기
+                </button>
+              </div>
+            )}
           </div>
-          <div className="create-info create-address">{place.address}</div>
-          {place.tel && <div className="create-info">{place.tel}</div>}
+          <div className="create-placetitle">
+            <div className="create-title">{place.title}</div>
+            <div className="create-info top-info">
+              <CategoryBadge category={place.category}>
+                {place.category}
+              </CategoryBadge>
+            </div>
+            <div className="create-info create-address">{place.address}</div>
+            {place.tel && <div className="create-info">{place.tel}</div>}
+          </div>
         </div>
-      </div>
-    </PlaceCardWrapper>
+      </PlaceCardWrapper>
+
+      <Modal
+        open={isModalOpen}
+        onCancel={() => setIsModalOpen(false)}
+        footer={null}
+        title="장소 상세 정보"
+      >
+        <PlaceDetail place={place} />
+      </Modal>
+    </>
   );
 };
 
@@ -119,8 +137,8 @@ export const AssignedPlaceCard = ({
               {place.category}
             </CategoryBadge>
           </div>
+
           <div className="create-info create-address">{place.address}</div>
-          {place.tel && <div className="create-info">{place.tel}</div>}
 
           <div className="create-info create-time">
             {editingIndex === index ? (
