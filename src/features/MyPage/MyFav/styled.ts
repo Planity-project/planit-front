@@ -49,5 +49,26 @@ export const MyfavStyled = styled.div`
       right: 100px;
       top: 100px;
     }
+
+    @media (max-width: 1400px) {
+      .AddBanner {
+        width: 16%;
+      }
+    }
+    @media (max-width: 1000px) {
+      .AddBanner {
+        display: none;
+      }
+    }
+    @media (max-width: 900px) {
+      .chat-bubble {
+        width: 50%;
+      }
+    }
+    @media (max-width: 900px) {
+      .chat-bubble {
+        width: 70%;
+      }
+    }
   }
 `;
