@@ -11,7 +11,9 @@ interface infoprops {
 const Myinfo = ({ user }: infoprops) => {
   const [name, setName] = useState<string>("");
   const [preview, setPreview] = useState<string>(
-    user?.profile_img ?? "/defaultImage.png"
+    user?.profile_img
+      ? `http://localhost:5001/${user?.profile_img}`
+      : "/defaultImage.png"
   );
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
