@@ -23,7 +23,6 @@ const SnsPost = ({ data, variant }: snspostprops) => {
       router.push(`/snsmainpage/snsdetail/${id}`);
     }
   };
-  console.log(data, "img확인용");
 
   return (
     <SnsPostStyled $variant={variant}>
@@ -58,7 +57,12 @@ const SnsPost = ({ data, variant }: snspostprops) => {
                       key={idx}
                       className={`sns-imgWrapper ${idx === 0 ? "first" : ""}`}
                     >
-                      <img src={src} alt={`img-${idx}`} sizes="100%" />
+                      <img
+                        src={src}
+                        className="sns-img"
+                        alt={`img-${idx}`}
+                        sizes="100%"
+                      />
                     </div>
                   )
                 )}

@@ -12,7 +12,7 @@ export const SnsPostStyled = styled.div<{ $variant?: "default" | "album" }>`
     justify-content: center;
     flex-wrap: wrap;
     gap: 20px;
-    width: ${(props) => (props.$variant === "album" ? "80%" : "50%")};
+    width: ${(props) => (props.$variant === "album" ? "70%" : "50%")};
     max-width: 1280px;
   }
 
@@ -37,33 +37,42 @@ export const SnsPostStyled = styled.div<{ $variant?: "default" | "album" }>`
 
   .sns-imgBox {
     display: grid;
-    gap: 2px; /* 기존 1px에서 2px로 늘리면 더욱 구분감 생김 */
-    background-color: white; /* 틈 사이 회색 배경 느낌 추가 */
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
     height: ${(props) => (props.$variant === "album" ? "80%" : "70%")};
     overflow: hidden;
-    /* 왼쪽 위 모서리만 둥글게 */
     border-top-left-radius: 5px;
-
-    /* 오른쪽 위 모서리만 둥글게 */
     border-top-right-radius: 5px;
-  }
+    background-color: white;
 
+    /* ✅ album일 때만 강제로 1줄 1칸으로 채우기 */
+    ${(props) =>
+      props.$variant === "album" &&
+      `
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+  `}
+  }
   .sns-imgWrapper {
-    position: relative;
     width: 100%;
     height: 100%;
+    position: relative;
+    overflow: hidden;
     border-radius: 10px;
+    display: flex;
+  }
+  .sns-imgWrapper img,
+  .sns-img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
   }
-
   .sns-imgWrapper.first {
     grid-column: 1 / 2;
     grid-row: 1 / -1;
-  }
-
-  .sns-imgBox img {
-    object-fit: cover;
+    display: ${(props) => (props.$variant === "album" ? "flex" : "block")};
+    justify-content: ${(props) =>
+      props.$variant === "album" ? "center" : "block"};
   }
 
   /* 1개 이미지 */
@@ -120,6 +129,7 @@ export const SnsPostStyled = styled.div<{ $variant?: "default" | "album" }>`
     justify-content: ${(props) =>
       props.$variant === "album" ? "flex-end" : "center"};
     gap: 5px;
+    height: ${(props) => (props.$variant === "album" ? "20%" : "30%")};
     padding: ${(props) => (props.$variant === "album" ? "5px" : "10px 5px;")};
     background-color: white;
   }
@@ -163,7 +173,7 @@ export const SnsPostStyled = styled.div<{ $variant?: "default" | "album" }>`
       font-size: 12px;
     }
     .sns-wrap {
-      width: 50%;
+      width: 90%;
     }
   }
 
@@ -178,7 +188,7 @@ export const SnsPostStyled = styled.div<{ $variant?: "default" | "album" }>`
       font-size: 10px;
     }
     .sns-wrap {
-      width: 60%;
+      width: 100%;
     }
   }
 `;
