@@ -203,10 +203,6 @@ const CreateDays = ({
   };
 
   useEffect(() => {
-    console.log("최종 schedule 상태:", schedule);
-  }, [schedule]);
-
-  useEffect(() => {
     const totalMinutes = schedule.dataPlace.reduce(
       (acc, place) => acc + place.minutes,
       0
