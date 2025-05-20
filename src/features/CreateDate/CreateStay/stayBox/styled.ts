@@ -212,6 +212,55 @@ export const PlaceCardWrapper = styled.div`
     font-size: 14px;
     color: #888;
   }
+  @media (max-width: 750px) {
+    .create-img {
+      position: relative;
+      width: 25%;
+    }
+    .create-title {
+      font-size: 13px;
+      margin-bottom: 2px;
+      margin-left: 6px;
+    }
+    .create-delBtn {
+      font-size: 13px;
+      padding-bottom: 4px;
+    }
+    .create-placecard {
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+      background-color: white;
+      padding: 10px;
+      margin-bottom: 3px;
+    }
+  }
+  @media (max-width: 750px) {
+    .create-img {
+      position: relative;
+      width: 25%;
+    }
+    .create-title {
+      font-size: 11px;
+      margin-bottom: 2px;
+      margin-left: 6px;
+    }
+    .top-info {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+      margin-left: 8px;
+    }
+
+    .create-address {
+      font-size: 10px;
+    }
+    .edit-div {
+      font-size: 11px;
+    }
+  }
 `;
 
 const categoryColors: { [key: string]: string } = {

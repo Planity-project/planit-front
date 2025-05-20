@@ -182,6 +182,60 @@ export const PlaceCardWrapper = styled.div`
     word-break: break-word;
     white-space: normal;
   }
+  .edit-div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  @media (max-width: 750px) {
+    .create-img {
+      position: relative;
+      width: 25%;
+    }
+    .create-title {
+      font-size: 13px;
+      margin-bottom: 2px;
+      margin-left: 6px;
+    }
+    .create-delBtn {
+      font-size: 13px;
+      padding-bottom: 4px;
+    }
+    .create-placecard {
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+      background-color: white;
+      padding: 10px;
+      margin-bottom: 3px;
+    }
+  }
+  @media (max-width: 750px) {
+    .create-img {
+      position: relative;
+      width: 25%;
+    }
+    .create-title {
+      font-size: 11px;
+      margin-bottom: 2px;
+      margin-left: 6px;
+    }
+    .top-info {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+      margin-left: 8px;
+    }
+
+    .create-address {
+      font-size: 10px;
+    }
+    .edit-div {
+      font-size: 11px;
+    }
+  }
 `;
 
 const categoryColors: { [key: string]: string } = {
@@ -199,4 +253,12 @@ export const CategoryBadge = styled.span<{ category: string }>`
   color: ${({ category }) => categoryColors[category] || "#888"};
   font-size: 13px;
   font-weight: bold;
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 10px;
+  }
 `;

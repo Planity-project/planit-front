@@ -170,7 +170,7 @@ export const CreateStayStyled = styled.div`
   /* 버튼 */
   .choice-btnDiv {
     margin-top: 20px;
-    width: 52%;
+    width: 92%;
     display: flex;
     justify-content: end;
   }
@@ -184,5 +184,59 @@ export const CreateStayStyled = styled.div`
     color: white;
     border: none;
     padding: 20px 20px;
+  }
+  @media (max-width: 1000px) {
+    .create-time {
+      font-weight: bold;
+      white-space: nowrap;
+      color: black;
+    }
+    .create-topleft {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .create-wrap {
+      display: flex;
+      flex-direction: column-reverse;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
+      margin-top: 30px;
+    }
+    .choice-btnDiv {
+      margin-top: 20px;
+      width: 95%;
+      display: flex;
+      justify-content: end;
+    }
+
+    .create-container {
+      width: 90%;
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+  }
+  @media (max-width: 750px) {
+    .create-time {
+      font-weight: bold;
+      white-space: nowrap;
+      color: black;
+      font-size: 12px;
+    }
+    .create-input {
+      width: 80%;
+    }
+  }
+  @media (max-width: 520px) {
+    .create-all {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+    }
   }
 `;

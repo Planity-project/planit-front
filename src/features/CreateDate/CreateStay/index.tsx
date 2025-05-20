@@ -274,7 +274,7 @@ const CreateStay = ({
 
       <div className="choice-btnDiv">
         <Button type="primary" onClick={onNext}>
-          다음
+          일정 생성
         </Button>
       </div>
     </CreateStayStyled>

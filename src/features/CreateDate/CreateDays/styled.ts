@@ -62,7 +62,6 @@ export const CreateDaysStyled = styled.div`
   .create-info button {
     background: transparent;
     border: none;
-    padding: 4px 8px;
     cursor: pointer;
     border-radius: 4px;
   }
@@ -76,6 +75,7 @@ export const CreateDaysStyled = styled.div`
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
+    margin-right: 20px;
   }
 
   .check-icon {
@@ -87,6 +87,7 @@ export const CreateDaysStyled = styled.div`
     font-weight: bold;
     white-space: nowrap;
     color: black;
+    margin-right: 20px;
   }
 
   .create-time .over-time {
@@ -130,11 +131,11 @@ export const CreateDaysStyled = styled.div`
   }
 
   .create-all {
+    width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 150px;
     margin: 0;
   }
 
@@ -170,7 +171,7 @@ export const CreateDaysStyled = styled.div`
   /* 버튼 */
   .choice-btnDiv {
     margin-top: 20px;
-    width: 52%;
+    width: 95%;
     display: flex;
     justify-content: end;
   }
@@ -184,5 +185,54 @@ export const CreateDaysStyled = styled.div`
     color: white;
     border: none;
     padding: 20px 20px;
+  }
+
+  @media (max-width: 1000px) {
+    .create-time {
+      font-weight: bold;
+      white-space: nowrap;
+      color: black;
+    }
+    .create-topleft {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .create-wrap {
+      display: flex;
+      flex-direction: column-reverse;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    .create-container {
+      width: 90%;
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+  }
+  @media (max-width: 750px) {
+    .create-time {
+      font-weight: bold;
+      white-space: nowrap;
+      color: black;
+      font-size: 12px;
+    }
+    .create-input {
+      width: 80%;
+    }
+  }
+  @media (max-width: 520px) {
+    .create-all {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+    }
   }
 `;

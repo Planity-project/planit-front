@@ -161,7 +161,7 @@ const GoogleMapComponent = ({ title, schedule, lng, lat }: googlemaprops) => {
       }
       const mapInstance = new window.google.maps.Map(mapRef.current, {
         center: { lat, lng },
-        zoom: 7,
+        zoom: 14,
       });
 
       if (schedule && schedule.length > 0) {

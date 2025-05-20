@@ -166,7 +166,7 @@ export const AssignedPlaceCard = ({
                 </button>
               </>
             ) : (
-              <>
+              <div className="edit-div">
                 {Math.floor(place.minutes / 60)}시간{" "}
                 {String(place.minutes % 60).padStart(2, "0")}분
                 <button
@@ -175,7 +175,7 @@ export const AssignedPlaceCard = ({
                 >
                   <EditOutlined />
                 </button>
-              </>
+              </div>
             )}
           </div>
         </div>
