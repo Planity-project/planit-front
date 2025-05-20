@@ -5,8 +5,8 @@ export default function PaymentTestPage() {
   const shortUuid = crypto.randomUUID().slice(0, 24);
   const handlePayment = async () => {
     try {
-      const albumId = 1;
-      const userId = 1;
+      const albumId = 4;
+      const userId = 4;
 
       const paymentResult: any = await PortOne.requestPayment({
         storeId: "store-1bb9d540-a71d-4d62-b468-4457faae2c26", // 실제 상점 아이디로 교체
@@ -27,8 +27,8 @@ export default function PaymentTestPage() {
       if (paymentResult) {
         const res = await api.post("/payments/verify", {
           paymentId: paymentResult.paymentId,
-          albumId: 1,
-          userId: 1,
+          albumId: 4,
+          userId: 4,
           txId: paymentResult.txId,
           type: "desktop",
         });

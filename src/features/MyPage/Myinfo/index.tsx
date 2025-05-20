@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import api from "@/util/api";
 import { CameraOutlined } from "@ant-design/icons";
 import AddBanner from "@/components/AddBanner";
+
 interface infoprops {
   user: any;
 }
@@ -39,7 +40,7 @@ const Myinfo = ({ user }: infoprops) => {
   const handleProfileUpload = async (file: File) => {
     const formData = new FormData();
     formData.append("profileImage", file);
-    formData.append("userId", user.id); // user.id 확인 필요
+    formData.append("userId", user.id);
 
     try {
       const res = await api.put(`/users/me/profile-image`, formData);
@@ -48,7 +49,7 @@ const Myinfo = ({ user }: infoprops) => {
           centered: true,
           title: "프로필 이미지가 성공적으로 변경되었습니다.",
           onOk: () => {
-            window.location.reload(); // 새로고침으로 반영
+            window.location.reload();
           },
         });
       } else {
@@ -106,7 +107,7 @@ const Myinfo = ({ user }: infoprops) => {
     }
   };
 
-  //프로필 이미지 삭제 요청
+  // 프로필 이미지 삭제 요청
   const profileDelete = async () => {
     try {
       const res = await api.delete(`users/me/profile-image?userId=${user.id}`);
@@ -130,7 +131,7 @@ const Myinfo = ({ user }: infoprops) => {
     }
   };
 
-  //회원탈퇴
+  // 회원탈퇴
   const userexit = async () => {
     console.log(user.id);
     try {
@@ -140,7 +141,7 @@ const Myinfo = ({ user }: infoprops) => {
           centered: true,
           title: "회원 탈퇴가 완료되었습니다.",
           onOk: () => {
-            window.location.href = "/"; // 탈퇴 후 홈으로 리디렉션
+            window.location.href = "/";
           },
         });
       }
@@ -152,6 +153,35 @@ const Myinfo = ({ user }: infoprops) => {
       });
     }
   };
+
+  useEffect(() => {
+    if (!user?.id) return;
+
+    const fetchPaymentData = async () => {
+      try {
+        const res = await api.get(`/payments/user/${user.id}`);
+        const rawData = res.data.data;
+
+        const formattedData = rawData.map((item: any) => ({
+          id: item.id,
+          name: item.album?.title || "없음",
+          amount: item.price,
+          credit: item.method || "기타",
+          date: new Date(item.paidAt).toLocaleDateString(),
+        }));
+
+        setPaymentData(formattedData);
+      } catch (err) {
+        console.error("결제 내역 불러오기 실패:", err);
+        Modal.error({
+          title: "결제 내역 조회 실패",
+          centered: true,
+        });
+      }
+    };
+
+    fetchPaymentData();
+  }, [user?.id]);
 
   return (
     <MyinfoStyled>
@@ -189,6 +219,7 @@ const Myinfo = ({ user }: infoprops) => {
             </div>
           </div>
         </div>
+
         <div className="myinfo-nickname">
           <div className="myinfo-detailDiv">닉네임</div>
           <div className="myinfo-nicknameChange">
@@ -203,6 +234,7 @@ const Myinfo = ({ user }: infoprops) => {
             <Button onClick={changeNick}>닉네임 변경</Button>
           </div>
         </div>
+
         <div className="myinfo-useremail">
           <div className="myinfo-detailDiv">내 이메일</div>
           <Input
@@ -212,12 +244,14 @@ const Myinfo = ({ user }: infoprops) => {
             readOnly
           />
         </div>
+
         <div className="myinfo-usercredit">
-          <div>내 결제</div>
+          <div className="myinfo-detailDiv"> 내 결제</div>
           <div className="myinfo-creditlist" onClick={handleOpenModal}>
             내역 보기
           </div>
         </div>
+
         <Modal
           title="결제 내역"
           centered
@@ -225,6 +259,7 @@ const Myinfo = ({ user }: infoprops) => {
           onCancel={() => setIsModalOpen(false)}
           footer={null}
           width={600}
+          getContainer={false}
         >
           <Table
             dataSource={paymentData}
@@ -255,6 +290,7 @@ const Myinfo = ({ user }: infoprops) => {
             ]}
           />
         </Modal>
+
         <div
           onClick={userexit}
           style={{ cursor: "pointer" }}
@@ -262,6 +298,7 @@ const Myinfo = ({ user }: infoprops) => {
         >
           회원 탈퇴
         </div>
+
         <div className="AddBanner">
           <AddBanner />
         </div>
