@@ -63,6 +63,7 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
       setNum(num + 1);
     });
   };
+
   // 댓글 등록 요청 mini가 있으면 대댓글 없으면 댓글
   const commentpost = async (albumId: number) => {
     if (comment.trim().length < 1) {
@@ -70,11 +71,11 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
     }
 
     try {
-      await api.post("/album/commentPost", {
+      await api.post("/comments", {
         userId: user?.id,
         content: comment, // 댓글 본문
         postId: undefined, // 게시글이 아니므로 undefined
-        albumId: albumId, // 앨범 ID
+        albumImageId: albumId, // 앨범 ID
         parentId: mini || undefined, // 대댓글이면 parentId로 전달
       });
 
@@ -92,16 +93,6 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
 
   const handleContentClick = (e: React.MouseEvent) => {
     e.stopPropagation(); // 내부 클릭 시 닫히지 않도록
-  };
-
-  const goToNextImage = () => {
-    setCurrentIndex((prev) => (prev + 1) % dummy.titleImg.length);
-  };
-
-  const goToPreviousImage = () => {
-    setCurrentIndex((prev) =>
-      prev === 0 ? dummy.titleImg.length - 1 : prev - 1
-    );
   };
 
   const dummy: {
