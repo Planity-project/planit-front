@@ -46,6 +46,12 @@ const ChoiceWhich = ({
         setChoiceWhich(arr[0]);
         setSelectedLocation(arr[0]);
         setSelectedPlace(arr[0].name);
+        setSchedule((prev) => {
+          return {
+            ...prev,
+            dataPlace: [],
+          };
+        });
       } catch (error) {
         console.error("error", error);
       }

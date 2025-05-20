@@ -45,6 +45,11 @@ const CreateDatePage: React.FC = () => {
       setLoading(false); // 요청 끝났을 때 로딩 false
     }
   };
+
+  useEffect(() => {
+    console.log("최종 schedule 상태:", schedule);
+  }, [schedule]);
+
   const isRangeValid =
     range?.from instanceof Date &&
     range?.to instanceof Date &&
