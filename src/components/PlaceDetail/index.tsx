@@ -1,3 +1,4 @@
+import { PlaceDetailStyled } from "./styled";
 interface PlaceDetailProps {
   place?: {
     title: string;
@@ -12,13 +13,28 @@ interface PlaceDetailProps {
 
 const PlaceDetail = ({ place }: PlaceDetailProps) => {
   return (
-    <div>
-      <img src={place?.imageSrc} alt={`${place?.title}`} />
-      <p>제목: {place?.title}</p>
-      <p>카테고리: {place?.category}</p>
-      <p>주소: {place?.address}</p>
-      <p>전화번호: {place?.tel}</p>
-    </div>
+    <PlaceDetailStyled>
+      <div className="placedetail-wrap">
+        <div className="placedetail-imgDiv">
+          <img
+            src={place?.imageSrc}
+            className="placedetail-img"
+            alt={`${place?.title}`}
+          />
+        </div>
+        <div className="placedetail-textDiv">
+          <div className="placedetail-title">
+            이름: {place?.title}
+            <div className="placedetail-category">{place?.category}</div>
+          </div>
+
+          <div className="placedetail-address">주소: {place?.address}</div>
+          {place?.tel && (
+            <div className="placedetail-tel">전화번호: {place?.tel}</div>
+          )}
+        </div>
+      </div>
+    </PlaceDetailStyled>
   );
 };
 

@@ -16,7 +16,13 @@ export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const pathname = usePathname();
-  const excludedFooterPages = ["/", "/login", "/signup"];
+  const excludedFooterPages = [
+    "/",
+    "/login",
+    "/signup",
+    "/album",
+    "/snsmainpage",
+  ];
   const isFooterExcluded =
     excludedFooterPages.includes(pathname ?? "") ||
     (pathname?.startsWith("/snsmainpage/snsdetail") ?? false);

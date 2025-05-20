@@ -14,7 +14,7 @@ import {
 import MyDaysComponent from "@/components/MyDays";
 import { Input, Modal } from "antd";
 import { useUser } from "@/context/UserContext";
-import GoogleMapComponent from "@/components/showWhichGoogle";
+import GoogleMapComponent from "@/components/ShowWhichGoogle";
 import { useMemo } from "react";
 interface ImageSliderProps {
   images: string[];
@@ -141,6 +141,7 @@ const SnsDetail = () => {
             title={daydetail.name}
             lng={daydetail.lng}
             lat={daydetail.lat}
+            selectedDay={day}
           />
         </div>
         <div className="snspost-daysdetail">

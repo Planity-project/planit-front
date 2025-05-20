@@ -61,6 +61,7 @@ const CreateStay = ({
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
   const user = useUser();
   const router = useRouter();
+
   useEffect(() => {
     if (!range?.from || !range?.to) return;
     const totalDays = differenceInCalendarDays(range.to, range.from);
@@ -100,7 +101,6 @@ const CreateStay = ({
   useEffect(() => {
     if (selectedPlace) {
       setPlaces([]);
-
       setCurrentPage(1);
       setHasMore(true);
       // 다음 effect에서 1페이지로 다시 fetch
@@ -178,8 +178,6 @@ const CreateStay = ({
       return { ...prev, dataStay: updated };
     });
   };
-
-  useEffect(() => {}, [schedule]);
 
   useEffect(() => {
     const totalMinutes = schedule.dataStay.reduce(
