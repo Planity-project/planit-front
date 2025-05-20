@@ -141,6 +141,7 @@ const SnsDetail = () => {
             title={daydetail.name}
             lng={daydetail.lng}
             lat={daydetail.lat}
+            selectedDay={day}
           />
         </div>
         <div className="snspost-daysdetail">
