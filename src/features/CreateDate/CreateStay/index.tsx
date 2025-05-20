@@ -191,7 +191,7 @@ const CreateStay = ({
   }, [schedule.dataStay]);
 
   const generateFinalSchedule = async () => {
-    setLoading(true); // 로딩 시작
+    setresultLoading(true); // 로딩 시작
 
     try {
       const res = await api.post("/trip/generateDate", {
@@ -203,7 +203,7 @@ const CreateStay = ({
     } catch (err) {
       alert("일정 생성 중 오류가 발생했습니다.");
     } finally {
-      setLoading(false); // 로딩 종료
+      setresultLoading(false); // 로딩 종료
       router.push(`/snsmainpage/snsdetail/id=${result}`);
     }
   };
@@ -311,6 +311,7 @@ const CreateStay = ({
           일정 생성
         </Button>
       </div>
+      {resultLoading ? <Loding /> : <></>}
     </CreateStayStyled>
   );
 };
