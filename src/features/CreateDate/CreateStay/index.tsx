@@ -9,7 +9,6 @@ import { UnassignedPlaceCard, AssignedPlaceCard } from "./stayBox";
 import { Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { CheckOutlined } from "@ant-design/icons";
-import PlaceModal from "@/components/AddPlace/index";
 import { format, addDays, differenceInCalendarDays } from "date-fns";
 import { useUser } from "@/context/UserContext";
 import Loding from "@/components/Loding";
@@ -63,14 +62,14 @@ const CreateStay = ({
   const user = useUser();
   const router = useRouter();
   useEffect(() => {
-    if (!range?.from || !range?.to || schedule.dataStay.length > 0) return;
+    if (!range?.from || !range?.to) return;
     const totalDays = differenceInCalendarDays(range.to, range.from);
     const initialData = Array.from({ length: totalDays }).map((_, i) => ({
       date: format(addDays(range.from!, i), "yyyy-MM-dd"),
       place: null,
     }));
     setSchedule((prev) => ({ ...prev, dataStay: initialData }));
-  }, []);
+  }, [range]);
 
   //주변 장소 받아오는 함수
   const fetchNearbyPlaces = useCallback(async () => {
@@ -200,7 +199,7 @@ const CreateStay = ({
 
       setResult(res.data); // 결과 저장
     } catch (err) {
-      alert("일정 생성 중 오류가 발생했습니다.", err);
+      alert("일정 생성 중 오류가 발생했습니다.");
     } finally {
       setresultLoading(false); // 로딩 종료
       // router.push(`/snsmainpage/snsdetail/id=${result}`);
@@ -282,12 +281,6 @@ const CreateStay = ({
           </div>
         </div>
         <ShowWhich selectedLocation={place} isPlace={true} />
-
-        {/* 장소 등록 모달 */}
-        <PlaceModal
-          visible={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-        />
       </div>
 
       <div className="choice-btnDiv">

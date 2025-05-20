@@ -119,7 +119,8 @@ const DateChoice = ({ range, setRange, onNext }: DateChoiceProps) => {
               selected={range}
               onSelect={(selectedRange) => {
                 handleSelect(selectedRange);
-                handleReactivation(selectedRange); // 기간 완료 후 다시 클릭하면 초기화
+                handleReactivation(selectedRange);
+                setRange(selectedRange); // 기간 완료 후 다시 클릭하면 초기화
               }}
               disabled={getDisabledDays(range?.from)}
             />

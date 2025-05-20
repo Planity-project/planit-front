@@ -137,9 +137,11 @@ export const AssignedPlaceCard = ({
           </div>
         </div>
       ) : (
-        <div className="create-placeholder" key={index}>
-          <div className="placeholder-date">{date}</div>
-          <div className="placeholder-message">숙소를 추가해주세요</div>
+        <div key={index} style={{ display: "flex", justifyContent: "center" }}>
+          <div className="create-placeholder">
+            <div className="placeholder-date">{date}</div>
+            <div className="placeholder-message">숙소를 추가해주세요</div>
+          </div>
         </div>
       )}
     </PlaceCardWrapper>

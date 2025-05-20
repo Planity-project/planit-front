@@ -9,7 +9,6 @@ import { UnassignedPlaceCard, AssignedPlaceCard } from "./contentBox";
 import { Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { CheckOutlined } from "@ant-design/icons";
-import PlaceModal from "@/components/AddPlace/index";
 
 interface CreateDaysProps {
   selectedPlace: any;
@@ -98,7 +97,6 @@ const CreateDays = ({
   }, [selectedPlace, currentPage]);
 
   useEffect(() => {
-    console.log(selectedCategories, "선택된 카테고리");
     setPlaces([]);
     setCurrentPage(1);
     if (selectedPlace) fetchNearbyPlaces();
@@ -172,7 +170,6 @@ const CreateDays = ({
         dataPlace: [...prev.dataPlace, newPlace],
       };
     });
-    console.log(newPlace, "Data");
   };
 
   // 시간 수정 핸들러
@@ -240,14 +237,10 @@ const CreateDays = ({
 
           <div className="create-all">
             <div className="create-topleft">
-              {["장소 등록", "명소", "식당", "카페"].map((label) => (
+              {["명소", "식당", "카페"].map((label) => (
                 <button
                   key={label}
-                  onClick={() =>
-                    label === "장소 등록"
-                      ? setIsModalOpen(true)
-                      : toggleCategory(label)
-                  }
+                  onClick={() => toggleCategory(label)}
                   className={`create-button-item ${
                     selectedCategories.includes(label) ? "active" : ""
                   }`}
@@ -278,17 +271,7 @@ const CreateDays = ({
 
           <div className="create-left">
             <div className="create-choiceBox">
-              {places.length === 0 && !loading && (
-                <p>장소를 불러올 수 없습니다.</p>
-              )}
-              {places.map((place, i) => (
-                <UnassignedPlaceCard
-                  key={i}
-                  place={place}
-                  onClick={() => handlePlaceClick(i)}
-                />
-              ))}
-              {loading && (
+              {loading ? (
                 <>
                   {[...Array(5)].map((_, index) => (
                     <div className="create-placecard" key={index}>
@@ -305,15 +288,25 @@ const CreateDays = ({
                     </div>
                   ))}
                 </>
+              ) : places.length === 0 ? (
+                <p>장소를 불러올 수 없습니다.</p>
+              ) : (
+                places.map((place, i) => (
+                  <UnassignedPlaceCard
+                    key={i}
+                    place={place}
+                    onClick={() => handlePlaceClick(i)}
+                  />
+                ))
               )}
 
-              {hasMore && (
+              {!loading && hasMore && (
                 <button className="create-loadmore" onClick={loadMore}>
                   더보기
                 </button>
               )}
 
-              {!hasMore && (
+              {!loading && !hasMore && (
                 <p className="create-end">더 이상 장소가 없습니다.</p>
               )}
             </div>
@@ -337,12 +330,6 @@ const CreateDays = ({
           </div>
         </div>
         <ShowWhich selectedLocation={place} isPlace={true} />
-
-        {/* 장소 등록 모달 */}
-        <PlaceModal
-          visible={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-        />
       </div>
 
       <div className="choice-btnDiv">

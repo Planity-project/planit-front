@@ -184,7 +184,7 @@ export const PlaceCardWrapper = styled.div`
   }
 
   .create-placeholder {
-    width: 100%;
+    width: 95%;
     padding: 16px;
     /* background-color: #f0f2f5; */
     border: 2px dashed #d9d9d9;
