@@ -7,7 +7,6 @@ import ChoiceWhich from "./ChoiceWhich";
 import CreateDays from "./CreateDays";
 import CreateStay from "./CreateStay";
 import ChoiceTime from "./ChoiceTime";
-import GenerateDate from "./GenerateDate";
 import api from "@/util/api";
 export interface ScheduleType {
   dataTime: any[];
@@ -143,9 +142,6 @@ const CreateDatePage: React.FC = () => {
           loading={loading}
           setLoading={setLoading}
         />
-      )}
-      {current === 5 && (
-        <GenerateDate schedule={schedule} setSchedule={setSchedule} />
       )}
     </Createpage>
   );

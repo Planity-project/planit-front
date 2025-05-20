@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import api from "@/util/api";
 import { CreateStayStyled } from "./styled";
 import ShowWhich from "@/components/ShowWhich";
-import { Button, Skeleton } from "antd";
+import { Button, Modal, Skeleton } from "antd";
 import basicImg from "@/assets/images/close.png";
 import { ScheduleType } from "..";
 import { UnassignedPlaceCard, AssignedPlaceCard } from "./stayBox";
@@ -11,6 +11,9 @@ import { SearchOutlined } from "@ant-design/icons";
 import { CheckOutlined } from "@ant-design/icons";
 import PlaceModal from "@/components/AddPlace/index";
 import { format, addDays, differenceInCalendarDays } from "date-fns";
+import { useUser } from "@/context/UserContext";
+import Loding from "@/components/Loding";
+import { useRouter } from "next/router";
 interface CreateDaysProps {
   selectedPlace: any;
   onNext: () => void;
@@ -50,12 +53,15 @@ const CreateStay = ({
   const [place, setPlace] = useState<any | null>(selectedPlace);
   const [str, setStr] = useState("");
   const [totalTime, setTotalTime] = useState(0);
+  const [resultLoading, setresultLoading] = useState(false);
+  const [result, setResult] = useState<any>(null);
   // const [editingIndex, setEditingIndex] = useState<number | null>(null);
   // const [editedMinutes, setEditedMinutes] = useState<number>(120);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
-
+  const user = useUser();
+  const router = useRouter();
   useEffect(() => {
     if (!range?.from || !range?.to || schedule.dataStay.length > 0) return;
     const totalDays = differenceInCalendarDays(range.to, range.from);
@@ -174,9 +180,7 @@ const CreateStay = ({
     });
   };
 
-  useEffect(() => {
-    console.log("최종 schedule 상태:", schedule);
-  }, [schedule]);
+  useEffect(() => {}, [schedule]);
 
   useEffect(() => {
     const totalMinutes = schedule.dataStay.reduce(
@@ -186,8 +190,23 @@ const CreateStay = ({
     setTotalTime(totalMinutes);
   }, [schedule.dataStay]);
 
-  const totalHours = Math.floor(totalTime / 60);
-  const totalMinutes = totalTime % 60;
+  const generateFinalSchedule = async () => {
+    setLoading(true); // 로딩 시작
+
+    try {
+      const res = await api.post("/trip/generateDate", {
+        schedule,
+        userId: user?.id,
+      });
+
+      setResult(res.data); // 결과 저장
+    } catch (err) {
+      alert("일정 생성 중 오류가 발생했습니다.");
+    } finally {
+      setLoading(false); // 로딩 종료
+      router.push(`/snsmainpage/snsdetail/id=${result}`);
+    }
+  };
 
   return (
     <CreateStayStyled>
@@ -273,7 +292,22 @@ const CreateStay = ({
       </div>
 
       <div className="choice-btnDiv">
-        <Button type="primary" onClick={onNext}>
+        <Button
+          type="primary"
+          onClick={() => {
+            Modal.confirm({
+              centered: true,
+              title: "일정을 생성하시겠습니까?",
+              content: "최대 3분의 시간이 소요됩니다.",
+              okText: "yes",
+              cancelText: "no",
+              onOk: () => {
+                generateFinalSchedule();
+              },
+              onCancel: () => {},
+            });
+          }}
+        >
           일정 생성
         </Button>
       </div>
