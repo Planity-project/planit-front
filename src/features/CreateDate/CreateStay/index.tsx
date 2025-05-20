@@ -196,15 +196,14 @@ const CreateStay = ({
     try {
       const res = await api.post("/trip/generateDate", {
         schedule,
-        userId: user?.id,
       });
 
       setResult(res.data); // 결과 저장
     } catch (err) {
-      alert("일정 생성 중 오류가 발생했습니다.");
+      alert("일정 생성 중 오류가 발생했습니다.", err);
     } finally {
       setresultLoading(false); // 로딩 종료
-      router.push(`/snsmainpage/snsdetail/id=${result}`);
+      // router.push(`/snsmainpage/snsdetail/id=${result}`);
     }
   };
 
