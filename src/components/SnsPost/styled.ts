@@ -24,7 +24,7 @@ export const SnsPostStyled = styled.div<{ $variant?: "default" | "album" }>`
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    border-radius: 8px;
+    border-radius: 6px;
     border: 1px solid lightgray;
     background-color: #fff;
     box-shadow: 0 4px 12px rgba(250, 250, 250, 0.1);
@@ -58,7 +58,7 @@ export const SnsPostStyled = styled.div<{ $variant?: "default" | "album" }>`
     height: 100%;
     position: relative;
     overflow: hidden;
-    border-radius: 10px;
+    border-radius: 5px;
     display: flex;
   }
   .sns-imgWrapper img,
@@ -131,7 +131,6 @@ export const SnsPostStyled = styled.div<{ $variant?: "default" | "album" }>`
     gap: 5px;
     height: ${(props) => (props.$variant === "album" ? "20%" : "30%")};
     padding: ${(props) => (props.$variant === "album" ? "5px" : "10px 5px;")};
-    background-color: white;
   }
 
   .sns-title {

@@ -59,9 +59,11 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
         title: "로그인 후 이용가능합니다.",
       });
     }
-    api.post("/user/likePost", { userId: id, albumId: albumId }).then((res) => {
-      setNum(num + 1);
-    });
+    api
+      .post("/user/likePost", { userId: id, albumId: albumId })
+      .then((res: any) => {
+        setNum(num + 1);
+      });
   };
 
   // 댓글 등록 요청 mini가 있으면 대댓글 없으면 댓글
@@ -156,60 +158,50 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
     <PhotoStyled $modal={modal} onClick={handleBackgroundClick}>
       <div className="photo-wrap" onClick={handleContentClick}>
         <div className="photo-photozone">
+          {/* 왼쪽 화살표 (처음일 땐 안 보이게) */}
+          {currentIndex > 0 && (
+            <LeftOutlined
+              onClick={(e) => {
+                e.stopPropagation();
+                setCurrentIndex(currentIndex - 1);
+              }}
+              className="arrow-icon"
+            />
+          )}
           <div
             className="slider-container"
             style={{
-              display: "flex",
-              transition: "transform 0.5s ease",
               transform: `translateX(-${currentIndex * 100}%)`,
-              width: `100%`,
+              width: `${dummy.titleImg.length * 100}%`,
+              height: "100%", // 추가
             }}
           >
-            {dummy.titleImg.map((img: string, idx: number) => (
-              <div
-                key={idx}
-                style={{
-                  width: "100%",
-                  flexShrink: 0,
-                  height: "100%",
-                  position: "relative",
-                }}
-              >
-                {/* 왼쪽 화살표 (처음일 땐 안 보이게) */}
-                {currentIndex > 0 && (
-                  <LeftOutlined
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setCurrentIndex(currentIndex - 1);
+            {dummy.titleImg.map((img: any, idx: number) => {
+              console.log("이미지 확인:", img.src);
+              return (
+                <div key={idx} className="slider-item">
+                  <img
+                    src={img.src}
+                    alt={`image-${idx}`}
+                    style={{
+                      width: "100%",
+                      height: "100%",
                     }}
-                    className="arrow-icon"
                   />
-                )}
-                <Image
-                  className="photo-image"
-                  src={img}
-                  alt={`image-${idx}`}
-                  width={100}
-                  height={300}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "contain",
-                  }}
-                />
-                {/* 오른쪽 화살표 (마지막일 땐 안 보이게) */}
-                {currentIndex < dummy.titleImg.length - 1 && (
-                  <RightOutlined
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setCurrentIndex(currentIndex + 1);
-                    }}
-                    className="arrow-icon-right"
-                  />
-                )}
-              </div>
-            ))}
+                </div>
+              );
+            })}
           </div>
+          {/* 오른쪽 화살표 (마지막일 땐 안 보이게) */}
+          {currentIndex < dummy.titleImg.length - 1 && (
+            <RightOutlined
+              onClick={(e) => {
+                e.stopPropagation();
+                setCurrentIndex(currentIndex + 1);
+              }}
+              className="arrow-icon-right"
+            />
+          )}
         </div>
         <div className="photo-commentzone">
           <div className="photo-user">
