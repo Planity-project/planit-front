@@ -21,6 +21,7 @@ export const MypageStyled = styled.div`
     font-size: 18px;
     font-weight: 600;
     width: 15%;
+    height: 80vh;
     border-right: 1px solid black;
   }
   .mypage-component {

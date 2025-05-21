@@ -2,50 +2,61 @@ import styled from "styled-components";
 
 export const MyfavStyled = styled.div`
   width: 100%;
-
+  height: 100%;
+  display: flex;
+  justify-content: center;
   .myfav-wrap {
-    width: 100%;
+    width: 70%;
     height: 100%;
     position: relative;
 
     .myfav-title {
-      width: 100%;
+      text-align: center;
       font-weight: bold;
-      font-size: 1rem;
-      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
     }
 
-    .myfav-bubbleDiv {
+    .chat-box {
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      margin-top: 20px;
+      gap: 15px;
+      height: 100%;
+      overflow-y: auto;
+      padding: 12px;
+      background-color: rgba(83, 183, 232, 0.3);
+      border-radius: 8px;
+      margin-bottom: 20px;
     }
+
     .chat-bubble {
-      background-color: rgb(83, 183, 232, 0.3);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      width: 30%;
-      padding: 10px;
-      border-radius: 1rem;
+      max-width: 60%;
+      width: 40%;
+      padding: 8px 15px;
+      border-radius: 10px;
+      font-size: 1rem;
+      line-height: 1.4;
       position: relative;
-      font-size: 0.95rem;
+      word-wrap: break-word;
+    }
 
-      .chat-date {
-        font-size: 0.8rem;
-        color: #777;
-        text-align: right;
-      }
-    }
     .left {
-      border-top-left-radius: 0;
-      background-color: rgb(83, 183, 232, 0.3);
+      align-self: flex-start;
+      background-color: white;
+      border-bottom-left-radius: 0;
     }
+
+    .chat-date {
+      font-size: 0.75rem;
+      color: #666;
+      margin-top: 5px;
+      text-align: right;
+    }
+
     .AddBanner {
       width: 13%;
       height: 500px;
-      position: fixed; /* fixed로 변경 */
+      position: fixed;
       right: 100px;
       top: 100px;
     }
@@ -55,19 +66,16 @@ export const MyfavStyled = styled.div`
         width: 16%;
       }
     }
+
     @media (max-width: 1000px) {
       .AddBanner {
         display: none;
       }
     }
+
     @media (max-width: 900px) {
       .chat-bubble {
-        width: 50%;
-      }
-    }
-    @media (max-width: 900px) {
-      .chat-bubble {
-        width: 70%;
+        max-width: 80%;
       }
     }
   }

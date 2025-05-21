@@ -12,6 +12,7 @@ export const MyinfoDaysStyled = styled.div`
     width: 100%;
     max-width: 600px;
     background-color: rgba(83, 183, 232, 0.3);
+    overflow-y: auto;
     padding: 12px;
     border-radius: 8px;
   }
