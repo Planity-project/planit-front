@@ -22,13 +22,16 @@ const CommentComponent = ({ data, setMini, mini }: any) => {
       prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id]
     );
   };
-  //댓글 좋아요 요청
-  const commentHeart = (id?: number, commentId?: number) => {
-    api
-      .post("/like/comment", { userId: id, commentId: commentId })
-      .then((res) => {
-        setNum(num + 1);
-      });
+
+  // 댓글 좋아요 요청
+  const commentHeart = async (commentId?: number) => {
+    if (!user?.id) return;
+    try {
+      await api.post(`/likes/comment/${commentId}/toggle`);
+      setNum((prev) => prev + 1);
+    } catch (err) {
+      console.error("좋아요 처리 중 오류:", err);
+    }
   };
 
   useEffect(() => {}, [num]);
@@ -66,16 +69,12 @@ const CommentComponent = ({ data, setMini, mini }: any) => {
             </div>
             {comment.like === true ? (
               <HeartFilled
-                onClick={() => {
-                  commentHeart(user?.id, comment.id);
-                }}
+                onClick={() => commentHeart(comment.id)}
                 className="comment-heartIcon"
               />
             ) : (
               <HeartOutlined
-                onClick={() => {
-                  commentHeart(user?.id, comment.id);
-                }}
+                onClick={() => commentHeart(comment.id)}
                 className="comment-heartIcon"
               />
             )}

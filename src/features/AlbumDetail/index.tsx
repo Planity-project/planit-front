@@ -23,6 +23,7 @@ const AlbumDetail = () => {
   const [modal, setModal] = useState<boolean>(false);
   const [albumId, setAlbumId] = useState<number>(0);
   const [userrole, setUserrole] = useState<string>("member");
+  const [imgId, setImgId] = useState<number>(0);
   const [openMenuIndex, setOpenMenuIndex] = useState<number | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
 

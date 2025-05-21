@@ -27,7 +27,7 @@ export default function PaymentTestPage() {
       if (paymentResult) {
         const res = await api.post("/payments/verify", {
           paymentId: paymentResult.paymentId,
-          albumId: 4,
+          albumId: 6,
           userId: 4,
           txId: paymentResult.txId,
           type: "desktop",
