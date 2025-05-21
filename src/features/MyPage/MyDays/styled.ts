@@ -3,74 +3,88 @@ import styled from "styled-components";
 export const MyinfoDaysStyled = styled.div`
   padding: 2rem;
   display: flex;
-  flex-direction: column;
-  gap: 2rem;
+  justify-content: center;
   width: 100%;
 
-  .chat-section {
-    width: 100%;
+  .chat-box {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-  }
-  .chat-titleDiv {
     width: 100%;
+    max-width: 600px;
+    background-color: rgba(83, 183, 232, 0.3);
+    padding: 12px;
+    border-radius: 8px;
+  }
+
+  .chat-titleBox {
     display: flex;
+    align-items: center;
     justify-content: space-around;
+    margin-bottom: 20px;
   }
-  .chat-title {
-    width: 100%;
-    font-weight: bold;
-    font-size: 1rem;
-    margin-bottom: 0.8rem;
-  }
-  .chat-bubbleDiv {
-    width: 100%;
+
+  .chat-row {
     display: flex;
-    justify-content: space-around;
-  }
-  .chat-bubble {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     width: 100%;
     padding: 10px;
-    border-radius: 1rem;
-    position: relative;
-    font-size: 0.95rem;
+  }
 
-    .chat-date {
-      font-size: 0.8rem;
-      color: #777;
-      text-align: right;
-    }
+  .chat-row.left {
+    justify-content: flex-start;
   }
-  .chat-width100 {
-    width: 40%;
+
+  .chat-row.right {
+    justify-content: flex-end;
   }
-  .left {
-    border-top-left-radius: 0;
-    background-color: rgb(83, 183, 232, 0.3);
+
+  .chat-bubble {
+    position: relative;
+    max-width: 70%;
+    padding: 8px 12px;
+    background-color: white;
+    border-radius: 2px;
+    font-size: 0.95rem;
   }
-  .right {
-    border-top-right-radius: 0;
-    background-color: rgba(170, 170, 170, 0.2);
+
+  .chat-row.right .chat-bubble {
+    background-color: yellow;
   }
-  @media (max-width: 1010px) {
-    .chat-bubbleDiv {
-      display: flex;
-      flex-direction: column;
-      gap: 50px;
-    }
+
+  .chat-date {
+    font-size: 0.7rem;
+    color: #666;
+    text-align: right;
+    margin-top: 2px;
   }
-  @media (max-width: 700px) {
-    .chat-width100 {
-      width: 70%;
-    }
+
+  /* 꼬리 조정 - 작고 자연스럽게 하단 모서리 쪽에 */
+  .chat-row.left .chat-bubble::before {
+    content: "";
+    position: absolute;
+    top: 0px;
+    left: -7px;
+    width: 0;
+    height: 0;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-right: 14px solid white;
   }
-  @media (max-width: 450px) {
-    .chat-width100 {
-      width: 90%;
+
+  .chat-row.right .chat-bubble::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -7px;
+    width: 0;
+    height: 0;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-left: 14px solid yellow;
+  }
+
+  @media (max-width: 600px) {
+    .chat-bubble {
+      max-width: 85%;
     }
   }
 `;
