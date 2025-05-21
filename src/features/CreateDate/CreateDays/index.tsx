@@ -1,14 +1,18 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import api from "@/util/api";
 import { CreateDaysStyled } from "./styled";
 import ShowWhich from "@/components/ShowWhich";
 import { Button, Skeleton } from "antd";
-import basicImg from "@/assets/images/close.png";
+import { Input } from "antd";
+import { SearchOutlined, CheckOutlined } from "@ant-design/icons";
 import { ScheduleType } from "..";
 import { UnassignedPlaceCard, AssignedPlaceCard } from "./contentBox";
-import { Input } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
-import { CheckOutlined } from "@ant-design/icons";
 
 interface CreateDaysProps {
   selectedPlace: any;
@@ -56,54 +60,68 @@ const CreateDays = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
 
-  //주변 장소 받아오는 함수
-  const fetchNearbyPlaces = useCallback(async () => {
-    if (!selectedPlace) return;
+  // 주변 장소 받아오는 함수 (page 인자로 받음)
+  const fetchNearbyPlaces = useCallback(
+    async (page: number) => {
+      if (!selectedPlace) return;
 
-    setLoading(true);
-    // selectedCategories 한글 → 구글 카테고리명 변환
-    try {
-      console.log(selectedCategories, "선택된 카테고리");
-      const res = await api.post("/map/nearby", {
-        address: selectedPlace.name,
-        page: currentPage,
-        type: 1,
-        categories: selectedCategories, // 배열 그대로 넘김
-      });
+      setLoading(true);
+      try {
+        console.log(selectedCategories, "선택된 카테고리");
+        const res = await api.post("/map/nearby", {
+          address: selectedPlace.name,
+          page,
+          type: 1,
+          categories: selectedCategories,
+        });
 
-      const newPlaces = res.data.locations;
-      if (newPlaces.length === 0) setHasMore(false);
-      else setPlaces((prev) => [...prev, ...newPlaces]);
-      console.log("응답", newPlaces);
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoading(false);
-    }
-  }, [selectedPlace, currentPage, selectedCategories]);
+        const newPlaces = res.data.locations;
+        if (newPlaces.length === 0) setHasMore(false);
+        else
+          setPlaces((prev) =>
+            page === 0 ? newPlaces : [...prev, ...newPlaces]
+          );
+        console.log("응답", newPlaces);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [selectedPlace, selectedCategories, setLoading]
+  );
 
+  // selectedPlace 변경 시 초기화
   useEffect(() => {
     if (selectedPlace) {
       setPlaces([]);
-
-      setCurrentPage(1);
+      setCurrentPage(0);
       setHasMore(true);
-      // 다음 effect에서 1페이지로 다시 fetch
     }
   }, [selectedPlace]);
 
+  // currentPage 또는 selectedPlace 변경 시 fetch 호출
   useEffect(() => {
-    if (selectedPlace) fetchNearbyPlaces();
+    if (selectedPlace && currentPage > 0) {
+      fetchNearbyPlaces(currentPage);
+    }
   }, [selectedPlace, currentPage]);
 
+  // selectedCategories 변경 시 currentPage 1로 세팅 -> useEffect가 fetch 호출
   useEffect(() => {
-    setPlaces([]);
-    setCurrentPage(1);
-    if (selectedPlace) fetchNearbyPlaces();
-  }, [selectedCategories]);
+    if (selectedPlace) {
+      setPlaces([]);
+      setHasMore(true);
+      setCurrentPage(0);
+      fetchNearbyPlaces(0);
+    }
+  }, [selectedCategories, selectedPlace]);
 
+  // loadMore 눌렀을 때 스크롤 위치 저장 후 currentPage 증가
   const loadMore = () => {
-    setCurrentPage((prev) => prev + 1);
+    if (hasMore && !loading) {
+      setCurrentPage((prev) => prev + 1);
+    }
   };
 
   const searchInput = async (str: string) => {
@@ -111,13 +129,11 @@ const CreateDays = ({
     if (!selectedPlace) return;
 
     try {
-      const res = await api.get("/map/searchNearby", {
-        params: {
-          address: selectedPlace.name,
-          page: currentPage,
-          str,
-          type: 1,
-        },
+      const res = await api.post("/map/searchNearby", {
+        address: selectedPlace.name,
+        page: 0,
+        type: 1,
+        str: str,
       });
       const filteredPlaces = res.data.locations;
       setPlaces(filteredPlaces);
@@ -132,7 +148,6 @@ const CreateDays = ({
     setCurrentPage(1);
   };
 
-  // 버튼 중복 선택
   const toggleCategory = (category: string) => {
     setSelectedCategories((prev) =>
       prev.includes(category)
@@ -142,7 +157,6 @@ const CreateDays = ({
   };
 
   const handlePlaceClick = (i: number) => {
-    const totalMinutes = time.hrs * 60 + time.mins;
     const selected = places[i];
     const newPlace: DataType = {
       title: selected.title,
@@ -162,7 +176,7 @@ const CreateDays = ({
     });
 
     setSchedule((prev) => {
-      const dup = prev.dataPlace.find((p) => p.title === newPlace.title); //중복 지역은 x
+      const dup = prev.dataPlace.find((p) => p.title === newPlace.title);
       if (dup) return prev;
 
       return {
@@ -172,16 +186,14 @@ const CreateDays = ({
     });
   };
 
-  // 시간 수정 핸들러
   const handleTimeChange = (i: number, minutes: number) => {
     setEditingIndex(i);
-    setEditedMinutes(minutes); // 기존 시간을 가져와서 수정할 수 있게
+    setEditedMinutes(minutes);
   };
 
-  // 수정된 시간 저장 핸들러
   const handleTimeUpdate = (i: number) => {
     const updated = [...schedule.dataPlace];
-    updated[i].minutes = editedMinutes; // 시간 업데이트
+    updated[i].minutes = editedMinutes;
 
     setSchedule((prev) => ({
       ...prev,
@@ -194,12 +206,10 @@ const CreateDays = ({
   const handleDeleteBox = (i: number) => {
     const arr = schedule.dataPlace.filter((x, index) => index !== i);
 
-    setSchedule((prev) => {
-      return {
-        ...prev,
-        dataPlace: arr,
-      };
-    });
+    setSchedule((prev) => ({
+      ...prev,
+      dataPlace: arr,
+    }));
   };
 
   useEffect(() => {
@@ -242,10 +252,9 @@ const CreateDays = ({
                   }`}
                 >
                   {label}
-                  {["명소", "식당", "카페"].includes(label) &&
-                    selectedCategories.includes(label) && (
-                      <CheckOutlined className="check-icon" />
-                    )}
+                  {selectedCategories.includes(label) && (
+                    <CheckOutlined className="check-icon" />
+                  )}
                 </button>
               ))}
             </div>
@@ -267,10 +276,18 @@ const CreateDays = ({
 
           <div className="create-left">
             <div className="create-choiceBox">
-              {loading ? (
+              {places.map((place, i) => (
+                <UnassignedPlaceCard
+                  key={`${place.title}-${place.lat}-${place.lon}-${i}`}
+                  place={place}
+                  onClick={() => handlePlaceClick(i)}
+                />
+              ))}
+
+              {loading && (
                 <>
                   {[...Array(5)].map((_, index) => (
-                    <div className="create-placecard" key={index}>
+                    <div className="create-placecard" key={`skeleton-${index}`}>
                       <div style={{ width: "100%" }}>
                         <Skeleton
                           active
@@ -284,20 +301,16 @@ const CreateDays = ({
                     </div>
                   ))}
                 </>
-              ) : places.length === 0 ? (
-                <p>장소를 불러올 수 없습니다.</p>
-              ) : (
-                places.map((place, i) => (
-                  <UnassignedPlaceCard
-                    key={i}
-                    place={place}
-                    onClick={() => handlePlaceClick(i)}
-                  />
-                ))
               )}
 
               {!loading && hasMore && (
-                <button className="create-loadmore" onClick={loadMore}>
+                <button
+                  className="create-loadmore"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    loadMore();
+                  }}
+                >
                   더보기
                 </button>
               )}

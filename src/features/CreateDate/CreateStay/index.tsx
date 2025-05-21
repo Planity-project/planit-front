@@ -79,7 +79,6 @@ const CreateStay = ({
     setLoading(true);
     // selectedCategories 한글 → 구글 카테고리명 변환
     try {
-      console.log(range, "range");
       const res = await api.post("/map/nearby", {
         address: selectedPlace.name,
         page: currentPage,
@@ -120,13 +119,11 @@ const CreateStay = ({
     if (!selectedPlace) return;
 
     try {
-      const res = await api.get("/map/searchNearby", {
-        params: {
-          address: selectedPlace.name,
-          page: currentPage,
-          str,
-          type: 1,
-        },
+      const res = await api.post("/map/searchNearby", {
+        address: selectedPlace.name,
+        page: 0,
+        str,
+        type: 2,
       });
       const filteredPlaces = res.data.locations;
       setPlaces(filteredPlaces);
@@ -200,7 +197,7 @@ const CreateStay = ({
       alert("일정 생성 중 오류가 발생했습니다.");
     } finally {
       setresultLoading(false); // 로딩 종료
-      // router.push(`/snsmainpage/snsdetail/id=${result}`);
+      router.push(`/snsmainpage/snsdetail/id=${result}`);
     }
   };
 

@@ -32,19 +32,6 @@ const CreateDatePage: React.FC = () => {
     dataPlace: [],
     dataStay: [],
   });
-  const placeOnClick = async (place: string) => {
-    try {
-      setLoading(true); // 요청 시작 시 로딩 true
-      const res = await api.get("map/place", {
-        params: { name: place },
-      });
-      console.log(res.data); // 받아온 데이터 활용
-    } catch (err) {
-      console.error("API 요청 실패:", err);
-    } finally {
-      setLoading(false); // 요청 끝났을 때 로딩 false
-    }
-  };
 
   useEffect(() => {
     console.log("최종 schedule 상태:", schedule);
@@ -110,7 +97,6 @@ const CreateDatePage: React.FC = () => {
           onNext={handleNextStep}
           setChoiceWhich={setChiocewhich}
           setSchedule={setSchedule}
-          placeOnClick={placeOnClick}
         />
       )}
       {current === 2 && (

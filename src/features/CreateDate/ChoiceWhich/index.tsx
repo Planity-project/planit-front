@@ -14,7 +14,6 @@ interface ChoiceWhichProps {
   onNext: () => void;
   setChoiceWhich: (place: []) => void;
   setSchedule: React.Dispatch<React.SetStateAction<ScheduleType>>;
-  placeOnClick: (place: string) => void;
 }
 
 const ChoiceWhich = ({
@@ -22,7 +21,6 @@ const ChoiceWhich = ({
   onNext,
   setChoiceWhich,
   setSchedule,
-  placeOnClick,
 }: ChoiceWhichProps) => {
   const [location, setLocation] = useState<any[]>([]);
   const [inputValue, setInputValue] = useState<string>("");
@@ -86,7 +84,6 @@ const ChoiceWhich = ({
                       setSelectedLocation(x);
                       setChoiceWhich(x);
                       setSelectedPlace(x.name); // ⬅ 선택 시 상위로 전달
-                      placeOnClick(x.name);
                     }}
                   >
                     <div className="which-gpsDiv">

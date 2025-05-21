@@ -102,7 +102,7 @@ export const CreateDaysStyled = styled.div`
 
   .create-choiceBox {
     width: 50%;
-    max-height: 500px;
+    height: 500px;
     overflow-y: scroll;
   }
 
@@ -141,6 +141,7 @@ export const CreateDaysStyled = styled.div`
 
   .create-left {
     width: 100%;
+    min-height: 500px;
     display: flex;
     gap: 10px;
   }
