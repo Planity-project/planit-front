@@ -21,6 +21,7 @@ export const MyinfoDaysStyled = styled.div`
     align-items: center;
     justify-content: space-around;
     margin-bottom: 20px;
+    gap: 30px;
   }
 
   .chat-row {
@@ -39,10 +40,10 @@ export const MyinfoDaysStyled = styled.div`
 
   .chat-bubble {
     position: relative;
-    max-width: 70%;
+    width: 40%;
     padding: 8px 12px;
     background-color: white;
-    border-radius: 2px;
+    border-radius: 6px;
     font-size: 0.95rem;
   }
 
@@ -57,7 +58,6 @@ export const MyinfoDaysStyled = styled.div`
     margin-top: 2px;
   }
 
-  /* 꼬리 조정 - 작고 자연스럽게 하단 모서리 쪽에 */
   .chat-row.left .chat-bubble::before {
     content: "";
     position: absolute;

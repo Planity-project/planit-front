@@ -1,20 +1,24 @@
 import { useState } from "react";
-import { Popover, Spin } from "antd";
+import { Popover, Spin, Button } from "antd";
 import { BellOutlined } from "@ant-design/icons";
 import api from "@/util/api";
 import { NotificationStyled } from "./styled";
 
 interface Notification {
   id: number;
-  type: "normal" | "album";
+  type: "normal" | "album" | "schedule" | "post";
   message: string;
   createdAt: string;
 }
+
+const categories = ["전체", "게시글", "일정", "앨범"] as const;
+type Category = (typeof categories)[number];
 
 const NotificationPopover = () => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<Category>("전체");
 
   const fetchNotifications = async () => {
     setLoading(true);
@@ -35,21 +39,45 @@ const NotificationPopover = () => {
     }
   };
 
+  const filteredNotifications = notifications.filter((noti) => {
+    if (selectedCategory === "전체") return true;
+    if (selectedCategory === "게시글") return noti.type === "post";
+    if (selectedCategory === "일정") return noti.type === "schedule";
+    if (selectedCategory === "앨범") return noti.type === "album";
+    return false;
+  });
+
+  const title = (
+    <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+      {categories.map((category) => (
+        <Button
+          key={category}
+          size="small"
+          type={selectedCategory === category ? "primary" : "default"}
+          onClick={() => setSelectedCategory(category)}
+        >
+          {category}
+        </Button>
+      ))}
+    </div>
+  );
+
   const content = (
     <NotificationStyled>
       <div className="notification-list">
         {loading ? (
           <Spin />
-        ) : notifications.length === 0 ? (
+        ) : filteredNotifications.length === 0 ? (
           <div>알림이 없습니다.</div>
         ) : (
-          notifications.map((noti) => (
+          filteredNotifications.map((noti) => (
             <div key={noti.id} className="notification-item">
-              {noti.type === "normal" ? (
-                <p>일반: {noti.message}</p>
-              ) : (
-                <p>📷 앨범: {noti.message}</p>
-              )}
+              <p>
+                {noti.type === "normal" && "📢 전체"}
+                {noti.type === "album" && "📷 앨범"}
+                {noti.type === "schedule" && "📅 일정"}
+                {noti.type === "post" && "📝 게시글"}: {noti.message}
+              </p>
               <small>{new Date(noti.createdAt).toLocaleString()}</small>
             </div>
           ))
@@ -60,6 +88,7 @@ const NotificationPopover = () => {
 
   return (
     <Popover
+      title={title}
       content={content}
       trigger="click"
       open={open}

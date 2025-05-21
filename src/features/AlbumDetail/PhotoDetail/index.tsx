@@ -80,7 +80,7 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
       });
 
       // 전송 후 초기화 or 알림 등
-      setComment(""); // 입력창 비우기 등
+      setComment("");
     } catch (err) {
       console.error("댓글 등록 실패", err);
       alert("댓글 등록에 실패했습니다.");
