@@ -2,11 +2,18 @@ import { MypageStyled } from "./styled";
 import { useUser } from "@/context/UserContext";
 import Myinfo from "./Myinfo";
 import MyFav from "./MyFav";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Myinfodays from "./MyDays";
+import { useRouter } from "next/router";
 const MyPage = () => {
+  const router = useRouter();
   const user = useUser();
   const [click, setClick] = useState(0);
+
+  useEffect(() => {
+    const { id } = router.query;
+    id === "1" ? setClick(0) : setClick(1);
+  }, []);
   return (
     <MypageStyled>
       <div className="mypage-wrap">

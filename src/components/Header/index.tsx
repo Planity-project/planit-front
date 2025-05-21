@@ -40,7 +40,14 @@ const Header = () => {
             <>
               <NotificationPopover />
 
-              <div className="Header-sideText">내 일정</div>
+              <div
+                className="Header-sideText"
+                onClick={() => {
+                  router.push("/mypage/2");
+                }}
+              >
+                내 일정
+              </div>
 
               <div className="Header-sideBar">
                 <Image

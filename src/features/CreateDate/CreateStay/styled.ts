@@ -6,6 +6,7 @@ export const CreateStayStyled = styled.div`
   .create-wrap {
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 30px;
     margin-top: 10px;
   }
@@ -184,6 +185,10 @@ export const CreateStayStyled = styled.div`
     color: white;
     border: none;
     padding: 20px 20px;
+  }
+  .choice-showdiv {
+    display: flex;
+    margin-top: 50px;
   }
   @media (max-width: 1000px) {
     .create-time {

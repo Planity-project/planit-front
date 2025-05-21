@@ -84,7 +84,7 @@ const SideBar = ({ isOpen, setIsOpen }: SideBarProps) => {
   const router = useRouter();
   const user = useUser();
   const logout = () => {
-    api.get("auth/logout").then((res) => {
+    api.get("auth/logout").then((res: any) => {
       window.location.reload();
     });
   };
@@ -121,8 +121,8 @@ const SideBar = ({ isOpen, setIsOpen }: SideBarProps) => {
           items={items}
           onClick={({ key }) => {
             if (key === "sub3") router.push("/album"); // 시작하기
-            // if (key === "sub1") router.push("/schedule");
-            if (key === "sub2") router.push("/mypage");
+            if (key === "sub1") router.push("/mypage/2");
+            if (key === "sub2") router.push("/mypage/1");
           }}
         />
         <div className="sideBar-logoutText" onClick={logout}>

@@ -278,7 +278,9 @@ const CreateStay = ({
             </div>
           </div>
         </div>
-        <ShowWhich selectedLocation={place} isPlace={true} />
+        <div className="choice-showdiv">
+          <ShowWhich selectedLocation={place} isPlace={true} />
+        </div>
       </div>
 
       <div className="choice-btnDiv">
