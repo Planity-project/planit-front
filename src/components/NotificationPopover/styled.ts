@@ -1,29 +1,96 @@
 import styled from "styled-components";
 
 export const NotificationStyled = styled.div`
-  min-width: 250px;
-  max-height: 400px;
-  overflow-y: auto;
-  padding: 10px;
+  width: 360px;
 
   .notification-header {
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid;
+    padding: 8px 12px;
 
-  .notification-item {
-    margin-bottom: 10px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-
-    p {
-      margin: 0;
+    .tab {
+      background: none;
+      border: none;
+      padding: 6px 12px;
+      cursor: pointer;
+      font-weight: 500;
     }
 
-    small {
-      display: block;
-      font-size: 0.75rem;
-      margin-top: 4px;
+    .tab.active {
+      color: rgb(83, 183, 232, 0.9);
+    }
+
+    .mark-all-read {
+      margin-left: auto;
+      background: none;
+      border: none;
+      color: rgb(83, 183, 232, 0.9);
+      font-size: 12px;
+      cursor: pointer;
+    }
+  }
+
+  .notification-list {
+    max-height: 300px;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 8px;
+      cursor: hover;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(185, 177, 177, 0.3);
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: whitesmoke;
+    }
+
+    .notification-item {
+      display: flex;
+      padding: 10px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+
+      &.unread {
+        background-color: rgb(83, 183, 232, 0.1);
+      }
+
+      &.read {
+        background-color: #ffffff;
+      }
+
+      .profile-icon {
+        font-size: 24px;
+        margin-right: 10px;
+      }
+
+      .content {
+        flex: 1;
+
+        .message {
+          font-size: 14px;
+          color: #333;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .timestamp {
+          font-size: 12px;
+          color: #999;
+          margin-top: 4px;
+        }
+      }
+    }
+
+    .empty {
+      text-align: center;
+      color: #999;
+      padding: 20px 0;
     }
   }
 `;
