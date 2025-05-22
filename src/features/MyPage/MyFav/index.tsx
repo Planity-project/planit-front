@@ -15,11 +15,11 @@ const MyFav = ({ user }: infoprops) => {
   ];
   const router = useRouter();
   useEffect(() => {
-    // api
-    //   .get("/posts/알아서 해줘요", { params: { userId: user.id } })
-    //   .then((res: any) => {
-    //     console.log(res.data);
-    //   });
+    api
+      .get("/posts/likePosts", { params: { userId: user.id } })
+      .then((res: any) => {
+        console.log(res.data, "posts/likePosts");
+      });
   }, []);
   return (
     <MyfavStyled>

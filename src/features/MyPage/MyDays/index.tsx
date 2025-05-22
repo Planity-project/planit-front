@@ -14,11 +14,11 @@ const Myinfodays = ({ user }: infoprops) => {
     { userid: 1, postId: 5, title: "재미진 서울 여행", endDate: "2025-05-01" },
   ];
   useEffect(() => {
-    // api
-    //   .get("posts/알아서 해줘요", { params: { userId: user.id } })
-    //   .then((res: any) => {
-    //     console.log(res.data);
-    //   });
+    api
+      .get("posts/myPosts", { params: { userId: user.id } })
+      .then((res: any) => {
+        console.log(res.data, "posts/myPosts");
+      });
   }, []);
   const router = useRouter();
   const today = new Date();
