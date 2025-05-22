@@ -12,7 +12,7 @@ import {
   RightOutlined,
 } from "@ant-design/icons";
 import MyDaysComponent from "@/components/MyDays";
-import { Input, Modal } from "antd";
+import { Input, Modal, Rate } from "antd";
 import { useUser } from "@/context/UserContext";
 import GoogleMapComponent from "@/components/showWhichGoogle";
 import { useMemo } from "react";
@@ -120,6 +120,7 @@ const SnsDetail = () => {
     return schedule[day - 1]?.plan || [];
   }, [schedule, day]);
   console.log(schedule);
+  console.log(daydetail.rating);
   console.log(daydetail.image, "image");
   return (
     <SnsDetailStyled>
@@ -146,7 +147,7 @@ const SnsDetail = () => {
         </div>
         <div className="snspost-daysdetail">
           <div className="snspost-daydetailbox">
-            <div>Day{day}</div>
+            <div className="snspost-daydiv">Day{day}</div>
             <div className="snspost-daydetailwrap">
               <div>
                 {daydetail.image ? (
@@ -169,8 +170,14 @@ const SnsDetail = () => {
               <div>
                 <div className="daydetail-name">{daydetail.name}</div>
                 <div className="daydetail-category">{daydetail.category}</div>
-                <div className="daydetail-reviewcomment">리뷰 들어갈 자리</div>
-                <div className="daydetail-reviewcomment">별점 들어갈 자리</div>
+                <div className="daydetail-reviewcomment">
+                  <div className="daydetail-review">
+                    <Rate allowHalf value={Number(daydetail.rating)} disabled />
+                  </div>
+                  <div className="daydetail-">
+                    {daydetail.reviewCount}개의 리뷰
+                  </div>
+                </div>
               </div>
             </div>
           </div>

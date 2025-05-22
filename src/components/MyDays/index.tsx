@@ -89,7 +89,7 @@ const MyDaysComponent = ({
         const flatPlans = schedule.flatMap((d) => d.plan);
         const dayItem = flatPlans[closestPlanIndex];
         setDaydetail(dayItem);
-        setActivePlanIndex(closestPlanIndex); // ✅ 활성 인덱스 저장
+        setActivePlanIndex(closestPlanIndex); //  활성 인덱스 저장
       }
       if (
         container.scrollTop === 0 &&

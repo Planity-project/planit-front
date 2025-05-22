@@ -1,8 +1,7 @@
 import styled from "styled-components";
 
-export const CreateStayStyled = styled.div<{ $resultLoading: true | false }>`
+export const CreateStayStyled = styled.div`
   width: 100%;
-
   .create-wrap {
     display: flex;
     justify-content: center;

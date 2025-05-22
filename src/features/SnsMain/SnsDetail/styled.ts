@@ -46,14 +46,14 @@ export const SnsDetailStyled = styled.div`
     height: 100%;
     border-radius: 10px;
     background-color: white;
-    padding: 10px;
+    padding: 6px 10px;
     display: flex;
     flex-direction: column;
     gap: 5px;
   }
   .snspost-detailimg {
     border-radius: 5px;
-    border: 1px solid black;
+    border: 1px solid rgb(0, 0, 0, 0.2);
   }
   .snspost-daydetailwrap {
     display: flex;
@@ -64,11 +64,21 @@ export const SnsDetailStyled = styled.div`
     font-size: 13px;
     font-weight: 600;
   }
+  .snspost-daydiv {
+    font-size: 13px;
+    font-weight: 600;
+  }
   .daydetail-category {
     font-size: 10px;
     color: gray;
   }
   .daydetail-reviewcomment {
-    font-size: 12px;
+    display: flex;
+    align-items: flex-end;
+    font-size: 10px;
+    gap: 10px;
+  }
+  .daydetail-review .ant-rate {
+    font-size: 14px;
   }
 `;
