@@ -38,7 +38,7 @@ export const AlbumDetailStyled = styled.div`
     height: 200px;
     overflow: hidden;
     cursor: pointer;
-    border-radius: 8px;
+    border-radius: 3px;
     border: 1px solid lightgray;
     background-color: #fff;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
@@ -91,12 +91,58 @@ export const AlbumDetailStyled = styled.div`
   // 멤버 보기
   .group-member-wrap {
     display: flex;
-    flex-direction: column;
+    gap: 150px;
     justify-content: center;
-    width: 25%;
+    align-items: center;
+    width: 80%;
     padding: 16px;
   }
-
+  .group-changecontainer {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid rgb(0, 0, 0, 0.2);
+    border-radius: 3px;
+  }
+  .group-imgdiv {
+    width: 100%;
+    height: 80%;
+    border-bottom: 1px solid rgb(0, 0, 0, 0.4);
+    position: relative;
+  }
+  .group-img {
+    width: 100%;
+    height: 100%;
+  }
+  .group-inputdiv {
+    width: 100%;
+    position: relative;
+  }
+  .group-membercontainer {
+    width: 40%;
+  }
+  .group-inputdiv Input:hover,
+  .group-inputdiv Input:focus {
+    border-color: rgb(0, 0, 0, 0.2);
+    box-shadow: none;
+  }
+  .group-inputbtn {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .group-inputbtn Button {
+    border-color: rgb(83, 183, 232, 0.6);
+    background-color: rgb(83, 183, 232, 0.6);
+    color: white;
+  }
+  .group-inputbtn Button:hover,
+  .group-inputbtn Button:focus {
+    background-color: rgb(83, 183, 232, 0.6);
+    border-color: rgb(83, 183, 232, 0.6);
+  }
   .group-member-item {
     width: 100%;
     display: flex;
@@ -118,19 +164,45 @@ export const AlbumDetailStyled = styled.div`
     gap: 10px;
     width: 70%;
   }
-  .AlbumTitle-url {
+  .profile-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
     display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+  }
+
+  .group-imgdiv:hover .profile-overlay {
+    opacity: 1;
+  }
+  .AlbumTitle-url {
+    width: 70%;
+    display: flex;
+    justify-content: center;
     margin-bottom: 8px;
     background-color: #f0f0f0;
     padding: 5px;
     border-radius: 4px;
     word-break: break-all;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    max-width: 100%;
   }
   .group-member-copybtn {
     display: flex;
     margin-top: 2px;
   }
   .group-member-linkDiv {
+    width: 100%;
     display: flex;
     justify-content: center;
     gap: 10px;
@@ -142,6 +214,7 @@ export const AlbumDetailStyled = styled.div`
   .group-member-url {
     display: flex;
     justify-content: center;
+
     gap: 5px;
   }
 
@@ -187,8 +260,24 @@ export const AlbumDetailStyled = styled.div`
       display: flex;
       flex-direction: column;
       justify-content: center;
-      width: 50%;
+      width: 80%;
       padding: 16px;
+      gap: 100px;
+    }
+    .group-changecontainer {
+      width: 50%;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      border: 1px solid rgb(0, 0, 0, 0.2);
+      border-radius: 3px;
+    }
+    .group-membercontainer {
+      width: 70%;
+    }
+    .group-member-text {
+      font-size: 12px;
     }
   }
   @media (max-width: 580px) {
@@ -198,6 +287,12 @@ export const AlbumDetailStyled = styled.div`
       justify-content: center;
       width: 75%;
       padding: 16px;
+    }
+    .group-changecontainer {
+      width: 70%;
+    }
+    .group-membercontainer {
+      width: 100%;
     }
   }
 `;
