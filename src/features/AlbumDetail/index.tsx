@@ -81,12 +81,12 @@ const AlbumDetail = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-  const user = useUser();
+  const user: any = useUser();
   const toggleMenu = (index: number) => {
     setOpenMenuIndex(openMenuIndex === index ? null : index);
   };
   const router = useRouter();
-  const { id } = router.query;
+  const { id }: any = router.query;
 
   //대표 이미지 변경 요청
   const handleFileChange = async (
@@ -98,12 +98,10 @@ const AlbumDetail = () => {
     try {
       const formData = new FormData();
       formData.append("file", file);
-
+      formData.append("albumId", id);
+      formData.append("userId", user?.id);
       const res = await api
-        .post("/album/upload-title-image", {
-          formData,
-          albumId: id,
-        })
+        .post("/album/update/title", formData)
         .then((res: any) => {
           console.log(res.data);
           // 저장 성공 시 새로 고침
@@ -141,9 +139,15 @@ const AlbumDetail = () => {
 
   //title 변경 요청
   const changetitle = () => {
-    api.post("/album/titlechange", { title: titleChange }).then((res: any) => {
-      console.log(res.data);
-    });
+    api
+      .post("/album/update/title", {
+        userId: user?.id,
+        albumId: id,
+        title: titleChange,
+      })
+      .then((res: any) => {
+        console.log(res.data);
+      });
   };
 
   const getMaxLength = () => {
