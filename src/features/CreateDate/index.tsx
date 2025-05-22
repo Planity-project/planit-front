@@ -9,6 +9,7 @@ import CreateStay from "./CreateStay";
 import ChoiceTime from "./ChoiceTime";
 import api from "@/util/api";
 import Loding from "@/components/Loding";
+import { useUser } from "@/context/UserContext";
 export interface ScheduleType {
   dataTime: any[];
   dataPlace: any[];
@@ -22,6 +23,7 @@ export interface TimeType {
   mins: number;
 }
 const CreateDatePage: React.FC = () => {
+  const user = useUser();
   const [current, setCurrent] = useState<number>(0);
   const [range, setRange] = useState<DateRange | undefined>();
   const [selectedPlace, setSelectedPlace] = useState<string | null>(null); // ⬅ 추가
@@ -33,6 +35,7 @@ const CreateDatePage: React.FC = () => {
     dataTime: [],
     dataPlace: [],
     dataStay: [],
+    userId: user?.id,
   });
 
   useEffect(() => {
