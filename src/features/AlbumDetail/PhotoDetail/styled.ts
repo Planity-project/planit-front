@@ -103,7 +103,7 @@ export const PhotoStyled = styled.div<{ $modal?: true | false }>`
     flex-direction: column;
     margin-top: auto;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
-    padding-top: 10px;
+    padding-top: 8px;
   }
   .comment-likeDiv {
     margin-left: 10px;
@@ -132,7 +132,7 @@ export const PhotoStyled = styled.div<{ $modal?: true | false }>`
   @media (max-width: 1250px) {
     .photo-wrap {
       width: 75%;
-      height: 65%;
+      height: 85%;
     }
     .photo-photozone {
       width: 60%;
@@ -156,8 +156,8 @@ export const PhotoStyled = styled.div<{ $modal?: true | false }>`
     .photo-wrap {
       background-color: white;
       border-radius: 10px;
-      width: 65%;
-      height: 75%;
+      width: 75%;
+      height: 90%;
       overflow-y: auto;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
       display: flex;
@@ -182,8 +182,8 @@ export const PhotoStyled = styled.div<{ $modal?: true | false }>`
     .photo-wrap {
       background-color: white;
       border-radius: 10px;
-      width: 75%;
-      height: 55%;
+      width: 85%;
+      height: 85%;
       overflow-y: auto;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
       display: flex;

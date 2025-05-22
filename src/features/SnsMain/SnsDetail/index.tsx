@@ -58,30 +58,13 @@ const SnsDetail = () => {
       });
   }, [id, user?.id]);
 
-  function formatSchedule(data: any): { date: string; plan: any[] }[] {
-    const schedule: { date: string; plan: any[] }[] = [];
-    const start = new Date(data.startDate);
-    const end = new Date(data.endDate);
-    const dayCount =
-      (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24) + 1;
-
-    for (let i = 0; i < dayCount; i++) {
-      const currentDate = new Date(start);
-      currentDate.setDate(start.getDate() + i);
-
-      const dateStr = currentDate.toISOString().split("T")[0]; // yyyy-mm-dd
-      const dayKey = `day${i + 1}`;
-
-      if (data[dayKey]) {
-        schedule.push({
-          date: dateStr,
-          plan: data[dayKey],
-        });
-      }
-    }
-
-    return schedule;
-  }
+  const heart = () => {
+    api
+      .post("/likes/post", { userId: user?.id, postId: data.id })
+      .then((res: any) => {
+        console.log(res.data);
+      });
+  };
 
   const schedule = useMemo(() => {
     if (!data || !data.startDate || !data.endDate) return [];
@@ -109,23 +92,30 @@ const SnsDetail = () => {
 
     return result;
   }, [data]);
-  useEffect(() => {
-    console.log("📌 daydetail changed:", data);
-  }, [data]);
+  useEffect(() => {}, [data]);
 
-  useEffect(() => {
-    console.log("📌 schedule calculated:", schedule);
-  }, [schedule]);
+  useEffect(() => {}, [schedule]);
   const selectedDaySchedule = useMemo(() => {
     return schedule[day - 1]?.plan || [];
   }, [schedule, day]);
-  console.log(schedule);
-  console.log(daydetail.rating);
-  console.log(daydetail.image, "image");
+
   return (
     <SnsDetailStyled>
       <div className="snspost-mydaysbar">
-        <div className="snspost-mydaytext">{daydetail.postTitle}</div>
+        <div className="snspost-mydaytext">
+          <div>{daydetail.postTitle}</div>
+          <div className="snspost-myheart">
+            {data.state ? (
+              data.like ? (
+                <HeartFilled onClick={heart} />
+              ) : (
+                <HeartOutlined onClick={heart} />
+              )
+            ) : (
+              <></>
+            )}
+          </div>
+        </div>
         <MyDaysComponent
           schedule={schedule}
           day={day}
@@ -174,7 +164,7 @@ const SnsDetail = () => {
                   <div className="daydetail-review">
                     <Rate allowHalf value={Number(daydetail.rating)} disabled />
                   </div>
-                  <div className="daydetail-">
+                  <div className="daydetail-reciewcount">
                     {daydetail.reviewCount}개의 리뷰
                   </div>
                 </div>

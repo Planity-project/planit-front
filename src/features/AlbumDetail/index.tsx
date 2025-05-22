@@ -329,9 +329,10 @@ const AlbumDetail = () => {
       <ReportModal
         ModalOpen={ModalOpen}
         setModalOpen={setModalOpen}
-        type={"user"}
-        userId={userId}
+        targetType="user"
+        targetId={userId}
       />
+
       <PhotoDetail modal={modal} setModal={setModal} albumId={albumId} />
       {uploadModalOpen && (
         <AlbumImageSubmitModal
