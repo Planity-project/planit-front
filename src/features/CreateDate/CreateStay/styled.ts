@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const CreateStayStyled = styled.div`
+export const CreateStayStyled = styled.div<{ $resultLoading: true | false }>`
   width: 100%;
 
   .create-wrap {

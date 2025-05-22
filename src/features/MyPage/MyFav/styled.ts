@@ -38,6 +38,7 @@ export const MyfavStyled = styled.div`
       line-height: 1.4;
       position: relative;
       word-wrap: break-word;
+      cursor: pointer;
     }
 
     .left {
