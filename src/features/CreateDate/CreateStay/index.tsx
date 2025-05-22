@@ -293,8 +293,8 @@ const CreateStay = ({
               centered: true,
               title: "일정을 생성하시겠습니까?",
               content: "최대 3분의 시간이 소요됩니다.",
-              okText: "yes",
-              cancelText: "no",
+              okText: "예",
+              cancelText: "아니오",
               onOk: () => {
                 generateFinalSchedule();
               },
