@@ -301,7 +301,7 @@ const CreateStay = ({
           일정 생성
         </Button>
       </div>
-      {resultLoading ? <Loding /> : <></>}
+      {resultLoading ? <Loding state="day" /> : <></>}
     </CreateStayStyled>
   );
 };

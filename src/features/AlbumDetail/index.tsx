@@ -127,15 +127,6 @@ const AlbumDetail = () => {
         setArr(res.data);
       });
   }, []);
-  // 해당 앨범에 대한 유저의 권한 요청
-  useEffect(() => {
-    // api
-    //   .get("/album//userrole", { params: { userId: user?.id, AlbumId: id } })
-    //   .then((res: any) => {
-    //     setUserrole(res.data);
-    //     console.log(res.data);
-    //   });
-  }, []);
 
   //title 변경 요청
   const changetitle = () => {
@@ -250,7 +241,13 @@ const AlbumDetail = () => {
                 }}
               />
               <div className="group-inputbtn">
-                <Button>변경</Button>
+                <Button
+                  onClick={() => {
+                    changetitle;
+                  }}
+                >
+                  변경
+                </Button>
               </div>
             </div>
           </div>

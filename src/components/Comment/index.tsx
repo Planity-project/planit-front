@@ -7,8 +7,8 @@ import { useUser } from "@/context/UserContext";
 import api from "@/util/api";
 interface CommentProps {
   data: any;
-  setMini: (value: string) => void;
-  mini: string;
+  setMini: (value: { nickname: string; id: number } | null) => void;
+  mini: { nickname: string; id: number } | null;
 }
 
 const CommentComponent = ({ data, setMini, mini }: any) => {
@@ -57,14 +57,17 @@ const CommentComponent = ({ data, setMini, mini }: any) => {
             <div className="comment-miniPost">
               <div
                 onClick={() => {
-                  mini === comment.nickname
-                    ? setMini("")
-                    : setMini(comment.nickname);
+                  if (mini?.id === comment.id) {
+                    setMini(null);
+                  } else {
+                    setMini({ nickname: comment.nickname, id: comment.id });
+                  }
                 }}
                 style={{ cursor: "pointer" }}
               >
                 답글 달기
               </div>
+
               <div>좋아요 {comment.likeCnt}개</div>
             </div>
             {comment.like === true ? (

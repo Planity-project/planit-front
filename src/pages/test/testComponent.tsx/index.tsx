@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Button, Input, Upload, message, Select } from "antd";
+import { Modal, Button, Input, Upload, message, Select, Rate } from "antd";
 import type {
   UploadFile,
   RcFile,
@@ -8,7 +8,7 @@ import type {
 import { PlusOutlined } from "@ant-design/icons";
 import api from "@/util/api";
 import { useUser } from "@/context/UserContext";
-
+import { DaypostStyled, ModalStyled } from "./styled";
 interface SubmitModalProps {
   postId: number;
   userId: number;
@@ -20,6 +20,7 @@ const SubmitModal = ({ postId, userId }: SubmitModalProps) => {
   const [hashtags, setHashtags] = useState<string[]>([]);
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
+  const [rating, setRating] = useState<number>(0);
   const showModal = () => setIsModalOpen(true);
   const user = useUser();
 
@@ -36,6 +37,8 @@ const SubmitModal = ({ postId, userId }: SubmitModalProps) => {
       formData.append("hashtags", JSON.stringify(hashtags)); // 배열을 문자열로 전송
       formData.append("tripId", String(1));
       formData.append("userId", String(user?.id));
+      formData.append("rating", String(rating));
+
       // fileList 중 서버에 업로드할 파일만 append (originFileObj가 실제 파일 객체)
       fileList.forEach((file) => {
         if (file.originFileObj) {
@@ -83,7 +86,7 @@ const SubmitModal = ({ postId, userId }: SubmitModalProps) => {
   };
 
   return (
-    <>
+    <ModalStyled>
       <Button type="primary" onClick={showModal}>
         모달 열기
       </Button>
@@ -93,66 +96,77 @@ const SubmitModal = ({ postId, userId }: SubmitModalProps) => {
         onOk={handleOk}
         onCancel={handleCancel}
         okText="완료"
+        cancelText="취소"
       >
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleOk();
-          }}
-        >
-          <h3>제목</h3>
-          <Input
-            type="text"
-            name="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="제목을 입력하세요"
-            required
-          />
-
-          <h3>소개</h3>
-          <Input.TextArea
-            name="content"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            placeholder="소개글을 입력하세요"
-            rows={4}
-            required
-          />
-
-          <h3>hashtag</h3>
-          <Select
-            mode="tags"
-            style={{ width: "100%" }}
-            placeholder="#여행  #일정 공유  #CSS"
-            onChange={hashtagChange}
-            value={hashtags}
-            tokenSeparators={[" ", ","]}
-            allowClear
-            notFoundContent={null}
-          />
-
-          <h3>이미지 (최대 5개)</h3>
-          <Upload
-            multiple
-            listType="picture-card"
-            fileList={fileList}
-            beforeUpload={beforeUpload}
-            onChange={onChangeUpload}
-            onRemove={(file) => {
-              setFileList(fileList.filter((item) => item.uid !== file.uid));
+        <DaypostStyled>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleOk();
             }}
           >
-            {fileList.length >= 5 ? null : (
-              <div>
-                <PlusOutlined />
-                <div>업로드</div>
-              </div>
-            )}
-          </Upload>
-        </form>
+            <div className="daypost-title">제목</div>
+            <Input
+              type="text"
+              name="title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="제목을 입력하세요"
+              required
+            />
+
+            <div className="daypost-title">소개</div>
+            <Input.TextArea
+              name="content"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              placeholder="소개글을 입력하세요"
+              rows={4}
+              required
+            />
+
+            <div className="daypost-title">#</div>
+            <Select
+              mode="tags"
+              style={{ width: "100%" }}
+              placeholder="#재미난 여행  #레알 ㅋㅋ #진짜 ㅋㅋ"
+              onChange={hashtagChange}
+              value={hashtags}
+              tokenSeparators={[" ", ","]}
+              allowClear
+              notFoundContent={null}
+            />
+
+            <div className="daypost-title">이미지 (최대 5개)</div>
+            <Upload
+              multiple
+              listType="picture-card"
+              fileList={fileList}
+              beforeUpload={beforeUpload}
+              onChange={onChangeUpload}
+              onRemove={(file) => {
+                setFileList(fileList.filter((item) => item.uid !== file.uid));
+              }}
+            >
+              {fileList.length >= 5 ? null : (
+                <div>
+                  <PlusOutlined />
+                  <div>업로드</div>
+                </div>
+              )}
+            </Upload>
+            <div className="daypost-title">이번 여행의 별점을 매겨주세요!</div>
+            <div>
+              <Rate
+                allowHalf
+                value={rating}
+                onChange={(value) => setRating(value)}
+              />
+            </div>
+          </form>
+        </DaypostStyled>
       </Modal>
-    </>
+    </ModalStyled>
   );
 };
 
