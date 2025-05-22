@@ -8,7 +8,7 @@ export const SnsDetailStyled = styled.div`
   overflow: hidden; /* 스크롤 방지 */
 
   .snspost-mydaysbar {
-    width: 25%;
+    width: 350px;
     padding: 8px;
     box-sizing: border-box;
   }
@@ -80,5 +80,21 @@ export const SnsDetailStyled = styled.div`
   }
   .daydetail-review .ant-rate {
     font-size: 14px;
+  }
+  @media (max-width: 768px) {
+    flex-direction: column-reverse;
+    align-items: center;
+    .snspost-daysdetail {
+      display: none;
+    }
+    .snspost-mydaysbar {
+      width: 100%;
+      height: 50%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+    .snspost-mydayright {
+      width: 100%;
+    }
   }
 `;
