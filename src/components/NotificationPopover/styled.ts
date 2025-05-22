@@ -19,14 +19,14 @@ export const NotificationStyled = styled.div`
     }
 
     .tab.active {
-      color: rgb(83, 183, 232, 0.9);
+      color: rgb(83, 183, 232, 1);
     }
 
     .mark-all-read {
       margin-left: auto;
       background: none;
       border: none;
-      color: rgb(83, 183, 232, 0.9);
+      color: rgb(83, 183, 232, 1);
       font-size: 12px;
       cursor: pointer;
     }
@@ -35,19 +35,25 @@ export const NotificationStyled = styled.div`
   .notification-list {
     max-height: 300px;
     overflow-y: auto;
+    cursor: pointer;
 
     &::-webkit-scrollbar {
       width: 8px;
-      cursor: hover;
     }
 
     &::-webkit-scrollbar-thumb {
-      background-color: rgba(185, 177, 177, 0.3);
+      background-color: transparent;
       border-radius: 10px;
+      transition: background-color 0.3s ease;
     }
 
     &::-webkit-scrollbar-track {
       background-color: whitesmoke;
+    }
+
+    &:hover::-webkit-scrollbar-thumb,
+    .scrolling &::-webkit-scrollbar-thumb {
+      background-color: rgba(185, 177, 177, 0.3);
     }
 
     .notification-item {
