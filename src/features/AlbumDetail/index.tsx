@@ -5,10 +5,13 @@ import api from "@/util/api";
 import Image from "next/image";
 import {
   CommentOutlined,
+  CrownFilled,
   EllipsisOutlined,
   HeartFilled,
+  StarOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
-import { Button, message } from "antd";
+import { Button, message, Modal } from "antd";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, A11y } from "swiper/modules";
 import "swiper/css";
@@ -16,17 +19,18 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import PhotoDetail from "./PhotoDetail";
 import { useUser } from "@/context/UserContext";
-
+import ReportModal from "@/components/ReportModal";
 const AlbumDetail = () => {
+  const [ModalOpen, setModalOpen] = useState<boolean>(false);
   const [arr, setArr] = useState();
   const [viewMode, setViewMode] = useState<"grid" | "slide">("grid");
   const [modal, setModal] = useState<boolean>(false);
   const [albumId, setAlbumId] = useState<number>(0);
-  const [userrole, setUserrole] = useState<string>("member");
+  const [userrole, setUserrole] = useState<string>("owner");
   const [imgId, setImgId] = useState<number>(0);
   const [openMenuIndex, setOpenMenuIndex] = useState<number | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
-
+  const [userId, setUserId] = useState<number>(0);
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -96,23 +100,23 @@ const AlbumDetail = () => {
   }, []);
   // 해당 앨범에 대한 유저의 권한 요청
   useEffect(() => {
-    api
-      .get("/album//userrole", { params: { userId: user?.id, AlbumId: id } })
-      .then((res: any) => {
-        setUserrole(res.data);
-        console.log(res.data);
-      });
+    // api
+    //   .get("/album//userrole", { params: { userId: user?.id, AlbumId: id } })
+    //   .then((res: any) => {
+    //     setUserrole(res.data);
+    //     console.log(res.data);
+    //   });
   }, []);
   const getMaxLength = () => {
     const width = window.innerWidth;
-    if (width >= 1024) return 28; // 데스크탑
-    if (width >= 768) return 25; // 태블릿
-    return 15; // 모바일
+    if (width >= 1024) return 15; // 데스크탑
+    if (width >= 768) return 10; // 태블릿
+    return 10; // 모바일
   };
   const shortenUrl = (url: string) => {
     const maxLength = getMaxLength();
     if (url.length <= maxLength) return url;
-    return "..." + url.slice(url.length - maxLength);
+    return url.slice(url.length - maxLength) + "...";
   };
   const handleCopy = async () => {
     try {
@@ -172,10 +176,12 @@ const AlbumDetail = () => {
       ) : (
         <div className="group-member-wrap">
           <div className="group-member-url">
-            <span className="group-member-text">초대링크</span>
-            <span className="AlbumTitle-url">
-              {shortenUrl(groupdummy.link[0])}
-            </span>
+            <div className="group-member-linkDiv">
+              <span className="group-member-text">초대링크</span>
+              <span className="AlbumTitle-url">
+                {shortenUrl(groupdummy.link[0])}
+              </span>
+            </div>
             <div className="group-member-copybtn">
               <Button onClick={handleCopy}>복사</Button>
             </div>
@@ -193,7 +199,9 @@ const AlbumDetail = () => {
                 <div className="group-member-nickname">{x.nickname}</div>
               </div>
 
-              <div>{x.role === "owner" ? "그룹장" : "멤버"}</div>
+              <div className={`group-member${x.role}`}>
+                {x.role === "owner" ? <CrownFilled /> : <UserOutlined />}
+              </div>
 
               <div
                 onClick={() => toggleMenu(i)}
@@ -208,10 +216,26 @@ const AlbumDetail = () => {
                     <>
                       <div className="menu-item">강퇴</div>
                       <div className="menu-item">그룹장 위임</div>
-                      <div className="menu-item">신고</div>
+                      <div
+                        onClick={() => {
+                          setModalOpen(true);
+                          setUserId(x.id);
+                        }}
+                        className="menu-item"
+                      >
+                        신고
+                      </div>
                     </>
                   ) : (
-                    <div className="menu-item">신고</div>
+                    <div
+                      className="menu-item"
+                      onClick={() => {
+                        setModalOpen(true);
+                        setUserId(x.id);
+                      }}
+                    >
+                      신고
+                    </div>
                   )}
                 </div>
               )}
@@ -219,6 +243,12 @@ const AlbumDetail = () => {
           ))}
         </div>
       )}
+      <ReportModal
+        ModalOpen={ModalOpen}
+        setModalOpen={setModalOpen}
+        type={"user"}
+        userId={userId}
+      />
       <PhotoDetail modal={modal} setModal={setModal} albumId={albumId} />
     </AlbumDetailStyled>
   );

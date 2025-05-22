@@ -47,9 +47,11 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   useEffect(() => {
-    // api.get("/album/photoinfo", { params: { albumId: albumId } }).then((res) => {
-    //   console.log(res.data);
-    // });
+    // api
+    //   .get("/album/photoinfo", { params: { albumId: albumId } })
+    //   .then((res: any) => {
+    //     console.log(res.data);
+    //   });
   }, [id, num]);
 
   const heart = (id?: number) => {

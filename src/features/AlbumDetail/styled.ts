@@ -13,6 +13,14 @@ export const AlbumDetailStyled = styled.div`
     justify-content: center;
     align-items: center;
     gap: 10px;
+    .ant-btn-primary {
+      background-color: rgb(83, 183, 232, 0.6);
+      border-color: rgb(83, 183, 232, 0.6);
+    }
+    .ant-btn:hover {
+      color: black !important;
+      border-color: rgb(0, 0, 0, 0.4) !important;
+    }
   }
 
   .AlbumDetail-photoWrap {
@@ -90,12 +98,13 @@ export const AlbumDetailStyled = styled.div`
   }
 
   .group-member-item {
+    width: 100%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 12px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    background-color: #fafafa;
   }
   /* .group-member-nickname {
     width: 40%;
@@ -107,17 +116,24 @@ export const AlbumDetailStyled = styled.div`
   .group-member-proflie {
     display: flex;
     gap: 10px;
-    width: 30%;
+    width: 70%;
   }
   .AlbumTitle-url {
     display: flex;
-    justify-content: center;
-    width: 60%;
     margin-bottom: 8px;
     background-color: #f0f0f0;
-    padding: 6px;
+    padding: 5px;
     border-radius: 4px;
     word-break: break-all;
+  }
+  .group-member-copybtn {
+    display: flex;
+    margin-top: 2px;
+  }
+  .group-member-linkDiv {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
   }
   .group-member-text {
     margin-top: 6px;
@@ -128,33 +144,60 @@ export const AlbumDetailStyled = styled.div`
     justify-content: center;
     gap: 5px;
   }
-  .group-member-copybtn {
-    display: flex;
-    margin-top: 2px;
-  }
+
   .member-popup-menu {
+    cursor: pointer;
     position: absolute;
     background: white;
     border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 8px;
+    border-radius: 5px;
+    padding: 6px;
     z-index: 999;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     right: 0;
     top: 30px;
     min-width: 120px;
   }
-
-  .menu-item {
-    padding: 6px 10px;
+  .group-member-nickname {
+    width: 100%;
+  }
+  .ellipsis-menu-trigger {
     cursor: pointer;
   }
-
+  .menu-item {
+    margin-left: 3px;
+    padding: 1px;
+    cursor: pointer;
+  }
+  .group-memberowner {
+    color: rgb(246, 217, 31);
+    font-size: 20px;
+  }
+  .group-membermember {
+    color: black;
+  }
   .menu-item:hover {
-    background-color: #f0f0f0;
+    border-right: 1px solid rgba(0, 0, 0, 0.4);
   }
 
   .group-member-item {
     position: relative; /* 중요: 메뉴 위치 기준을 이 박스로 잡음 */
+  }
+  @media (max-width: 1000px) {
+    .group-member-wrap {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 50%;
+      padding: 16px;
+    }
+  }
+  @media (max-width: 580px) {
+    .group-member-wrap {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 75%;
+      padding: 16px;
+    }
   }
 `;
