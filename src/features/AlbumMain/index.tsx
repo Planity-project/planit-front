@@ -3,6 +3,7 @@ import { Button, Spin } from "antd";
 import SnsPost from "@/components/SnsPost";
 import AlbumCreate from "../AlbumCreate";
 import { useEffect, useState } from "react";
+import Footer from "@/components/Footer";
 import api from "@/util/api";
 
 const AlbumMain = () => {
@@ -72,28 +73,31 @@ const AlbumMain = () => {
   }, [hasMore, loading]);
 
   return (
-    <AlbumMainStyled>
-      <div className="AlbumMain-wrap">
-        <div className="AlbumMain-title">추억을 저장하고 공유해보세요</div>
+    <>
+      <AlbumMainStyled>
+        <div className="AlbumMain-wrap">
+          <div className="AlbumMain-title">추억을 저장하고 공유해보세요</div>
 
-        <div className="AlbumMain-btnDiv">
-          <Button onClick={() => setModal(true)}>생성하기</Button>
+          <div className="AlbumMain-btnDiv">
+            <Button onClick={() => setModal(true)}>생성하기</Button>
+          </div>
+
+          <div className="AlbimMain-container">
+            {data.length === 0 && !loading ? (
+              <div className="AlbumMain-noData">새로운 앨범을 시작해보세요</div>
+            ) : (
+              <>
+                <SnsPost data={data} variant="album" />
+                {loading && <Spin style={{ marginTop: 20 }} />}
+              </>
+            )}
+          </div>
+
+          <AlbumCreate modal={modal} setModal={setModal} />
         </div>
-
-        <div className="AlbimMain-container">
-          {data.length === 0 && !loading ? (
-            <div className="AlbumMain-noData">새로운 앨범을 시작해보세요</div>
-          ) : (
-            <>
-              <SnsPost data={data} variant="album" />
-              {loading && <Spin style={{ marginTop: 20 }} />}
-            </>
-          )}
-        </div>
-
-        <AlbumCreate modal={modal} setModal={setModal} />
-      </div>
-    </AlbumMainStyled>
+      </AlbumMainStyled>
+      {!hasMore && !loading && <Footer />}
+    </>
   );
 };
 

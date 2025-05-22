@@ -1,6 +1,7 @@
 import { Spin } from "antd";
 import SnsPost from "@/components/SnsPost";
 import { useEffect, useState } from "react";
+import Footer from "@/components/Footer";
 import api from "@/util/api";
 const SnsMain = () => {
   const [data, setData] = useState<any[]>([]);
@@ -70,6 +71,7 @@ const SnsMain = () => {
   return (
     <>
       <SnsPost data={data} /> {loading && <Spin style={{ marginTop: 20 }} />}
+      {!hasMore && !loading && <Footer />}
     </>
   );
 };
