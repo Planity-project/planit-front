@@ -46,6 +46,7 @@ export const MyinfoDaysStyled = styled.div`
     background-color: white;
     border-radius: 6px;
     font-size: 0.95rem;
+    cursor: pointer;
   }
 
   .chat-row.right .chat-bubble {

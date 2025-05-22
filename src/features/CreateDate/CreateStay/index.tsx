@@ -23,6 +23,8 @@ interface CreateDaysProps {
   loading: boolean;
   setLoading: (loading: boolean) => void;
   children?: React.ReactNode;
+  resultLoading: boolean;
+  setresultLoading: (value: boolean) => void;
 }
 
 interface DataType {
@@ -47,6 +49,8 @@ const CreateStay = ({
   loading,
   setLoading,
   children,
+  resultLoading,
+  setresultLoading,
 }: CreateDaysProps) => {
   const [places, setPlaces] = useState<DataType[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -54,12 +58,10 @@ const CreateStay = ({
   const [place, setPlace] = useState<any | null>(selectedPlace);
   const [str, setStr] = useState("");
   const [totalTime, setTotalTime] = useState(0);
-  const [resultLoading, setresultLoading] = useState(false);
+
   // const [editingIndex, setEditingIndex] = useState<number | null>(null);
   // const [editedMinutes, setEditedMinutes] = useState<number>(120);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
   const user = useUser();
   const router = useRouter();
 
@@ -201,7 +203,9 @@ const CreateStay = ({
       setresultLoading(false); // 로딩 종료
     }
   };
-
+  if (resultLoading) {
+    return <Loding state="day" />;
+  }
   return (
     <CreateStayStyled>
       <div className="create-wrap">
@@ -301,7 +305,6 @@ const CreateStay = ({
           일정 생성
         </Button>
       </div>
-      {resultLoading ? <Loding /> : <></>}
     </CreateStayStyled>
   );
 };

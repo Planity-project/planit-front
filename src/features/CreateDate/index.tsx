@@ -8,6 +8,8 @@ import CreateDays from "./CreateDays";
 import CreateStay from "./CreateStay";
 import ChoiceTime from "./ChoiceTime";
 import api from "@/util/api";
+import Loding from "@/components/Loding";
+import { useUser } from "@/context/UserContext";
 export interface ScheduleType {
   dataTime: any[];
   dataPlace: any[];
@@ -21,16 +23,19 @@ export interface TimeType {
   mins: number;
 }
 const CreateDatePage: React.FC = () => {
+  const user = useUser();
   const [current, setCurrent] = useState<number>(0);
   const [range, setRange] = useState<DateRange | undefined>();
   const [selectedPlace, setSelectedPlace] = useState<string | null>(null); // ⬅ 추가
   const [choicewhich, setChiocewhich] = useState<any>("");
   const [time, setTime] = useState<TimeType>();
+  const [resultLoading, setresultLoading] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [schedule, setSchedule] = useState<ScheduleType>({
     dataTime: [],
     dataPlace: [],
     dataStay: [],
+    userId: user?.id,
   });
 
   useEffect(() => {
@@ -64,6 +69,9 @@ const CreateDatePage: React.FC = () => {
     });
     console.log("선택 지역", selectedPlace);
   }, [selectedPlace]);
+  if (resultLoading) {
+    return <Loding state="day" />;
+  }
   return (
     <Createpage>
       <div className="createpage-text">
@@ -132,6 +140,8 @@ const CreateDatePage: React.FC = () => {
           setSchedule={setSchedule}
           loading={loading}
           setLoading={setLoading}
+          resultLoading={resultLoading}
+          setresultLoading={setresultLoading}
         />
       )}
     </Createpage>

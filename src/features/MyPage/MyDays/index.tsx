@@ -1,17 +1,26 @@
+import { useEffect } from "react";
 import { MyinfoDaysStyled } from "./styled";
-
+import { useRouter } from "next/router";
+import api from "@/util/api";
 interface infoprops {
   user: any;
 }
 
 const Myinfodays = ({ user }: infoprops) => {
   const dummy = [
-    { userid: 1, tripid: 2, title: "재미진 여수 여행", endDate: "2025-05-30" },
-    { userid: 1, tripid: 3, title: "재미진 부산 여행", endDate: "2025-05-03" },
-    { userid: 1, tripid: 4, title: "재미진 제주 여행", endDate: "2025-06-01" },
-    { userid: 1, tripid: 5, title: "재미진 서울 여행", endDate: "2025-05-01" },
+    { userid: 1, postId: 2, title: "재미진 여수 여행", endDate: "2025-05-30" },
+    { userid: 1, postId: 3, title: "재미진 부산 여행", endDate: "2025-05-03" },
+    { userid: 1, postId: 4, title: "재미진 제주 여행", endDate: "2025-06-01" },
+    { userid: 1, postId: 5, title: "재미진 서울 여행", endDate: "2025-05-01" },
   ];
-
+  useEffect(() => {
+    api
+      .get("posts/myPosts", { params: { userId: user.id } })
+      .then((res: any) => {
+        console.log(res.data, "posts/myPosts");
+      });
+  }, []);
+  const router = useRouter();
   const today = new Date();
 
   const upcoming = dummy
@@ -50,6 +59,9 @@ const Myinfodays = ({ user }: infoprops) => {
 
         {combined.map((item, idx) => (
           <div
+            onClick={() => {
+              router.push(`/snsmainpage/snsdetail/${item.postId}`);
+            }}
             key={idx}
             className={`chat-row ${
               item.type === "upcoming" ? "left" : "right"
