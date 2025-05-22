@@ -58,6 +58,14 @@ const SnsDetail = () => {
       });
   }, [id, user?.id]);
 
+  const heart = () => {
+    api
+      .post("/likes/post", { userId: user?.id, postId: data.id })
+      .then((res: any) => {
+        console.log(res.data);
+      });
+  };
+
   const schedule = useMemo(() => {
     if (!data || !data.startDate || !data.endDate) return [];
 
@@ -94,7 +102,20 @@ const SnsDetail = () => {
   return (
     <SnsDetailStyled>
       <div className="snspost-mydaysbar">
-        <div className="snspost-mydaytext">{daydetail.postTitle}</div>
+        <div className="snspost-mydaytext">
+          <div>{daydetail.postTitle + "dasdasd"}</div>
+          <div className="snspost-myheart">
+            {data.state ? (
+              data.like ? (
+                <HeartFilled onClick={heart} />
+              ) : (
+                <HeartOutlined onClick={heart} />
+              )
+            ) : (
+              <></>
+            )}
+          </div>
+        </div>
         <MyDaysComponent
           schedule={schedule}
           day={day}

@@ -13,11 +13,18 @@ export const SnsDetailStyled = styled.div`
     box-sizing: border-box;
   }
   .snspost-mydaytext {
+    display: flex;
+    align-items: center;
     padding: 5px;
     font-size: 15px;
     font-weight: 600;
+    padding: 3px 14px;
+    justify-content: space-between;
   }
-
+  .snspost-myheart {
+    color: red;
+    font-size: 18px;
+  }
   .snspost-mydayright {
     width: 75%;
     height: 100%;
