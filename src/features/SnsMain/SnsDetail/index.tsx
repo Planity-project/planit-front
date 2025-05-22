@@ -103,7 +103,7 @@ const SnsDetail = () => {
     <SnsDetailStyled>
       <div className="snspost-mydaysbar">
         <div className="snspost-mydaytext">
-          <div>{daydetail.postTitle + "dasdasd"}</div>
+          <div>{daydetail.postTitle}</div>
           <div className="snspost-myheart">
             {data.state ? (
               data.like ? (

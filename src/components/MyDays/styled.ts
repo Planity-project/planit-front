@@ -19,6 +19,8 @@ export const MyDaysStyled = styled.div`
     font-size: 15px;
     font-weight: 600;
     margin-bottom: 5px;
+    margin-top: 10px;
+    padding-top: 20px;
     margin-left: 17px;
   }
 

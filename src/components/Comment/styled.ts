@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const CommentStyled = styled.div`
+  padding-bottom: 18px;
   .comment-chatMapDiv {
     position: relative;
     display: flex;
@@ -43,13 +44,14 @@ export const CommentStyled = styled.div`
   }
 
   .comment-menu {
+    display: flex;
+    flex-direction: column;
     position: absolute;
     top: 2.5rem;
     right: 0;
     background-color: white;
     border: 1px solid #ccc;
     border-radius: 4px;
-    padding: 0.5rem;
     z-index: 10;
   }
 
@@ -96,19 +98,21 @@ export const CommentStyled = styled.div`
   }
 
   .comment-textdiv {
-    padding: 0px 1px;
+    width: 90%;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 12px;
   }
-
+  .comment-textdiv:hover {
+    font-weight: 500;
+  }
   .comment-menu {
     width: 44px;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 30px;
+    height: 40px;
     position: absolute;
     top: 23px;
     border-radius: 3px;

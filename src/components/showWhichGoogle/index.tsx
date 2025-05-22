@@ -148,7 +148,7 @@ const GoogleMapComponent = ({
     if (mapRef.current && window.google && !map) {
       const mapInstance = new window.google.maps.Map(mapRef.current, {
         center: { lat, lng },
-        zoom: 14,
+        zoom: 12,
       });
       setMap(mapInstance);
     }
