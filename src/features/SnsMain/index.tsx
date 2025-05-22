@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import api from "@/util/api";
 const SnsMain = () => {
   const [data, setData] = useState<any[]>([]);
-  const [page, setPage] = useState<number>(4);
+  const [page, setPage] = useState<number>(1);
   const [limit, setLimit] = useState<number>(4);
   const [loading, setLoading] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(true);
@@ -16,7 +16,9 @@ const SnsMain = () => {
 
     setLoading(true);
     try {
-      const res: any = api.get("/posts/list", { params: { page, limit } });
+      const res: any = await api.get("/posts/list", {
+        params: { page, limit },
+      });
 
       const newItems = res.data.items;
       const totalItems = res.data.total;
@@ -31,7 +33,7 @@ const SnsMain = () => {
 
       setTotal(totalItems);
       setLastFetchedPage(page);
-
+      console.log("postData", res.data);
       if (page * limit >= totalItems) {
         setHasMore(false);
       }

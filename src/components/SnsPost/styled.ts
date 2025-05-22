@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const SnsPostStyled = styled.div<{ $variant?: "default" | "album" }>`
   margin-top: 70px;
+  margin-bottom: 70px;
   width: 100%;
   display: flex;
   justify-content: center;

@@ -53,7 +53,6 @@ const CreateStay = ({
   const [str, setStr] = useState("");
   const [totalTime, setTotalTime] = useState(0);
   const [resultLoading, setresultLoading] = useState(false);
-  const [result, setResult] = useState<any>(null);
   // const [editingIndex, setEditingIndex] = useState<number | null>(null);
   // const [editedMinutes, setEditedMinutes] = useState<number>(120);
 
@@ -191,13 +190,11 @@ const CreateStay = ({
       const res = await api.post("/trip/generateDate", {
         schedule,
       });
-
-      setResult(res.data); // 결과 저장
+      router.push(`/snsmainpage/snsdetail/${res.data}`);
     } catch (err) {
       alert("일정 생성 중 오류가 발생했습니다.");
     } finally {
       setresultLoading(false); // 로딩 종료
-      router.push(`/snsmainpage/snsdetail/id=${result}`);
     }
   };
 
