@@ -42,7 +42,9 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
   const router = useRouter();
   const [id, setId] = useState<number>(albumId);
   const [comment, setComment] = useState<string>("");
-  const [mini, setMini] = useState<string>("");
+  const [mini, setMini] = useState<{ nickname: string; id: number } | null>(
+    null
+  );
   const [num, setNum] = useState<number>(0);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
@@ -80,7 +82,7 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
         content: comment, // 댓글 본문
         postId: undefined, // 게시글이 아니므로 undefined
         albumImageId: albumId, // 앨범 ID
-        parentId: mini || undefined, // 대댓글이면 parentId로 전달
+        parentId: mini?.id || undefined, // 대댓글이면 parentId로 전달
       });
 
       // 전송 후 초기화 or 알림 등
@@ -254,7 +256,7 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
 
                     // 만약 유저가 prefix를 지웠다면 mini 초기화
                     if (!value.startsWith(prefix)) {
-                      setMini("");
+                      setMini(null);
                       setComment(value);
                     } else {
                       setComment(value.slice(prefix.length));
