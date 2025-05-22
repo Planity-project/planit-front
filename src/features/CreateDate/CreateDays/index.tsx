@@ -34,6 +34,8 @@ interface DataType {
   tel: string;
   title: string;
   address: string;
+  rating?: number;
+  reviewCount?: number;
   minutes: number;
 }
 
@@ -166,6 +168,8 @@ const CreateDays = ({
       tel: selected.tel,
       imageSrc: selected.imageSrc,
       address: selected.address,
+      rating: selected.rating,
+      reviewCount: selected.reviewCount,
       minutes: 120,
     };
 

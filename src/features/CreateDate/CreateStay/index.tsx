@@ -33,6 +33,8 @@ interface DataType {
   tel: string;
   title: string;
   address: string;
+  rating?: number;
+  reviewCount?: number;
 }
 
 const CreateStay = ({
@@ -150,6 +152,8 @@ const CreateStay = ({
       tel: selected.tel,
       imageSrc: selected.imageSrc,
       address: selected.address,
+      rating: selected.rating,
+      reviewCount: selected.reviewCount,
     };
 
     const emptyIndex = schedule.dataStay.findIndex(
