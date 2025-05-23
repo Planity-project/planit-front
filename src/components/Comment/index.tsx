@@ -71,7 +71,7 @@ const CommentComponent = ({ data, setMini, mini }: CommentProps) => {
   };
 
   useEffect(() => {}, [num]);
-
+  console.log(mini);
   return (
     <>
       <CommentStyled>

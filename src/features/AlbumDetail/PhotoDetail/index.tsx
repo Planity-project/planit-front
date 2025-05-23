@@ -58,13 +58,16 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   useEffect(() => {
-    // if (!user?.id || albumId !== 0) return;
-    console.log(albumId, "Sdfsdf");
+    if (!user) {
+      return;
+    }
+
     api
       .get("/album/photoinfo", {
         params: { albumId: albumId, userId: user?.id },
       })
       .then((res: any) => {
+        console.log(res);
         setData(res.data);
       });
   }, [id, num, user, albumId]);
