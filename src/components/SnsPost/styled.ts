@@ -59,7 +59,6 @@ export const SnsPostStyled = styled.div<{ $variant?: "default" | "album" }>`
     height: 100%;
     position: relative;
     overflow: hidden;
-    border-radius: 5px;
     display: flex;
     border-bottom: 1px solid rgb(0, 0, 0, 0.2);
   }

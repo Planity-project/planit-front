@@ -94,12 +94,13 @@ const AlbumDetail = () => {
   };
   // 앨범 정보 요청
   useEffect(() => {
+    console.log(id);
     api
       .get("/album/detailData", {
         params: { AlbumId: id },
       })
       .then((res: any) => {
-        console.log(res.data, "ㅇㅁㄴㅇㄴㅁㅇㅁㄴㄹ");
+        console.log(res.data.title);
         setArr(res.data);
         setGroupImg(arr.titleImg);
         settitleChange(arr.title);
