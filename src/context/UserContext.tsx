@@ -1,5 +1,3 @@
-// context/UserContext.tsx
-// import { useUser } from "@/context/UserContext"; // useUser 로그인 데이터
 import {
   createContext,
   useContext,
@@ -17,7 +15,15 @@ interface User {
   profile_img: string | null;
 }
 
-const UserContext = createContext<User | null>(null);
+interface UserContextType {
+  user: User | null;
+  isLoading: boolean;
+}
+
+const UserContext = createContext<UserContextType>({
+  user: null,
+  isLoading: true,
+});
 
 interface UserProviderProps {
   children: ReactNode;
@@ -25,12 +31,12 @@ interface UserProviderProps {
 
 export const UserProvider = ({ children }: UserProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     api
       .get("/auth/cookieCheck")
       .then((res) => {
-        console.log(res.data, "테스트 정보");
         if (res.data.result) {
           setUser(res.data.user);
         } else {
@@ -39,10 +45,17 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       })
       .catch(() => {
         setUser(null);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, []);
 
-  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
+  return (
+    <UserContext.Provider value={{ user, isLoading }}>
+      {children}
+    </UserContext.Provider>
+  );
 };
 
 export const useUser = () => useContext(UserContext);

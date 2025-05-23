@@ -23,7 +23,7 @@ export interface TimeType {
   mins: number;
 }
 const CreateDatePage: React.FC = () => {
-  const user = useUser();
+  const { user } = useUser();
   const [current, setCurrent] = useState<number>(0);
   const [range, setRange] = useState<DateRange | undefined>();
   const [selectedPlace, setSelectedPlace] = useState<string | null>(null); // ⬅ 추가
