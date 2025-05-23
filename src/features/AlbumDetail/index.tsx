@@ -103,8 +103,8 @@ const AlbumDetail = () => {
       .then((res: any) => {
         console.log(res.data);
         setArr(res.data);
-        setGroupImg(arr.titleImg);
-        settitleChange(arr.title);
+        setGroupImg(res.data.titleImg);
+        settitleChange(res.data.title);
         console.log(res.data.title);
       });
   }, [id]);

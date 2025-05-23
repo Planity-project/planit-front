@@ -45,6 +45,15 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
   const [mini, setMini] = useState<{ nickname: string; id: number } | null>(
     null
   );
+  const [data, setData] = useState({
+    titleImg: [],
+    comment: [],
+    userImg: "",
+    user: "",
+    like: false,
+    likeCnt: 0,
+    id: 0,
+  });
   const [num, setNum] = useState<number>(0);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
@@ -56,7 +65,7 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
         params: { albumId: albumId, userId: user?.id },
       })
       .then((res: any) => {
-        console.log(res.data, "photoinfo");
+        setData(res.data);
       });
   }, [id, num, user, albumId]);
 
@@ -105,63 +114,6 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
     e.stopPropagation(); // 내부 클릭 시 닫히지 않도록
   };
 
-  const dummy: {
-    id: number;
-    titleImg: any;
-    user: string;
-    userImg: string;
-    like: boolean;
-    comment: CommentType[];
-    likeCnt: number;
-  } = {
-    id: 1,
-    titleImg: [Travel, Travel, Travel, Travel, Travel, Travel],
-    // 글 올린 사람
-    user: "진순흠",
-    userImg: "/defaultImage.png",
-    // 로그인 한 사람이 앨범에 좋아요 상태
-    like: true,
-    comment: [
-      {
-        id: 1,
-        userId: 1,
-        profileImg: "/defaultImage.png",
-        nickname: "진순흠",
-        chat: "ㅋㅋㅋ",
-        likeCnt: 2,
-        // 댓글 좋아요 상태
-        like: true,
-        miniComment: [
-          {
-            userId: 3,
-            profileImg: "/defaultImage.png",
-            nickname: "진순흠",
-            chat: "ㅋㅋㅋㅇㅈ",
-          },
-        ],
-      },
-      {
-        id: 3,
-        userId: 2,
-        profileImg: "/defaultImage.png",
-        nickname: "진순흠2",
-        chat: "ㅋㅋㅋ",
-        likeCnt: 2,
-        like: true,
-      },
-      {
-        id: 2,
-        userId: 3,
-        profileImg: "/defaultImage.png",
-        nickname: "진순흠3",
-        chat: "ㅋㅋㅋ",
-        likeCnt: 2,
-        like: false,
-      },
-    ],
-    likeCnt: 12,
-  };
-
   return (
     <PhotoStyled $modal={modal} onClick={handleBackgroundClick}>
       <div className="photo-wrap" onClick={handleContentClick}>
@@ -180,16 +132,16 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
             className="slider-container"
             style={{
               transform: `translateX(-${currentIndex * 100}%)`,
-              width: `${dummy.titleImg.length * 100}%`,
+              width: `${data?.titleImg?.length * 100}%`,
               height: "100%", // 추가
             }}
           >
-            {dummy.titleImg.map((img: any, idx: number) => {
+            {data?.titleImg?.map((img: any, idx: number) => {
               console.log("이미지 확인:", img.src);
               return (
                 <div key={idx} className="slider-item">
                   <img
-                    src={img.src}
+                    src={img}
                     alt={`image-${idx}`}
                     style={{
                       width: "100%",
@@ -201,7 +153,7 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
             })}
           </div>
           {/* 오른쪽 화살표 (마지막일 땐 안 보이게) */}
-          {currentIndex < dummy.titleImg.length - 1 && (
+          {currentIndex < data?.titleImg?.length - 1 && (
             <RightOutlined
               onClick={(e) => {
                 e.stopPropagation();
@@ -214,22 +166,24 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
         <div className="photo-commentzone">
           <div className="photo-user">
             <Image
-              src={dummy.userImg}
+              src={data.userImg}
               className="photo-userimg"
               alt=""
               height={50}
               width={50}
             />
 
-            {dummy.user}
+            {data.user}
           </div>
           <div style={{ flex: 1, overflowY: "auto" }}>
-            <CommentComponent data={dummy} setMini={setMini} mini={mini} />
+            {data && Array.isArray(data.comment) && (
+              <CommentComponent data={data} setMini={setMini} mini={mini} />
+            )}
           </div>
           <div className="comment-bottomDiv">
             <div className="comment-likeDiv">
               <div>
-                {dummy.like === true ? (
+                {data.like === true ? (
                   <HeartFilled
                     onClick={() => {
                       heart(user?.id);
@@ -245,7 +199,7 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
                   />
                 )}
               </div>
-              <div className="comment-likeCnt">{dummy.likeCnt}</div>
+              <div className="comment-likeCnt">{data.likeCnt}</div>
             </div>
             <div className="comment-inputDiv">
               <Input
@@ -272,7 +226,7 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
               />
               <div
                 onClick={() => {
-                  commentpost(dummy.id);
+                  commentpost(data.id);
                 }}
                 style={{
                   color: comment.length < 1 ? "lightgray" : "black",

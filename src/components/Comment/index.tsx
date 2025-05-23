@@ -75,7 +75,7 @@ const CommentComponent = ({ data, setMini, mini }: CommentProps) => {
   return (
     <>
       <CommentStyled>
-        {data?.comment.map((comment: any, index: number) => (
+        {data?.comment?.map((comment: any, index: number) => (
           <div
             key={index}
             style={{ marginBottom: "5px", position: "relative" }}
