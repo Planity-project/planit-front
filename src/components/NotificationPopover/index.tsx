@@ -126,6 +126,14 @@ const NotificationPopover = () => {
 
               <div className="content">
                 <div className="message">{noti.message}</div>
+
+                {noti.type === "report" && (noti as any).extra && (
+                  <div className="report-info">
+                    👤 대상: {(noti as any).extra.reportedUserNickname} <br />
+                    ⚠️ 신고 횟수: {(noti as any).extra.reportCount}
+                  </div>
+                )}
+
                 <div className="timestamp">
                   {new Date(noti.createdAt).toLocaleTimeString()}
                 </div>
