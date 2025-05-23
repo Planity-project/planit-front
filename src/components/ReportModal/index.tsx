@@ -20,6 +20,8 @@ const ReportModal = ({
   const user = useUser();
   const [reportReason, setReportReason] = useState("");
 
+  console.log("ReportModal 렌더링 - targetId:", targetId);
+
   const report = async () => {
     if (!user?.id) {
       Modal.warning({
@@ -30,15 +32,25 @@ const ReportModal = ({
       return;
     }
 
+    if (!reportReason.trim()) {
+      Modal.warning({
+        centered: true,
+        title: "신고 사유를 입력해주세요.",
+      });
+      return;
+    }
+
     try {
       const endpoint =
         targetType === "comment"
           ? `/reports/comments/${targetId}`
           : `/reports/users/${targetId}`;
 
+      console.log("API 호출 endpoint:", endpoint);
+      console.log("전송 데이터:", { reason: reportReason });
+
       await api.post(endpoint, {
         reason: reportReason,
-        userId: user.id,
       });
 
       setModalOpen(false);

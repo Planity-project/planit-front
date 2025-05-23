@@ -102,6 +102,7 @@ const AlbumDetail = () => {
       })
       .then((res: any) => {
         console.log(res.data);
+        console.log("그룹 멤버 목록:", res.data.group);
         setArr(res.data);
         setGroupImg(res.data.titleImg);
         settitleChange(res.data.title);
@@ -282,7 +283,8 @@ const AlbumDetail = () => {
                         <div
                           onClick={() => {
                             setModalOpen(true);
-                            setUserId(x.id);
+                            setUserId(x.userId);
+                            console.log("신고 대상 유저 ID:", x.userId);
                           }}
                           className="menu-item"
                         >
@@ -294,7 +296,7 @@ const AlbumDetail = () => {
                         className="menu-item"
                         onClick={() => {
                           setModalOpen(true);
-                          setUserId(x.id);
+                          setUserId(x.userId);
                         }}
                       >
                         신고
