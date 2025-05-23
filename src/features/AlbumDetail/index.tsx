@@ -94,16 +94,19 @@ const AlbumDetail = () => {
   };
   // 앨범 정보 요청
   useEffect(() => {
-    console.log(id);
+    if (!id) return;
+    console.log(id, "요청보냄 IDIDID");
+
     api
       .get("/album/detailData", {
-        params: { AlbumId: id },
+        params: { albumId: id },
       })
       .then((res: any) => {
         console.log(res.data.title);
         setArr(res.data);
         setGroupImg(arr.titleImg);
         settitleChange(arr.title);
+        console.log(res.data.title);
       });
   }, [id]);
 
