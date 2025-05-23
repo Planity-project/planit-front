@@ -56,6 +56,12 @@ const AlbumTitle = ({ setModal }: any) => {
         title: "2글자 이상 입력해주세요",
       });
     }
+    if (inviteUrl.length < 10) {
+      return Modal.warning({
+        centered: true,
+        title: "초대링크를 생성해주세요.",
+      });
+    }
     api
       .post("/album/submit", {
         userId: user?.id,

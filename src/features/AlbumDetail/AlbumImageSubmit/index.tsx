@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Button, Input, Upload, message, Select, Rate } from "antd";
 import type {
   UploadFile,
@@ -11,16 +11,23 @@ import { useUser } from "@/context/UserContext";
 import { DaypostStyled, ModalStyled } from "./styled";
 
 interface SubmitModalProps {
-  albumId: number;
-  onClose: () => void;
+  albumId?: number;
+  num: boolean;
+  setNum: (value: boolean) => void;
 }
 
-const AlbumImageSubmitModal = ({ albumId, onClose }: SubmitModalProps) => {
+const AlbumImageSubmitModal = ({ albumId, num, setNum }: SubmitModalProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const showModal = () => setIsModalOpen(true);
-  const user = useUser();
 
+  const user = useUser();
+  useEffect(() => {
+    console.log(num);
+    if (num) {
+      setIsModalOpen(true);
+    }
+  }, [num]);
   const handleOk = async () => {
     try {
       const formData = new FormData();
@@ -47,7 +54,10 @@ const AlbumImageSubmitModal = ({ albumId, onClose }: SubmitModalProps) => {
       message.error("제출 중 오류가 발생했습니다.");
     }
   };
-  const handleCancel = () => setIsModalOpen(false);
+  const handleCancel = () => {
+    setIsModalOpen(false);
+    setNum(false);
+  };
 
   // 업로드 전 파일 검사 (최대 5개 제한)
   const beforeUpload = (file: RcFile) => {
@@ -67,12 +77,14 @@ const AlbumImageSubmitModal = ({ albumId, onClose }: SubmitModalProps) => {
 
   return (
     <ModalStyled>
-      <Button type="primary" onClick={showModal}>
-        모달 열기
-      </Button>
+      <div style={{ display: albumId ? "none" : "block" }}>
+        <Button type="primary" onClick={showModal}>
+          모달 열기
+        </Button>
+      </div>
       <Modal
         title="앨범을 등록해주세요"
-        open={isModalOpen}
+        open={albumId ? num : isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
         okText="완료"

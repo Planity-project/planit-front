@@ -44,7 +44,7 @@ const AlbumDetail = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [groupImg, setGroupImg] = useState<string>("");
   const [uploadModalOpen, setUploadModalOpen] = useState(false);
-
+  const [num, setNum] = useState(false);
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -157,7 +157,7 @@ const AlbumDetail = () => {
         >
           그룹 멤버
         </Button>
-        <Button onClick={() => setUploadModalOpen(true)}>사진 업로드</Button>
+        <Button onClick={() => setNum(true)}>사진 업로드</Button>
       </div>
 
       {viewMode === "grid" ? (
@@ -310,8 +310,9 @@ const AlbumDetail = () => {
       )}
       {uploadModalOpen && (
         <AlbumImageSubmitModal
-          albumId={parseInt(id)} // router에서 받은 앨범 ID
-          onClose={() => setUploadModalOpen(false)} // 모달 닫기용 콜백
+          num={num}
+          setNum={setNum}
+          albumId={parseInt(id)}
         />
       )}
     </AlbumDetailStyled>
