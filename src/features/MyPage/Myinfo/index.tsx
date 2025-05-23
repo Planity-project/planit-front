@@ -191,7 +191,7 @@ const Myinfo = ({ user }: infoprops) => {
           <div className="myinfo-imgDiv">
             <div className="myinfo-imgDiv" onClick={handleImageClick}>
               <div className="profile-image-container">
-                <Image
+                <img
                   src={
                     user?.profile_img
                       ? `${user.profile_img}`

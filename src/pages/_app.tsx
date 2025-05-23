@@ -5,7 +5,6 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useEffect, useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import axios from "axios";
 import "antd/dist/antd.css";
 import { useRouter } from "next/router";
 import Script from "next/script";
@@ -40,7 +39,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
     const end = () => {
       const elapsed = Date.now() - startTime;
-      const remaining = 1000 - elapsed; // 최소 2초 유지
+      const remaining = 800 - elapsed;
 
       if (remaining > 0) {
         timeout = setTimeout(() => setLoading(false), remaining);
