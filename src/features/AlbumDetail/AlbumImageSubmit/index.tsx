@@ -12,22 +12,21 @@ import { DaypostStyled, ModalStyled } from "./styled";
 
 interface SubmitModalProps {
   albumId?: number;
-  num: boolean;
-  setNum: (value: boolean) => void;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
-const AlbumImageSubmitModal = ({ albumId, num, setNum }: SubmitModalProps) => {
+const AlbumImageSubmitModal = ({
+  albumId,
+  isOpen,
+  onClose,
+}: SubmitModalProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const showModal = () => setIsModalOpen(true);
 
   const user = useUser();
-  useEffect(() => {
-    console.log(num);
-    if (num) {
-      setIsModalOpen(true);
-    }
-  }, [num]);
+
   const handleOk = async () => {
     try {
       const formData = new FormData();
@@ -54,10 +53,6 @@ const AlbumImageSubmitModal = ({ albumId, num, setNum }: SubmitModalProps) => {
       message.error("제출 중 오류가 발생했습니다.");
     }
   };
-  const handleCancel = () => {
-    setIsModalOpen(false);
-    setNum(false);
-  };
 
   // 업로드 전 파일 검사 (최대 5개 제한)
   const beforeUpload = (file: RcFile) => {
@@ -77,16 +72,11 @@ const AlbumImageSubmitModal = ({ albumId, num, setNum }: SubmitModalProps) => {
 
   return (
     <ModalStyled>
-      <div style={{ display: albumId ? "none" : "block" }}>
-        <Button type="primary" onClick={showModal}>
-          모달 열기
-        </Button>
-      </div>
       <Modal
         title="앨범을 등록해주세요"
-        open={albumId ? num : isModalOpen}
+        open={isOpen}
         onOk={handleOk}
-        onCancel={handleCancel}
+        onCancel={onClose}
         okText="완료"
         cancelText="취소"
       >
