@@ -49,12 +49,16 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   useEffect(() => {
-    // api
-    //   .get("/album/photoinfo", { params: { albumId: albumId } })
-    //   .then((res: any) => {
-    //     console.log(res.data);
-    //   });
-  }, [id, num]);
+    // if (!user?.id || albumId !== 0) return;
+    console.log(albumId, "Sdfsdf");
+    api
+      .get("/album/photoinfo", {
+        params: { albumId: albumId, userId: user?.id },
+      })
+      .then((res: any) => {
+        console.log(res.data, "photoinfo");
+      });
+  }, [id, num, user, albumId]);
 
   const heart = (id?: number) => {
     if (!id) {
