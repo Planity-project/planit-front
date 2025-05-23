@@ -21,6 +21,8 @@ import "swiper/css/pagination";
 import PhotoDetail from "./PhotoDetail";
 import { useUser } from "@/context/UserContext";
 import ReportModal from "@/components/ReportModal";
+import AlbumImageSubmitModal from "./AlbumImageSubmit";
+
 const groupdummy = {
   link: ["dasdasdadasd.dsadasdasd"],
 
@@ -69,6 +71,8 @@ const AlbumDetail = () => {
   const [titleChange, settitleChange] = useState<string>(groupdummy.title);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [groupImg, setGroupImg] = useState<string>(groupdummy.titleImg);
+  const [uploadModalOpen, setUploadModalOpen] = useState(false);
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -175,6 +179,7 @@ const AlbumDetail = () => {
         >
           그룹 멤버
         </Button>
+        <Button onClick={() => setUploadModalOpen(true)}>사진 업로드</Button>
       </div>
 
       {viewMode === "grid" ? (
@@ -329,6 +334,12 @@ const AlbumDetail = () => {
       />
 
       <PhotoDetail modal={modal} setModal={setModal} albumId={albumId} />
+      {uploadModalOpen && (
+        <AlbumImageSubmitModal
+          albumId={parseInt(id)} // router에서 받은 앨범 ID
+          onClose={() => setUploadModalOpen(false)} // 모달 닫기용 콜백
+        />
+      )}
     </AlbumDetailStyled>
   );
 };
