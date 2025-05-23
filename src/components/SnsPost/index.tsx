@@ -29,7 +29,7 @@ const SnsPost = ({ data, variant }: snspostprops) => {
       <div className="sns-wrap">
         {data?.map((x: any, i: number) => {
           const imgList = Array.isArray(x.img) ? x.img : [];
-
+          console.log(imgList, "이미지 확인용");
           return (
             <div
               className="sns-postBox"

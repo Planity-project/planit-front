@@ -83,10 +83,11 @@ interface SideBarProps {
 const SideBar = ({ isOpen, setIsOpen }: SideBarProps) => {
   const router = useRouter();
   const user = useUser();
-
   const logout = () => {
     api.get("auth/logout").then(() => {
-      window.location.reload();
+      router.push("/").then(() => {
+        window.location.reload(); // ✅ push가 완료된 후 새로고침
+      });
     });
   };
 
