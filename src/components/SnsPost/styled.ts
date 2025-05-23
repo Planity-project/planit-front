@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const SnsPostStyled = styled.div<{ $variant?: "default" | "album" }>`
-  margin-top: 70px;
+  margin-top: 100px;
   margin-bottom: 70px;
   width: 100%;
   display: flex;
@@ -137,7 +137,7 @@ export const SnsPostStyled = styled.div<{ $variant?: "default" | "album" }>`
 
   .sns-title {
     text-align: ${(props) => (props.$variant === "album" ? "center" : "")};
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 500;
   }
 
@@ -146,8 +146,8 @@ export const SnsPostStyled = styled.div<{ $variant?: "default" | "album" }>`
     color: gray;
   }
 
-  .sns-comment {
-    font-size: 14px;
+  .sns-content {
+    font-size: 12px;
   }
 
   /* 반응형 */
