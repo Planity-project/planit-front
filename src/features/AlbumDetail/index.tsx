@@ -89,6 +89,7 @@ const AlbumDetail = () => {
   };
   const movePhoto = (id: number) => {
     console.log(modal);
+    console.log(id, "선택 앨범 id");
     setModal(true);
     setAlbumId(id);
   };
@@ -102,7 +103,7 @@ const AlbumDetail = () => {
         params: { albumId: id },
       })
       .then((res: any) => {
-        console.log(res.data.title);
+        console.log(res.data);
         setArr(res.data);
         setGroupImg(arr.titleImg);
         settitleChange(arr.title);
@@ -305,7 +306,9 @@ const AlbumDetail = () => {
         targetId={userId}
       />
 
-      <PhotoDetail modal={modal} setModal={setModal} albumId={albumId} />
+      {modal && albumId !== 0 && (
+        <PhotoDetail modal={modal} setModal={setModal} albumId={albumId} />
+      )}
       {uploadModalOpen && (
         <AlbumImageSubmitModal
           albumId={parseInt(id)} // router에서 받은 앨범 ID
