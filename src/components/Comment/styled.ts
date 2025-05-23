@@ -71,6 +71,7 @@ export const CommentStyled = styled.div`
   }
 
   .comment-miniMapDiv {
+    margin-top: 5px;
     margin-left: 5px;
     display: flex;
     align-items: center;

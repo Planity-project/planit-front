@@ -141,7 +141,7 @@ const AlbumDetail = () => {
       message.error("복사 실패");
     }
   };
-  console.log(arr.titleImg);
+
   return (
     <AlbumDetailStyled>
       <div className="view-toggle">
