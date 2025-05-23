@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
 export const NotificationStyled = styled.div`
-  width: 360px;
-
   .notification-header {
     display: flex;
     justify-content: space-between;

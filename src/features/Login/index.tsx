@@ -8,7 +8,6 @@ import { useRouter } from "next/router";
 const Login = () => {
   const router = useRouter();
   const { redirect } = router.query;
-
   const makeLoginUrl = (provider: string) => {
     const base = `http://localhost:5001/auth/${provider}`;
     return redirect

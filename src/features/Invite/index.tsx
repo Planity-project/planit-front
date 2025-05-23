@@ -13,14 +13,6 @@ const Invite = () => {
 
   useEffect(() => {
     const currentUrl = window.location.href;
-    console.log(currentUrl);
-    api
-      .get("/album/inviteData", {
-        params: { inviteIink: currentUrl },
-      })
-      .then((res: any) => {
-        console.log(res.data);
-      });
   }, []);
   const dummy = [{ Id: 1, title: "헤이", titleImg: null, owner: "진순흠" }];
   const loginCheck = () => {

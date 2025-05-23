@@ -194,7 +194,7 @@ const Myinfo = ({ user }: infoprops) => {
                 <Image
                   src={
                     user?.profile_img
-                      ? `http://localhost:5001/${user.profile_img}`
+                      ? `${user.profile_img}`
                       : "/user-thumbnail.png"
                   }
                   alt="사용자 프로필"

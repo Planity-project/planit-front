@@ -9,11 +9,13 @@ const MyPage = () => {
   const router = useRouter();
   const user = useUser();
   const [click, setClick] = useState(0);
-
   useEffect(() => {
+    if (!router.isReady) return;
     const { id } = router.query;
-    id === "1" ? setClick(0) : setClick(1);
-  }, []);
+    if (id === "1") setClick(0);
+    else if (id === "2") setClick(1);
+    else setClick(2);
+  }, [router.isReady, router.query]);
   return (
     <MypageStyled>
       <div className="mypage-wrap">

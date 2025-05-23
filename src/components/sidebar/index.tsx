@@ -83,11 +83,19 @@ interface SideBarProps {
 const SideBar = ({ isOpen, setIsOpen }: SideBarProps) => {
   const router = useRouter();
   const user = useUser();
+
   const logout = () => {
-    api.get("auth/logout").then((res: any) => {
+    api.get("auth/logout").then(() => {
       window.location.reload();
     });
   };
+
+  const navigateIfChanged = (path: string) => {
+    if (router.asPath !== path) {
+      router.push(path);
+    }
+  };
+
   return (
     <SidebarStyled $isOpen={isOpen}>
       <div className="sideBar-closeBtn">
@@ -106,7 +114,7 @@ const SideBar = ({ isOpen, setIsOpen }: SideBarProps) => {
               user?.profile_img
                 ? `http://localhost:5001/${user?.profile_img}`
                 : "/user-thumbnail.png"
-            } // null, undefined 방지
+            }
             alt="사용자 프로필"
             className="sideBar-userProfile"
             width={50}
@@ -120,9 +128,9 @@ const SideBar = ({ isOpen, setIsOpen }: SideBarProps) => {
           mode="inline"
           items={items}
           onClick={({ key }) => {
-            if (key === "sub3") router.push("/album"); // 시작하기
-            if (key === "sub1") router.push("/mypage/2");
-            if (key === "sub2") router.push("/mypage/1");
+            if (key === "sub3") navigateIfChanged("/album");
+            if (key === "sub1") navigateIfChanged("/mypage/2");
+            if (key === "sub2") navigateIfChanged("/mypage/1");
           }}
         />
         <div className="sideBar-logoutText" onClick={logout}>
