@@ -30,7 +30,7 @@ interface DateChoiceProps {
 }
 
 const DateChoice = ({ range, setRange, onNext }: DateChoiceProps) => {
-  const [initialFrom, setInitialFrom] = useState<Date | null>(null); // 시작 날짜
+  const [initialFrom, setInitialFrom] = useState<Date | null | any>(null); // 시작 날짜
   const [isRangeComplete, setIsRangeComplete] = useState(false); // 범위 선택 완료 여부
 
   const isMobile = useResponsive();
@@ -38,6 +38,9 @@ const DateChoice = ({ range, setRange, onNext }: DateChoiceProps) => {
   const today = new Date();
 
   const handleSelect = (selectedRange: DateRange | undefined) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
     if (!selectedRange) {
       setInitialFrom(null);
       setRange(undefined);
@@ -45,7 +48,9 @@ const DateChoice = ({ range, setRange, onNext }: DateChoiceProps) => {
       return;
     }
 
-    // 범위가 이미 완료된 상태에서 새 선택 시작 시 초기화
+    const { from, to } = selectedRange;
+
+    // 이미 선택 완료 상태면 → 어떤 날짜를 클릭하든 다시 시작
     if (isRangeComplete) {
       setInitialFrom(null);
       setRange(undefined);
@@ -53,20 +58,21 @@ const DateChoice = ({ range, setRange, onNext }: DateChoiceProps) => {
       return;
     }
 
-    if (!initialFrom && selectedRange.from) {
-      setInitialFrom(selectedRange.from);
-      setRange(selectedRange);
+    // 처음 선택한 경우
+    if (!initialFrom && from) {
+      setInitialFrom(from);
+      setRange({ from, to: undefined });
       return;
     }
 
-    if (initialFrom && selectedRange.from && selectedRange.to) {
-      if (selectedRange.from < initialFrom) {
-        setInitialFrom(null);
-        setRange(undefined);
+    // 두 번째 선택이며, 10일 범위 내에서 선택된 경우
+    if (initialFrom && from && to) {
+      const maxTo = addDays(initialFrom, 10);
+      if (isAfter(to, maxTo)) {
+        // 범위 초과 → 무시
         return;
       }
-
-      setRange(selectedRange);
+      setRange({ from: initialFrom, to });
       setIsRangeComplete(true);
       return;
     }
@@ -76,20 +82,20 @@ const DateChoice = ({ range, setRange, onNext }: DateChoiceProps) => {
 
   const getDisabledDays = (fromDate: Date | undefined) => {
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // 오늘 0시 기준
+    today.setHours(0, 0, 0, 0);
 
-    // 범위가 완료된 상태면 오늘 이전만 비활성화
     if (isRangeComplete) {
+      // 범위 완료 후 → 오늘 이전만 비활성화
       return [{ before: today }];
     }
 
     if (!fromDate) {
+      // 아무것도 선택 안 했을 땐 오늘 이전만 비활성화
       return [{ before: today }];
     }
 
     const start = new Date(fromDate.setHours(0, 0, 0, 0));
     const end = addDays(start, 10);
-
     return [{ before: today }, { before: start }, { after: end }];
   };
 
@@ -117,12 +123,8 @@ const DateChoice = ({ range, setRange, onNext }: DateChoiceProps) => {
               mode="range"
               numberOfMonths={isMobile ? 1 : 2}
               selected={range}
-              onSelect={(selectedRange) => {
-                handleSelect(selectedRange);
-                handleReactivation(selectedRange);
-                setRange(selectedRange); // 기간 완료 후 다시 클릭하면 초기화
-              }}
-              disabled={getDisabledDays(range?.from)}
+              onSelect={handleSelect}
+              disabled={getDisabledDays(initialFrom)}
             />
           </div>
         </div>

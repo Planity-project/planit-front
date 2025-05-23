@@ -36,6 +36,7 @@ export const DateChoiceStyled = styled.div`
   .rdp-caption_label {
     margin-left: 20px;
   }
+
   .rdp-root {
     font-size: 22px;
     --rdp-accent-color: rgb(83, 183, 232, 0.6) !important;
