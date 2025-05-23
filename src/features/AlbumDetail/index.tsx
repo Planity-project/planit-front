@@ -23,43 +23,15 @@ import { useUser } from "@/context/UserContext";
 import ReportModal from "@/components/ReportModal";
 import AlbumImageSubmitModal from "./AlbumImageSubmit";
 
-const groupdummy = {
-  link: ["dasdasdadasd.dsadasdasd"],
-
-  title: "ㅇㅁㄴㅇㅁㄴ",
-  titleImg: "/defaultImage.png",
-  group: [
-    {
-      id: 1,
-      userId: 1,
-      img: "/defaultImage.png",
-      nickname: "진순흠",
-      role: "owner",
-    },
-    {
-      id: 2,
-      userId: 3,
-      img: "/defaultImage.png",
-      nickname: "진순",
-      role: "user",
-    },
-    {
-      id: 3,
-      userId: 2,
-      img: "/defaultImage.png",
-      nickname: "진",
-      role: "user",
-    },
-  ],
-  image: [
-    { id: 1, img: "/defaultImage.png", likeCnt: 12, commentCnt: 32 },
-    { id: 2, img: "/defaultImage.png", likeCnt: 12, commentCnt: 32 },
-    { id: 3, img: "/defaultImage.png", likeCnt: 12, commentCnt: 32 },
-  ],
-};
 const AlbumDetail = () => {
   const [ModalOpen, setModalOpen] = useState<boolean>(false);
-  const [arr, setArr] = useState();
+  const [arr, setArr] = useState<any>({
+    link: [],
+    title: "",
+    titleImg: "/defaultImage.png",
+    group: [],
+    image: [],
+  });
   const [viewMode, setViewMode] = useState<"grid" | "slide">("grid");
   const [modal, setModal] = useState<boolean>(false);
   const [albumId, setAlbumId] = useState<number>(0);
@@ -68,9 +40,9 @@ const AlbumDetail = () => {
   const [openMenuIndex, setOpenMenuIndex] = useState<number | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
   const [userId, setUserId] = useState<number>(0);
-  const [titleChange, settitleChange] = useState<string>(groupdummy.title);
+  const [titleChange, settitleChange] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [groupImg, setGroupImg] = useState<string>(groupdummy.titleImg);
+  const [groupImg, setGroupImg] = useState<string>("");
   const [uploadModalOpen, setUploadModalOpen] = useState(false);
 
   useEffect(() => {
@@ -127,10 +99,12 @@ const AlbumDetail = () => {
         params: { AlbumId: id },
       })
       .then((res: any) => {
-        console.log(res.data);
+        console.log(res.data, "ㅇㅁㄴㅇㄴㅁㅇㅁㄴㄹ");
         setArr(res.data);
+        setGroupImg(arr.titleImg);
+        settitleChange(arr.title);
       });
-  }, []);
+  }, [id]);
 
   //title 변경 요청
   const changetitle = () => {
@@ -158,7 +132,7 @@ const AlbumDetail = () => {
   };
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(groupdummy.link[0]);
+      await navigator.clipboard.writeText(arr.link[0]);
       message.success("링크가 클립보드에 복사되었습니다");
     } catch (err) {
       message.error("복사 실패");
@@ -184,7 +158,7 @@ const AlbumDetail = () => {
 
       {viewMode === "grid" ? (
         <div className="AlbumDetail-photoWrap">
-          {groupdummy.image.map((x, i) => (
+          {arr.image.map((x: any, i: number) => (
             <div
               key={i}
               onClick={() => movePhoto(x.id)}
@@ -192,8 +166,8 @@ const AlbumDetail = () => {
             >
               <Image
                 className="AlbumDetail-img"
-                src={x.img}
-                alt={`photo`}
+                src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${x.img}`} // ✅ 바르게 접근
+                alt="photo"
                 width={200}
                 height={200}
               />
@@ -217,7 +191,7 @@ const AlbumDetail = () => {
           <div className="group-changecontainer">
             <div className="group-imgdiv">
               <Image
-                src={groupImg}
+                src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${groupImg}`}
                 alt="그룹 타이틀 이미지"
                 width={200}
                 height={200}
@@ -246,13 +220,7 @@ const AlbumDetail = () => {
                 }}
               />
               <div className="group-inputbtn">
-                <Button
-                  onClick={() => {
-                    changetitle;
-                  }}
-                >
-                  변경
-                </Button>
+                <Button onClick={changetitle}>변경</Button>
               </div>
             </div>
           </div>
@@ -261,14 +229,14 @@ const AlbumDetail = () => {
               <div className="group-member-linkDiv">
                 <span className="group-member-text">초대링크</span>
                 <span className="AlbumTitle-url">
-                  {shortenUrl(groupdummy.link[0])}
+                  {shortenUrl(arr.link[0])}
                 </span>
               </div>
               <div className="group-member-copybtn">
                 <Button onClick={handleCopy}>복사</Button>
               </div>
             </div>
-            {groupdummy.group.map((x, i) => (
+            {arr.group.map((x: any, i: number) => (
               <div key={i} className="group-member-item">
                 <div className="group-member-proflie">
                   <Image

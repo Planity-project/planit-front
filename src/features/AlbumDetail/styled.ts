@@ -150,7 +150,6 @@ export const AlbumDetailStyled = styled.div`
     align-items: center;
     padding: 12px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
   }
   /* .group-member-nickname {
     width: 40%;
