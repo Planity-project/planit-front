@@ -61,13 +61,13 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
     if (!user) {
       return;
     }
-
     api
       .get("/album/photoinfo", {
         params: { albumId: albumId, userId: user?.id },
       })
       .then((res: any) => {
-        console.log(res);
+        console.log(res.data);
+        console.log(num);
         setData(res.data);
       });
   }, [id, num, user, albumId]);
@@ -80,7 +80,7 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
       });
     }
     api
-      .post("/user/likePost", { userId: id, albumId: albumId })
+      .get("/album/likeAlbum", { params: { userId: id, albumId: albumId } })
       .then((res: any) => {
         setNum(num + 1);
       });
@@ -101,8 +101,9 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
         parentId: mini?.id || undefined, // 대댓글이면 parentId로 전달
       });
 
-      // 전송 후 초기화 or 알림 등
       setComment("");
+      setMini(null);
+      setNum(num + 1);
     } catch (err) {
       console.error("댓글 등록 실패", err);
       alert("댓글 등록에 실패했습니다.");
@@ -180,7 +181,13 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
           </div>
           <div style={{ flex: 1, overflowY: "auto" }}>
             {data && Array.isArray(data.comment) && (
-              <CommentComponent data={data} setMini={setMini} mini={mini} />
+              <CommentComponent
+                data={data}
+                setMini={setMini}
+                mini={mini}
+                setNum={setNum}
+                num={num}
+              />
             )}
           </div>
           <div className="comment-bottomDiv">
@@ -207,12 +214,12 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
             <div className="comment-inputDiv">
               <Input
                 type="text"
-                value={mini ? `@${mini} ${comment}` : comment}
+                value={mini ? `@${mini.nickname} ${comment}` : comment}
                 placeholder="댓글을 작성하세요"
                 onChange={(e) => {
                   // mini가 존재할 때, @mini 를 유지하고 그 이후 값만 comment로 저장
                   if (mini) {
-                    const prefix = `@${mini} `;
+                    const prefix = `@${mini.nickname} `;
                     const value = e.target.value;
 
                     // 만약 유저가 prefix를 지웠다면 mini 초기화

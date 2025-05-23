@@ -110,6 +110,12 @@ const AlbumDetail = () => {
       });
   }, [id]);
 
+  useEffect(() => {
+    const userInfo = arr.group.find((member: any) => member.id === user.id);
+    if (userInfo) {
+      setUserrole(userInfo.role);
+    }
+  }, [arr]);
   //title 변경 요청
   const changetitle = () => {
     api
@@ -142,7 +148,7 @@ const AlbumDetail = () => {
       message.error("복사 실패");
     }
   };
-  console.log(arr.titleImg);
+
   return (
     <AlbumDetailStyled>
       <div className="view-toggle">
@@ -257,13 +263,16 @@ const AlbumDetail = () => {
                 <div className={`group-member${x.role}`}>
                   {x.role === "owner" ? <CrownFilled /> : <UserOutlined />}
                 </div>
-
-                <div
-                  onClick={() => toggleMenu(i)}
-                  className="ellipsis-menu-trigger"
-                >
-                  <EllipsisOutlined />
-                </div>
+                {x.userId === user.id ? (
+                  <div className="ellipsis-menu-trigger"></div>
+                ) : (
+                  <div
+                    onClick={() => toggleMenu(i)}
+                    className="ellipsis-menu-trigger"
+                  >
+                    <EllipsisOutlined />
+                  </div>
+                )}
 
                 {openMenuIndex === i && (
                   <div ref={menuRef} className="member-popup-menu">
@@ -312,8 +321,9 @@ const AlbumDetail = () => {
       )}
       {uploadModalOpen && (
         <AlbumImageSubmitModal
-          albumId={parseInt(id)} // router에서 받은 앨범 ID
-          onClose={() => setUploadModalOpen(false)} // 모달 닫기용 콜백
+          albumId={parseInt(id)}
+          isOpen={uploadModalOpen}
+          onClose={() => setUploadModalOpen(false)}
         />
       )}
     </AlbumDetailStyled>

@@ -15,12 +15,19 @@ interface CommentProps {
   data: any;
   setMini: (value: { nickname: string; id: number } | null) => void;
   mini: { nickname: string; id: number } | null;
+  setNum: (value: number) => void;
+  num: number;
 }
 
-const CommentComponent = ({ data, setMini, mini }: CommentProps) => {
+const CommentComponent = ({
+  data,
+  setMini,
+  mini,
+  setNum,
+  num,
+}: CommentProps) => {
   const user = useUser();
 
-  const [num, setNum] = useState<number>(0);
   const [openReplies, setOpenReplies] = useState<number[]>([]);
   const [openMenuId, setOpenMenuId] = useState<number | null>(null);
 
@@ -36,8 +43,10 @@ const CommentComponent = ({ data, setMini, mini }: CommentProps) => {
   const commentHeart = async (commentId?: number) => {
     if (!user?.id) return;
     try {
-      await api.post(`/likes/comment/${commentId}/toggle`);
-      setNum((prev) => prev + 1);
+      await api.post(`/likes/comment/${commentId}/toggle`).then((res: any) => {
+        console.log(res.data);
+      });
+      setNum(num + 1);
     } catch (err) {
       console.error("좋아요 처리 중 오류:", err);
     }
@@ -48,7 +57,7 @@ const CommentComponent = ({ data, setMini, mini }: CommentProps) => {
 
     try {
       await api.delete(`/comments/${commentId}`);
-      setNum((prev) => prev + 1);
+      setNum(num + 1);
 
       Modal.success({
         centered: true,
@@ -70,7 +79,6 @@ const CommentComponent = ({ data, setMini, mini }: CommentProps) => {
     setReportModalOpen(true);
   };
 
-  useEffect(() => {}, [num]);
   console.log(mini);
   return (
     <>
