@@ -95,8 +95,6 @@ const AlbumDetail = () => {
   // 앨범 정보 요청
   useEffect(() => {
     if (!id) return;
-    console.log(id, "요청보냄 IDIDID");
-
     api
       .get("/album/detailData", {
         params: { albumId: id },
@@ -142,6 +140,7 @@ const AlbumDetail = () => {
       message.error("복사 실패");
     }
   };
+  console.log(arr.titleImg);
   return (
     <AlbumDetailStyled>
       <div className="view-toggle">
@@ -170,7 +169,7 @@ const AlbumDetail = () => {
             >
               <Image
                 className="AlbumDetail-img"
-                src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${x.img}`} // ✅ 바르게 접근
+                src={x.img} // ✅ 바르게 접근
                 alt="photo"
                 width={200}
                 height={200}
@@ -195,7 +194,7 @@ const AlbumDetail = () => {
           <div className="group-changecontainer">
             <div className="group-imgdiv">
               <Image
-                src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${groupImg}`}
+                src={`${arr.titleImg}`}
                 alt="그룹 타이틀 이미지"
                 width={200}
                 height={200}
