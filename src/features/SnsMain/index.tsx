@@ -23,7 +23,7 @@ const SnsMain = () => {
 
       const newItems = res.data.items;
       const totalItems = res.data.total;
-      console.log(res.data, "dasdasdsad");
+
       setData((prev) => {
         const existingIds = new Set(prev.map((item) => item.id));
         const uniqueItems = newItems.filter(

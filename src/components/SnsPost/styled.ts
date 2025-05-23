@@ -13,7 +13,7 @@ export const SnsPostStyled = styled.div<{ $variant?: "default" | "album" }>`
     justify-content: center;
     flex-wrap: wrap;
     gap: 20px;
-    width: ${(props) => (props.$variant === "album" ? "70%" : "40%")};
+    width: ${(props) => (props.$variant === "album" ? "75%" : "40%")};
     max-width: 1280px;
   }
 
@@ -173,7 +173,7 @@ export const SnsPostStyled = styled.div<{ $variant?: "default" | "album" }>`
       font-size: 12px;
     }
     .sns-wrap {
-      width: 90%;
+      width: ${(props) => (props.$variant === "album" ? "80%" : "60%")};
     }
   }
 
@@ -188,7 +188,7 @@ export const SnsPostStyled = styled.div<{ $variant?: "default" | "album" }>`
       font-size: 10px;
     }
     .sns-wrap {
-      width: 100%;
+      width: ${(props) => (props.$variant === "album" ? "100%" : "60%")};
     }
   }
 `;
