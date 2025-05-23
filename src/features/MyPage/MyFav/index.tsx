@@ -1,6 +1,6 @@
 import AddBanner from "@/components/AddBanner";
 import { MyfavStyled } from "./styled";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import api from "@/util/api";
 import { useRouter } from "next/router";
 interface infoprops {
@@ -8,17 +8,14 @@ interface infoprops {
 }
 
 const MyFav = ({ user }: infoprops) => {
-  const dummy = [
-    { userid: 2, postId: 2, title: "재미진 여수 여행", nickname: "진순흠" },
-    { userid: 5, postId: 3, title: "재미진 부산 여행", nickname: "순흠" },
-    { userid: 2, postId: 4, title: "또 가고 싶은 제주도", nickname: "진순흠" },
-  ];
+  const [data, setData] = useState<any[]>([]);
   const router = useRouter();
   useEffect(() => {
     api
       .get("/posts/likePosts", { params: { userId: user.id } })
       .then((res: any) => {
         console.log(res.data, "posts/likePosts");
+        setData(res.data);
       });
   }, []);
   return (
@@ -26,18 +23,29 @@ const MyFav = ({ user }: infoprops) => {
       <div className="myfav-wrap">
         <div className="chat-box">
           <div className="myfav-title">📌 관심 일정</div>
-          {dummy.map((item, idx) => (
+          {data.length < 1 ? (
             <div
-              onClick={() => {
-                router.push(`/snsmainpage/snsdetail/${item.postId}`);
-              }}
-              key={idx}
               className={`chat-bubble left`}
+              onClick={() => {
+                router.push(`/snsmainpage`);
+              }}
             >
-              <div className="bubble-content">{item.title}</div>
-              <div className="chat-date">{item.nickname}</div>
+              아직 관심있는 일정이 없어요!<div> 한번 추가 해보실까요?</div>
             </div>
-          ))}
+          ) : (
+            data.map((item, idx) => (
+              <div
+                onClick={() => {
+                  router.push(`/snsmainpage/snsdetail/${item.postId}`);
+                }}
+                key={idx}
+                className={`chat-bubble left`}
+              >
+                <div className="bubble-content">{item.title}</div>
+                <div className="chat-date">{item.nickname}</div>
+              </div>
+            ))
+          )}
         </div>
       </div>
     </MyfavStyled>

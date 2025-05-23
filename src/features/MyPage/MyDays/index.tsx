@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { MyinfoDaysStyled } from "./styled";
 import { useRouter } from "next/router";
 import api from "@/util/api";
@@ -7,6 +7,8 @@ interface infoprops {
 }
 
 const Myinfodays = ({ user }: infoprops) => {
+  const [data, setData] = useState<any[]>([]);
+
   const dummy = [
     { userid: 1, postId: 2, title: "재미진 여수 여행", endDate: "2025-05-30" },
     { userid: 1, postId: 3, title: "재미진 부산 여행", endDate: "2025-05-03" },
@@ -18,21 +20,24 @@ const Myinfodays = ({ user }: infoprops) => {
       .get("posts/myPosts", { params: { userId: user.id } })
       .then((res: any) => {
         console.log(res.data, "posts/myPosts");
+        setData(res.data);
       });
-  }, []);
+  }, [user]);
   const router = useRouter();
   const today = new Date();
 
-  const upcoming = dummy
-    .filter((item) => new Date(item.endDate) >= today)
+  const upcoming = data
+    ?.filter((item: any) => new Date(item.endDate) >= today)
     .sort(
-      (a, b) => new Date(a.endDate).getTime() - new Date(b.endDate).getTime()
+      (a: any, b: any) =>
+        new Date(a.endDate).getTime() - new Date(b.endDate).getTime()
     );
 
-  const past = dummy
-    .filter((item) => new Date(item.endDate) < today)
+  const past = data
+    .filter((item: any) => new Date(item.endDate) < today)
     .sort(
-      (a, b) => new Date(a.endDate).getTime() - new Date(b.endDate).getTime()
+      (a: any, b: any) =>
+        new Date(a.endDate).getTime() - new Date(b.endDate).getTime()
     );
 
   // 번갈아 출력용 배열

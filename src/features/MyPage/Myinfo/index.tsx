@@ -251,45 +251,46 @@ const Myinfo = ({ user }: infoprops) => {
             내역 보기
           </div>
         </div>
-
-        <Modal
-          title="결제 내역"
-          centered
-          open={isModalOpen}
-          onCancel={() => setIsModalOpen(false)}
-          footer={null}
-          width={600}
-          getContainer={false}
-        >
-          <Table
-            dataSource={paymentData}
-            rowKey={(record) => record.id}
-            pagination={{ pageSize: 5 }}
-            columns={[
-              {
-                title: "앨범 이름",
-                dataIndex: "name",
-                key: "name",
-              },
-              {
-                title: "금액",
-                dataIndex: "amount",
-                key: "amount",
-                render: (amount: number) => `${amount.toLocaleString()}원`,
-              },
-              {
-                title: "결제 수단",
-                dataIndex: "credit",
-                key: "credit",
-              },
-              {
-                title: "결제일",
-                dataIndex: "date",
-                key: "date",
-              },
-            ]}
-          />
-        </Modal>
+        <div>
+          <Modal
+            title="결제 내역"
+            centered
+            open={isModalOpen}
+            onCancel={() => setIsModalOpen(false)}
+            footer={null}
+            width={600}
+            getContainer={false}
+          >
+            <Table
+              dataSource={paymentData}
+              rowKey={(record) => record.id}
+              pagination={{ pageSize: 5 }}
+              columns={[
+                {
+                  title: "앨범 이름",
+                  dataIndex: "name",
+                  key: "name",
+                },
+                {
+                  title: "금액",
+                  dataIndex: "amount",
+                  key: "amount",
+                  render: (amount: number) => `${amount.toLocaleString()}원`,
+                },
+                {
+                  title: "결제 수단",
+                  dataIndex: "credit",
+                  key: "credit",
+                },
+                {
+                  title: "결제일",
+                  dataIndex: "date",
+                  key: "date",
+                },
+              ]}
+            />
+          </Modal>
+        </div>
 
         <div
           onClick={userexit}
