@@ -129,6 +129,11 @@ export const PhotoStyled = styled.div<{ $modal?: true | false }>`
     border: none;
     border-bottom: 1px solid black;
   }
+  .photo-delphoto {
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+  }
   @media (max-width: 1250px) {
     .photo-wrap {
       width: 75%;

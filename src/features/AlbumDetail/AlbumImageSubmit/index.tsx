@@ -88,6 +88,12 @@ const AlbumImageSubmitModal = ({
             }}
           >
             <div className="daypost-title">이미지 (최대 5개)</div>
+            <div className="daypost-commentdiv">
+              ! 무료 체험판 사용 시 업로드 횟수는 3회로 제한됩니다,
+            </div>
+            <div className="daypost-commentdiv">
+              이미지 업로드 시 방장 외에는 삭제가 불가합니다
+            </div>
             <Upload
               multiple
               listType="picture-card"

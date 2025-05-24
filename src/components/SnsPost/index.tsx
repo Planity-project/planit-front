@@ -15,7 +15,7 @@ const SnsPost = ({ data, variant }: snspostprops) => {
   const [list, setList] = useState<string[]>([]);
   const [id, setId] = useState(0);
   const router = useRouter();
-  console.log(data);
+  console.log(data, "dsjakbdiujsabdjksabfksdbkjfhsa");
   const handleClick = (id: number) => {
     if (variant === "album") {
       router.push(`/album/detail/${id}`);
@@ -70,11 +70,9 @@ const SnsPost = ({ data, variant }: snspostprops) => {
 
               <div className="sns-textBox">
                 <div className="sns-title">{x?.title}</div>
-                {x.hastag ? (
-                  <div className="sns-hashtag">{x?.hashtag ?? ""}</div>
-                ) : (
-                  <></>
-                )}
+                {x.hashtag && x.hashtag.length > 0 ? (
+                  <div className="sns-hashtag">{x.hashtag.join(" ")}</div>
+                ) : null}
                 {x.content ? (
                   <div className="sns-content">{x?.content ?? ""}</div>
                 ) : (

@@ -101,12 +101,11 @@ const AlbumDetail = () => {
         params: { albumId: id },
       })
       .then((res: any) => {
-        console.log(res.data);
-        console.log("그룹 멤버 목록:", res.data.group);
+        console.log(res.data, "ㅇㄴㅁㅇㅁㄴㅇㄴㅁㅇㅁㄴ");
+
         setArr(res.data);
         setGroupImg(res.data.titleImg);
         settitleChange(res.data.title);
-        console.log(res.data.title);
       });
   }, [id]);
 
@@ -164,7 +163,13 @@ const AlbumDetail = () => {
         >
           그룹 멤버
         </Button>
-        <Button onClick={() => setUploadModalOpen(true)}>사진 업로드</Button>
+        <Button
+          onClick={() => {
+            setUploadModalOpen(true);
+          }}
+        >
+          사진 업로드
+        </Button>
       </div>
 
       {viewMode === "grid" ? (
@@ -236,6 +241,13 @@ const AlbumDetail = () => {
             </div>
           </div>
           <div className="group-membercontainer">
+            <div>
+              <div className="group-creditstate">
+                {arr.state === "free"
+                  ? "무료 체험판 사용중"
+                  : "프리미엄 앨범 사용중"}
+              </div>
+            </div>
             <div className="group-member-url">
               <div className="group-member-linkDiv">
                 <span className="group-member-text">초대링크</span>
@@ -261,7 +273,7 @@ const AlbumDetail = () => {
                 </div>
 
                 <div className={`group-member${x.role}`}>
-                  {x.role === "owner" ? <CrownFilled /> : <UserOutlined />}
+                  {x.role === "OWNER" ? <CrownFilled /> : <UserOutlined />}
                 </div>
                 {x.userId === user.id ? (
                   <div className="ellipsis-menu-trigger"></div>
@@ -306,6 +318,11 @@ const AlbumDetail = () => {
                 )}
               </div>
             ))}
+            {userrole === "owner" ? (
+              <div className="menu-delalbum">방 삭제하기</div>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       )}
@@ -317,7 +334,12 @@ const AlbumDetail = () => {
       />
 
       {modal && albumId !== 0 && (
-        <PhotoDetail modal={modal} setModal={setModal} albumId={albumId} />
+        <PhotoDetail
+          modal={modal}
+          setModal={setModal}
+          albumId={albumId}
+          userrole={userrole}
+        />
       )}
       {uploadModalOpen && (
         <AlbumImageSubmitModal

@@ -185,6 +185,7 @@ export const AlbumDetailStyled = styled.div`
     width: 70%;
     display: flex;
     justify-content: center;
+    text-align: center;
     margin-bottom: 8px;
     background-color: #f0f0f0;
     padding: 5px;
@@ -213,7 +214,7 @@ export const AlbumDetailStyled = styled.div`
   .group-member-url {
     display: flex;
     justify-content: center;
-
+    width: 100%;
     gap: 5px;
   }
 
@@ -240,7 +241,7 @@ export const AlbumDetailStyled = styled.div`
     padding: 1px;
     cursor: pointer;
   }
-  .group-memberowner {
+  .group-memberOWNER {
     color: rgb(246, 217, 31);
     font-size: 20px;
   }
@@ -253,6 +254,22 @@ export const AlbumDetailStyled = styled.div`
 
   .group-member-item {
     position: relative; /* 중요: 메뉴 위치 기준을 이 박스로 잡음 */
+  }
+  .group-creditstate {
+    font-size: 13px;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    margin-top: -20px;
+    margin-bottom: 30px;
+  }
+  .menu-delalbum {
+    font-size: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 50px;
+    color: #ccc;
   }
   @media (max-width: 1000px) {
     .group-member-wrap {

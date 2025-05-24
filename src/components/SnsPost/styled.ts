@@ -21,11 +21,11 @@ export const SnsPostStyled = styled.div<{ $variant?: "default" | "album" }>`
     cursor: pointer;
     width: calc(50% - 10px);
     aspect-ratio: ${(props) =>
-      props.$variant === "album" ? "1/0.8" : "1/0.7"};
+      props.$variant === "album" ? "1/0.8" : "1/0.75"};
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    border-radius: 6px;
+    border-radius: 4px;
     border: 1px solid lightgray;
     background-color: #fff;
     box-shadow: 0 4px 12px rgba(250, 250, 250, 0.1);
@@ -40,7 +40,7 @@ export const SnsPostStyled = styled.div<{ $variant?: "default" | "album" }>`
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
-    height: ${(props) => (props.$variant === "album" ? "80%" : "80%")};
+    height: ${(props) => (props.$variant === "album" ? "80%" : "75%")};
     overflow: hidden;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -129,19 +129,19 @@ export const SnsPostStyled = styled.div<{ $variant?: "default" | "album" }>`
     flex-direction: column;
     justify-content: ${(props) =>
       props.$variant === "album" ? "flex-end" : "center"};
-    gap: 5px;
-    height: ${(props) => (props.$variant === "album" ? "20%" : "30%")};
-    padding: ${(props) => (props.$variant === "album" ? "5px" : "10px 5px;")};
+    gap: 2px;
+    height: ${(props) => (props.$variant === "album" ? "20%" : "35%")};
+    padding: ${(props) => (props.$variant === "album" ? "5px" : "12px 5px")};
   }
 
   .sns-title {
     text-align: ${(props) => (props.$variant === "album" ? "center" : "")};
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 500;
   }
 
   .sns-hashtag {
-    font-size: 12px;
+    font-size: 10px;
     color: gray;
   }
 

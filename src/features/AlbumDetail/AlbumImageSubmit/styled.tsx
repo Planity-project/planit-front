@@ -7,6 +7,12 @@ export const DaypostStyled = styled.div`
     margin-bottom: 5px;
     margin-top: 5px;
   }
+
+  .daypost-commentdiv {
+    font-size: 11px;
+    color: gray;
+    margin-bottom: 3px;
+  }
 `;
 
 export const ModalStyled = styled.div`

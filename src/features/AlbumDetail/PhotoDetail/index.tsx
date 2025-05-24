@@ -18,6 +18,7 @@ interface Albumprops {
   modal: boolean;
   setModal: (value: boolean) => void;
   albumId: number;
+  userrole: string;
 }
 interface MiniComment {
   userId: number;
@@ -37,7 +38,7 @@ interface CommentType {
   miniComment?: MiniComment[];
 }
 
-const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
+const PhotoDetail = ({ modal, setModal, albumId, userrole }: Albumprops) => {
   const user = useUser();
   const router = useRouter();
   const [id, setId] = useState<number>(albumId);
@@ -66,7 +67,7 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
         params: { albumId: albumId, userId: user?.id },
       })
       .then((res: any) => {
-        console.log(res.data);
+        console.log(res.data, "dsadasdasdasd");
         console.log(num);
         setData(res.data);
       });
@@ -178,6 +179,11 @@ const PhotoDetail = ({ modal, setModal, albumId }: Albumprops) => {
             />
 
             {data.user}
+            {userrole === "owner" ? (
+              <div className="photo-delphoto">삭제</div>
+            ) : (
+              <></>
+            )}
           </div>
           <div style={{ flex: 1, overflowY: "auto" }}>
             {data && Array.isArray(data.comment) && (
