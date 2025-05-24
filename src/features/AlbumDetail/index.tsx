@@ -96,9 +96,11 @@ const AlbumDetail = () => {
     setAlbumId(id);
   };
   const delAlbum = () => {
-    api.del("/album/albumdel", { albumId: id }).then((res: any) => {
-      window.location.reload();
-    });
+    api
+      .delete("/album/delAlbum", { params: { albumId: id } })
+      .then((res: any) => {
+        window.location.href = "/album";
+      });
   };
   // 앨범 정보 요청
   useEffect(() => {
@@ -323,7 +325,7 @@ const AlbumDetail = () => {
                 )}
               </div>
             ))}
-            {userrole === "owner" ? (
+            {userrole === "OWNER" ? (
               <div
                 className="menu-delalbum"
                 onClick={() => {
