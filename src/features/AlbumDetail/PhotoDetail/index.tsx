@@ -185,7 +185,7 @@ const PhotoDetail = ({ modal, setModal, albumId, userrole }: Albumprops) => {
             />
 
             {data.user}
-            {userrole === "owner" ? (
+            {userrole === "OWNER" ? (
               <div
                 className="photo-delphoto"
                 onClick={() => {
