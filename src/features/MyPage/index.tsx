@@ -7,7 +7,7 @@ import Myinfodays from "./MyDays";
 import { useRouter } from "next/router";
 const MyPage = () => {
   const router = useRouter();
-  const user = useUser();
+  const { user } = useUser();
   const [click, setClick] = useState(0);
   useEffect(() => {
     if (!router.isReady) return;

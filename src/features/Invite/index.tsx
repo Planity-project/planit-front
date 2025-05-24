@@ -9,7 +9,7 @@ import { ok } from "assert";
 const Invite = () => {
   const router = useRouter();
   const { name } = router.query;
-  const user = useUser();
+  const { user } = useUser();
 
   useEffect(() => {
     const currentUrl = window.location.href;

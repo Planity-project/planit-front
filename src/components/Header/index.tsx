@@ -9,7 +9,7 @@ import { useUser } from "@/context/UserContext";
 import NotificationPopover from "@/components/NotificationPopover";
 
 const Header = () => {
-  const user = useUser();
+  const { user } = useUser();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 

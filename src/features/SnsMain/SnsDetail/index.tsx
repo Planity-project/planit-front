@@ -42,7 +42,7 @@ const SnsDetail = () => {
   const [data, setData] = useState<any>("");
   const router = useRouter();
   const { id } = router.query;
-  const user = useUser();
+  const { user } = useUser();
   //sns 디테일 페이지 이동 시 데이터 요청 , 게시글 모든 데이터 필요(잘 정리해서 줄것: 맘에 안들면 다시 )
 
   useEffect(() => {

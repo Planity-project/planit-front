@@ -25,7 +25,7 @@ const AlbumImageSubmitModal = ({
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const showModal = () => setIsModalOpen(true);
 
-  const user = useUser();
+  const { user } = useUser();
 
   const handleOk = async () => {
     try {

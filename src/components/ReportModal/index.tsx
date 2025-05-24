@@ -17,7 +17,7 @@ const ReportModal = ({
   setModalOpen,
   targetType,
 }: ModalProps) => {
-  const user = useUser();
+  const { user } = useUser();
   const [reportReason, setReportReason] = useState("");
 
   console.log("ReportModal 렌더링 - targetId:", targetId);
