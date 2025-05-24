@@ -270,6 +270,7 @@ export const AlbumDetailStyled = styled.div`
     justify-content: flex-end;
     margin-top: 50px;
     color: #ccc;
+    cursor: pointer;
   }
   @media (max-width: 1000px) {
     .group-member-wrap {

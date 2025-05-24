@@ -1,12 +1,14 @@
-import { Button, Input, message, Modal } from "antd";
+import { Button, Input, message, Modal, Upload } from "antd";
 import { AlbumTitleStyled } from "./styled";
 import { useEffect, useState } from "react";
 import api from "@/util/api";
 import { useUser } from "@/context/UserContext";
+import { UploadOutlined } from "@ant-design/icons";
 const AlbumTitle = ({ setModal }: any) => {
   const [albumName, setAlbumName] = useState("");
   const [inviteUrl, setInviteUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
+  const [thumbnail, setThumbnail] = useState<File | null>(null);
   const { user } = useUser();
   useEffect(() => {
     const updateShortUrl = () => {
@@ -48,37 +50,76 @@ const AlbumTitle = ({ setModal }: any) => {
     if (url.length <= maxLength) return url;
     return "..." + url.slice(url.length - maxLength);
   };
+  const uploadProps = {
+    beforeUpload: (file: File) => {
+      setThumbnail(file);
+      return false; // 자동 업로드 방지
+    },
+    onRemove: () => {
+      setThumbnail(null);
+    },
+    fileList: thumbnail ? [thumbnail as any] : [],
+    maxCount: 1,
+    accept: "image/*",
+  };
   // 앨범 생성 요청 userid title 담아서 보냄
-  const create = () => {
+  const create = async () => {
+    if (!user?.id) {
+      return Modal.warning({ centered: true, title: "로그인이 필요합니다." });
+    }
+
     if (albumName.length < 2) {
       return Modal.warning({
         centered: true,
         title: "2글자 이상 입력해주세요",
       });
     }
+
     if (inviteUrl.length < 10) {
       return Modal.warning({
         centered: true,
         title: "초대링크를 생성해주세요.",
       });
     }
-    api
-      .post("/album/submit", {
-        userId: user?.id,
-        title: albumName,
-        url: inviteUrl,
-      })
-      .then((res: any) => {
-        if (res.data.result === true) {
-          Modal.warning({
-            centered: true,
-            title: "앨범이 생성되었습니다.",
-            onOk: () => {
-              window.location.reload();
-            },
-          });
-        }
+
+    if (!thumbnail) {
+      return Modal.warning({
+        centered: true,
+        title: "대표 이미지를 업로드해주세요.",
       });
+    }
+
+    const formData = new FormData();
+    formData.append("userId", String(user.id));
+    formData.append("title", albumName);
+    formData.append("url", inviteUrl);
+    formData.append("thumbnail", thumbnail);
+
+    try {
+      const res = await api.post("/album/submit", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      if (res.data.result === true) {
+        Modal.success({
+          centered: true,
+          title: "앨범이 생성되었습니다.",
+          onOk: () => window.location.reload(),
+        });
+      } else {
+        Modal.error({
+          centered: true,
+          title: "앨범 생성에 실패했습니다.",
+          content: "다시 시도해주세요.",
+        });
+      }
+    } catch (err) {
+      Modal.error({
+        centered: true,
+        title: "서버 오류",
+        content: "서버와의 연결에 실패했습니다.",
+      });
+    }
   };
   return (
     <AlbumTitleStyled>
@@ -94,6 +135,11 @@ const AlbumTitle = ({ setModal }: any) => {
         <div className="AlbumTitle-btnDiv">
           <Button onClick={handleCreateLink}>초대링크 생성</Button>
         </div>
+      </div>
+      <div className="AlbumTitle-upload">
+        <Upload {...uploadProps}>
+          <Button icon={<UploadOutlined />}>대표 이미지 업로드</Button>
+        </Upload>
       </div>
       <div className="AlbumTitle-inviteDiv">
         {inviteUrl && (

@@ -12,7 +12,11 @@ export const AlbumTitleStyled = styled.div`
     display: flex;
     align-items: baseline;
     justify-content: center;
+
     gap: 10px;
+  }
+  .AlbumTitle-upload {
+    margin-top: 20px;
   }
   .AlbumTitle-inputDiv {
     width: 70%;
