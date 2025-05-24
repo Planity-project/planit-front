@@ -65,7 +65,11 @@ const SnsDetail = () => {
         console.log(res.data);
       });
   };
-
+  const delPost = () => {
+    api.delete("posts/del", { postId: id }).then((res: any) => {
+      router.push("/snsmainpage");
+    });
+  };
   const schedule = useMemo(() => {
     if (!data || !data.startDate || !data.endDate) return [];
 
@@ -111,6 +115,25 @@ const SnsDetail = () => {
               ) : (
                 <HeartOutlined onClick={heart} />
               )
+            ) : (
+              <></>
+            )}
+            {data.userId === user?.id ? (
+              <div
+                onClick={() => {
+                  Modal.confirm({
+                    title: "해당 일정을 삭제하시겠습니까?",
+                    okText: "예",
+                    cancelText: "아니오",
+                    onOk: () => {
+                      delPost();
+                    },
+                  });
+                }}
+                className="snspost-delpost"
+              >
+                삭제
+              </div>
             ) : (
               <></>
             )}

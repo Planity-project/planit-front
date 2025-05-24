@@ -250,9 +250,7 @@ const AlbumDetail = () => {
           <div className="group-membercontainer">
             <div>
               <div className="group-creditstate">
-                {arr.state === "free"
-                  ? "무료 체험판 사용중"
-                  : "프리미엄 앨범 사용중"}
+                {!arr.state ? "무료 체험판 사용중" : "프리미엄 앨범 사용중"}
               </div>
             </div>
             <div className="group-member-url">
@@ -330,7 +328,7 @@ const AlbumDetail = () => {
                 className="menu-delalbum"
                 onClick={() => {
                   Modal.confirm({
-                    title: "해당 게시글을 삭제하시겠습니까?",
+                    title: "해당 앨범을 삭제하시겠습니까?",
                     okText: "예",
                     cancelText: "아니오",
                     onOk: () => {

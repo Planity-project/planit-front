@@ -24,6 +24,13 @@ export const SnsDetailStyled = styled.div`
   .snspost-myheart {
     color: red;
     font-size: 18px;
+    display: flex;
+    gap: 10px;
+  }
+  .snspost-delpost {
+    font-size: 12px;
+    color: gray;
+    cursor: pointer;
   }
   .snspost-mydayright {
     width: 75%;
