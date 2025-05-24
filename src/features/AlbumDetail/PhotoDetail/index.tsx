@@ -87,7 +87,9 @@ const PhotoDetail = ({ modal, setModal, albumId, userrole }: Albumprops) => {
       });
   };
   const delImg = () => {
-    api.del("/album/imgdel", { imgId: data.id });
+    api.del("/album/imgdel", { imgId: data.id }).then((res: any) => {
+      window.location.reload();
+    });
   };
   // 댓글 등록 요청 mini가 있으면 대댓글 없으면 댓글
   const commentpost = async (albumId: number) => {

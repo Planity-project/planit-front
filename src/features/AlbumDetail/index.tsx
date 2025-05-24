@@ -96,7 +96,9 @@ const AlbumDetail = () => {
     setAlbumId(id);
   };
   const delAlbum = () => {
-    api.del("/album/albumdel", { albumId: id });
+    api.del("/album/albumdel", { albumId: id }).then((res: any) => {
+      window.location.reload();
+    });
   };
   // 앨범 정보 요청
   useEffect(() => {
