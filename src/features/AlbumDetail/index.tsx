@@ -119,11 +119,12 @@ const AlbumDetail = () => {
   }, [id]);
 
   useEffect(() => {
-    const userInfo = arr.group.find((member: any) => member.id === user?.id);
+    if (!user) return;
+    const userInfo = arr.group.find((member: any) => member.userId === user.id);
     if (userInfo) {
       setUserrole(userInfo.role);
     }
-  }, [arr]);
+  }, [arr, user]);
   //title 변경 요청
   const changetitle = () => {
     api
@@ -174,7 +175,24 @@ const AlbumDetail = () => {
         </Button>
         <Button
           onClick={() => {
-            setUploadModalOpen(true);
+            console.log("image length:", arr.image.length);
+            if (!arr.state) {
+              if (arr.image.length < 3) {
+                setUploadModalOpen(true);
+              } else {
+                Modal.confirm({
+                  title: "이미지 추가 업로드를 위한 결제를 하시겠습니까?",
+                  content: "9,900원 결제 시 무제한 업로드가 가능합니다.",
+                  okText: "예",
+                  cancelText: "아니오",
+                  onOk: () => {
+                    console.log("결제 로직 실행");
+                  },
+                });
+              }
+            } else {
+              setUploadModalOpen(true);
+            }
           }}
         >
           사진 업로드

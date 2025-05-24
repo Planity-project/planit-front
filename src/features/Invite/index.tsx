@@ -19,10 +19,10 @@ const Invite = () => {
 
     api
       .get("album/inviteFind", { params: currentUrl })
-      .then((res) => {
+      .then((res: any) => {
         setData(res.data);
       })
-      .catch((err) => {
+      .catch((err: any) => {
         console.error("초대 앨범 불러오기 실패:", err);
       })
       .finally(() => {
