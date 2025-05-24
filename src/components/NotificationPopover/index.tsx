@@ -7,11 +7,15 @@ import { useRouter } from "next/router";
 
 interface Notification {
   id: number;
-  type: "album" | "schedule" | "post" | "report";
+  type: "ALBUM" | "TRIP" | "POST" | "REPORT";
   targetId?: number;
-  message: string;
+  content: string;
   createdAt: string;
   isRead: boolean;
+  extra?: {
+    reportedUserNickname?: string;
+    reportCount?: number;
+  };
 }
 
 const categories = ["전체", "게시글", "일정", "앨범", "신고"] as const;
@@ -28,12 +32,20 @@ const NotificationPopover = () => {
     setLoading(true);
     try {
       const res = await api.get("/notifications");
+      console.log("🔔 받은 알림 데이터:", res.data);
       setNotifications(res.data);
     } catch (error) {
       console.error("알림 로딩 실패:", error);
     } finally {
       setLoading(false);
     }
+  };
+
+  const typeToPathMap: Record<Notification["type"], string> = {
+    POST: "posts",
+    TRIP: "trip",
+    ALBUM: "albums",
+    REPORT: "reports",
   };
 
   const handleNotificationClick = async (noti: Notification) => {
@@ -45,19 +57,9 @@ const NotificationPopover = () => {
         );
       }
 
-      switch (noti.type) {
-        case "post":
-          if (noti.targetId) router.push(`/posts/${noti.targetId}`);
-          break;
-        case "schedule":
-          if (noti.targetId) router.push(`/schedules/${noti.targetId}`);
-          break;
-        case "album":
-          if (noti.targetId) router.push(`/albums/${noti.targetId}`);
-          break;
-        case "report":
-          if (noti.targetId) router.push(`/reports/${noti.targetId}`);
-          break;
+      const path = typeToPathMap[noti.type];
+      if (noti.targetId && path) {
+        router.push(`/${path}/${noti.targetId}`);
       }
     } catch (error) {
       console.error("알림 처리 실패:", error);
@@ -73,10 +75,10 @@ const NotificationPopover = () => {
 
   const filteredNotifications = notifications.filter((noti) => {
     if (selectedCategory === "전체") return true;
-    if (selectedCategory === "게시글") return noti.type === "post";
-    if (selectedCategory === "일정") return noti.type === "schedule";
-    if (selectedCategory === "앨범") return noti.type === "album";
-    if (selectedCategory === "신고") return noti.type === "report";
+    if (selectedCategory === "게시글") return noti.type === "POST";
+    if (selectedCategory === "일정") return noti.type === "TRIP";
+    if (selectedCategory === "앨범") return noti.type === "ALBUM";
+    if (selectedCategory === "신고") return noti.type === "REPORT";
     return false;
   });
 
@@ -107,39 +109,46 @@ const NotificationPopover = () => {
         ) : filteredNotifications.length === 0 ? (
           <div className="empty">알림이 없습니다.</div>
         ) : (
-          filteredNotifications.map((noti) => (
-            <div
-              key={noti.id}
-              className={`notification-item ${noti.isRead ? "read" : "unread"}`}
-              onClick={() => handleNotificationClick(noti)}
-              style={{ cursor: "pointer" }}
-            >
-              <div className="profile-icon">
-                {noti.type === "album"
-                  ? "📷"
-                  : noti.type === "schedule"
-                  ? "📅"
-                  : noti.type === "post"
-                  ? "📝"
-                  : "⚠️"}
-              </div>
+          filteredNotifications.map((noti) => {
+            const type = noti.type.toLowerCase();
 
-              <div className="content">
-                <div className="message">{noti.message}</div>
+            return (
+              <div
+                key={noti.id}
+                className={`notification-item ${
+                  noti.isRead ? "read" : "unread"
+                }`}
+                onClick={() => handleNotificationClick(noti)}
+                style={{ cursor: "pointer" }}
+              >
+                <div className="profile-icon">
+                  {type === "album"
+                    ? "📷"
+                    : type === "trip"
+                    ? "📅"
+                    : type === "post"
+                    ? "📝"
+                    : type === "report"
+                    ? "⚠️"
+                    : "❓"}
+                </div>
+                <div className="content">
+                  <div className="message">{noti.content}</div>
 
-                {noti.type === "report" && (noti as any).extra && (
-                  <div className="report-info">
-                    👤 대상: {(noti as any).extra.reportedUserNickname} <br />
-                    ⚠️ 신고 횟수: {(noti as any).extra.reportCount}
+                  {noti.type === "REPORT" && noti.extra && (
+                    <div className="report-info">
+                      👤 대상: {noti.extra.reportedUserNickname} <br />
+                      ⚠️ 신고 횟수: {noti.extra.reportCount}
+                    </div>
+                  )}
+
+                  <div className="timestamp">
+                    {new Date(noti.createdAt).toLocaleTimeString()}
                   </div>
-                )}
-
-                <div className="timestamp">
-                  {new Date(noti.createdAt).toLocaleTimeString()}
                 </div>
               </div>
-            </div>
-          ))
+            );
+          })
         )}
       </div>
     </NotificationStyled>
