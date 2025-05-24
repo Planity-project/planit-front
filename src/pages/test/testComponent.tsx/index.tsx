@@ -22,7 +22,7 @@ const SubmitModal = ({ postId, userId }: SubmitModalProps) => {
   const [content, setContent] = useState<string>("");
   const [rating, setRating] = useState<number>(0);
   const showModal = () => setIsModalOpen(true);
-  const user = useUser();
+  const { user } = useUser();
 
   const handleOk = async () => {
     if (!title.trim() || !content.trim()) {

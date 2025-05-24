@@ -7,7 +7,7 @@ const AlbumTitle = ({ setModal }: any) => {
   const [albumName, setAlbumName] = useState("");
   const [inviteUrl, setInviteUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
-  const user = useUser();
+  const { user } = useUser();
   useEffect(() => {
     const updateShortUrl = () => {
       setShortUrl(shortenUrl(inviteUrl));

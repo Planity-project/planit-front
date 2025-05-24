@@ -39,7 +39,7 @@ interface CommentType {
 }
 
 const PhotoDetail = ({ modal, setModal, albumId, userrole }: Albumprops) => {
-  const user = useUser();
+  const { user } = useUser();
   const router = useRouter();
   const [id, setId] = useState<number>(albumId);
   const [comment, setComment] = useState<string>("");
@@ -86,7 +86,9 @@ const PhotoDetail = ({ modal, setModal, albumId, userrole }: Albumprops) => {
         setNum(num + 1);
       });
   };
-
+  const delImg = () => {
+    api.del("/album/imgdel", { imgId: data.id });
+  };
   // 댓글 등록 요청 mini가 있으면 대댓글 없으면 댓글
   const commentpost = async (albumId: number) => {
     if (comment.trim().length < 1) {
@@ -180,7 +182,21 @@ const PhotoDetail = ({ modal, setModal, albumId, userrole }: Albumprops) => {
 
             {data.user}
             {userrole === "owner" ? (
-              <div className="photo-delphoto">삭제</div>
+              <div
+                className="photo-delphoto"
+                onClick={() => {
+                  Modal.confirm({
+                    title: "해당 게시글을 삭제하시겠습니까?",
+                    okText: "예",
+                    cancelText: "아니오",
+                    onOk: () => {
+                      delImg();
+                    },
+                  });
+                }}
+              >
+                삭제
+              </div>
             ) : (
               <></>
             )}

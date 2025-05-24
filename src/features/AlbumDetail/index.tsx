@@ -57,7 +57,7 @@ const AlbumDetail = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-  const user: any = useUser();
+  const { user } = useUser();
   const toggleMenu = (index: number) => {
     setOpenMenuIndex(openMenuIndex === index ? null : index);
   };
@@ -75,7 +75,9 @@ const AlbumDetail = () => {
       const formData = new FormData();
       formData.append("file", file);
       formData.append("albumId", id);
-      formData.append("userId", user?.id);
+      if (user?.id !== undefined) {
+        formData.append("userId", user.id.toString());
+      }
       const res = await api
         .post("/album/update/title", formData)
         .then((res: any) => {
@@ -92,6 +94,9 @@ const AlbumDetail = () => {
     console.log(id, "선택 앨범 id");
     setModal(true);
     setAlbumId(id);
+  };
+  const delAlbum = () => {
+    api.del("/album/albumdel", { albumId: id });
   };
   // 앨범 정보 요청
   useEffect(() => {
@@ -110,7 +115,7 @@ const AlbumDetail = () => {
   }, [id]);
 
   useEffect(() => {
-    const userInfo = arr.group.find((member: any) => member.id === user.id);
+    const userInfo = arr.group.find((member: any) => member.id === user?.id);
     if (userInfo) {
       setUserrole(userInfo.role);
     }
@@ -275,7 +280,7 @@ const AlbumDetail = () => {
                 <div className={`group-member${x.role}`}>
                   {x.role === "OWNER" ? <CrownFilled /> : <UserOutlined />}
                 </div>
-                {x.userId === user.id ? (
+                {x.userId === user?.id ? (
                   <div className="ellipsis-menu-trigger"></div>
                 ) : (
                   <div
@@ -319,7 +324,21 @@ const AlbumDetail = () => {
               </div>
             ))}
             {userrole === "owner" ? (
-              <div className="menu-delalbum">방 삭제하기</div>
+              <div
+                className="menu-delalbum"
+                onClick={() => {
+                  Modal.confirm({
+                    title: "해당 게시글을 삭제하시겠습니까?",
+                    okText: "예",
+                    cancelText: "아니오",
+                    onOk: () => {
+                      delAlbum();
+                    },
+                  });
+                }}
+              >
+                방 삭제하기
+              </div>
             ) : (
               <></>
             )}

@@ -62,7 +62,7 @@ const CreateStay = ({
   // const [editingIndex, setEditingIndex] = useState<number | null>(null);
   // const [editedMinutes, setEditedMinutes] = useState<number>(120);
 
-  const user = useUser();
+  const { user } = useUser();
   const router = useRouter();
 
   useEffect(() => {

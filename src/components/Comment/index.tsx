@@ -26,7 +26,7 @@ const CommentComponent = ({
   setNum,
   num,
 }: CommentProps) => {
-  const user = useUser();
+  const { user } = useUser();
 
   const [openReplies, setOpenReplies] = useState<number[]>([]);
   const [openMenuId, setOpenMenuId] = useState<number | null>(null);

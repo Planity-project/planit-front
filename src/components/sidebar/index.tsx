@@ -82,7 +82,7 @@ interface SideBarProps {
 
 const SideBar = ({ isOpen, setIsOpen }: SideBarProps) => {
   const router = useRouter();
-  const user = useUser();
+  const { user } = useUser();
   const logout = () => {
     api.get("auth/logout").then(() => {
       router.push("/").then(() => {

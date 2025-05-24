@@ -36,7 +36,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   useEffect(() => {
     api
       .get("/auth/cookieCheck")
-      .then((res) => {
+      .then((res: any) => {
         if (res.data.result) {
           setUser(res.data.user);
         } else {
