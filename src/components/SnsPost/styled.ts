@@ -40,7 +40,7 @@ export const SnsPostStyled = styled.div<{ $variant?: "default" | "album" }>`
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
-    height: ${(props) => (props.$variant === "album" ? "80%" : "75%")};
+    height: ${(props) => (props.$variant === "album" ? "85%" : "75%")};
     overflow: hidden;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -130,7 +130,7 @@ export const SnsPostStyled = styled.div<{ $variant?: "default" | "album" }>`
     justify-content: ${(props) =>
       props.$variant === "album" ? "flex-end" : "center"};
     gap: 2px;
-    height: ${(props) => (props.$variant === "album" ? "20%" : "35%")};
+    height: ${(props) => (props.$variant === "album" ? "15%" : "35%")};
     padding: ${(props) => (props.$variant === "album" ? "5px" : "12px 5px")};
   }
 
