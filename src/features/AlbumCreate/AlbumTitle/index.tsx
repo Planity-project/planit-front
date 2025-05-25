@@ -96,9 +96,7 @@ const AlbumTitle = ({ setModal }: any) => {
     formData.append("thumbnail", thumbnail);
 
     try {
-      const res = await api.post("/album/submit", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      const res = await api.post("/album/submit", formData);
 
       if (res.data.result === true) {
         Modal.success({
