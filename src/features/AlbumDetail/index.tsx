@@ -45,6 +45,7 @@ const AlbumDetail = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [groupImg, setGroupImg] = useState<string>("");
   const [uploadModalOpen, setUploadModalOpen] = useState(false);
+  const [num, setNum] = useState(0);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -82,12 +83,13 @@ const AlbumDetail = () => {
       const res = await api
         .post("/album/update/title", formData)
         .then((res: any) => {
-          console.log(res.data);
-          // 저장 성공 시 새로 고침
+          Modal.warning({
+            title: "대표이미지가 변경되었습니다.",
+          });
+          setNum(num + 1);
         });
     } catch (err) {
       console.error("업로드 실패:", err);
-      message.error("이미지 변경 실패");
     }
   };
   const movePhoto = (id: number) => {
@@ -111,13 +113,11 @@ const AlbumDetail = () => {
         params: { albumId: id },
       })
       .then((res: any) => {
-        console.log(res.data, "ㅇㄴㅁㅇㅁㄴㅇㄴㅁㅇㅁㄴ");
-
         setArr(res.data);
         setGroupImg(res.data.titleImg);
         settitleChange(res.data.title);
       });
-  }, [id]);
+  }, [id, num]);
 
   useEffect(() => {
     if (!user) return;
@@ -135,7 +135,10 @@ const AlbumDetail = () => {
         title: titleChange,
       })
       .then((res: any) => {
-        console.log(res.data);
+        Modal.warning({
+          title: "앨범 이름이 변경되었습니다.",
+        });
+        setNum(num + 1);
       });
   };
 

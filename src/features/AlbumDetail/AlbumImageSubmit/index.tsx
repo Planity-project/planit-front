@@ -42,9 +42,13 @@ const AlbumImageSubmitModal = ({
       });
 
       const res = await api.post("/album/submitImage", formData);
+      Modal.warning({
+        title: "이미지가 업로드 되었습니다.",
+        onOk: () => {
+          window.location.reload();
+        },
+      });
 
-      message.success("성공적으로 제출되었습니다!");
-      setIsModalOpen(false);
       // 필요 시 초기화
 
       setFileList([]);

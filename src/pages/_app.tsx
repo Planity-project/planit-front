@@ -59,16 +59,8 @@ function AppWithAuthGuard({ Component, pageProps }: AppProps) {
     };
 
     const end = () => {
-      const elapsed = Date.now() - startTime;
-      const remaining = 800 - elapsed;
-
-      if (remaining > 0) {
-        timeout = setTimeout(() => setLoading(false), remaining);
-      } else {
-        setLoading(false);
-      }
+      setLoading(false);
     };
-
     router.events.on("routeChangeStart", start);
     router.events.on("routeChangeComplete", end);
     router.events.on("routeChangeError", end);
