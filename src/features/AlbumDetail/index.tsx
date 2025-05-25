@@ -22,6 +22,7 @@ import PhotoDetail from "./PhotoDetail";
 import { useUser } from "@/context/UserContext";
 import ReportModal from "@/components/ReportModal";
 import AlbumImageSubmitModal from "./AlbumImageSubmit";
+import { handlePayment } from "@/util/payment";
 
 const AlbumDetail = () => {
   const [ModalOpen, setModalOpen] = useState<boolean>(false);
@@ -186,7 +187,7 @@ const AlbumDetail = () => {
                   okText: "예",
                   cancelText: "아니오",
                   onOk: () => {
-                    console.log("결제 로직 실행");
+                    handlePayment(id, user);
                   },
                 });
               }

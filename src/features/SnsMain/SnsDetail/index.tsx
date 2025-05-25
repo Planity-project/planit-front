@@ -66,9 +66,11 @@ const SnsDetail = () => {
       });
   };
   const delPost = () => {
-    api.delete("posts/del", { postId: id }).then((res: any) => {
-      router.push("/snsmainpage");
-    });
+    api
+      .delete("posts/delete/post", { params: { postId: id } })
+      .then((res: any) => {
+        router.push("/snsmainpage");
+      });
   };
   const schedule = useMemo(() => {
     if (!data || !data.startDate || !data.endDate) return [];
