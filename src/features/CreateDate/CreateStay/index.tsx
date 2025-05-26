@@ -191,7 +191,7 @@ const CreateStay = ({
 
   const generateFinalSchedule = async () => {
     setresultLoading(true); // 로딩 시작
-
+    window.scrollTo({ top: 0, behavior: "smooth" });
     try {
       const res = await api
         .post("/trip/generateDate", {
@@ -296,7 +296,7 @@ const CreateStay = ({
             Modal.confirm({
               centered: true,
               title: "일정을 생성하시겠습니까?",
-              content: "최대 3분의 시간이 소요됩니다.",
+              content: "최대 5분의 시간이 소요됩니다.",
               okText: "예",
               cancelText: "아니오",
               onOk: () => {

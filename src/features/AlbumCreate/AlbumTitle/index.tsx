@@ -93,10 +93,12 @@ const AlbumTitle = ({ setModal }: any) => {
     formData.append("userId", String(user.id));
     formData.append("title", albumName);
     formData.append("url", inviteUrl);
-    formData.append("thumbnail", thumbnail);
+    formData.append("file", thumbnail);
 
     try {
-      const res = await api.post("/album/submit", formData);
+      const res = await api.post("/album/submit", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
       if (res.data.result === true) {
         Modal.success({

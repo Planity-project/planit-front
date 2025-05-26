@@ -16,9 +16,9 @@ const Invite = () => {
   useEffect(() => {
     const currentUrl = window.location.href;
     setLoading(true);
-
+    console.log(currentUrl, "현재 url 주소");
     api
-      .get("album/inviteFind", { params: currentUrl })
+      .get("album/inviteFind", { params: { currentUrl } })
       .then((res: any) => {
         setData(res.data);
       })
@@ -37,13 +37,18 @@ const Invite = () => {
       api
         .post("/album/groupjoin", { userId: user.id, albumId: data.id })
         .then((res: any) => {
-          if (res.data === true) {
+          if (res.data.result === true) {
             Modal.warning({
               centered: true,
               title: "그룹 참여 성공",
               onOk: () => {
-                router.push("/album");
+                router.push(`album/detail/${res.data.albumId}`);
               },
+            });
+          } else {
+            Modal.warning({
+              centered: true,
+              title: `${res.data.message}`,
             });
           }
         });

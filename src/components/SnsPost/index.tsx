@@ -29,7 +29,17 @@ const SnsPost = ({ data, variant }: snspostprops) => {
       <div className="sns-wrap">
         {data?.map((x: any, i: number) => {
           const imgList = Array.isArray(x.img) ? x.img : [];
+          const titleImg =
+            x.titleImg !== null ? x.titleImg : "/defaultImage.png";
           console.log(imgList, "이미지 확인용");
+
+          const imagesToRender =
+            variant === "album"
+              ? [titleImg]
+              : imgList.length
+              ? imgList
+              : ["/defaultImage.png"];
+
           return (
             <div
               className="sns-postBox"
@@ -41,31 +51,29 @@ const SnsPost = ({ data, variant }: snspostprops) => {
                   variant === "album"
                     ? undefined
                     : (e) => {
-                        e.stopPropagation(); // 상위 div 클릭 방지
+                        e.stopPropagation();
                         setList(
                           imgList.length ? imgList : ["/defaultImage.png"]
-                        ); // 빈 배열이면 기본이미지로 대체
-                        setImgModal(true); // 모달 열기
+                        );
+                        setImgModal(true);
                       }
                 }
                 className="sns-imgBox"
-                data-img-count={imgList.length || 1} // 기본이미지 1장이라 1로 처리
+                data-img-count={imagesToRender.length}
               >
-                {(imgList.length ? imgList : ["/defaultImage.png"]).map(
-                  (src: string, idx: number) => (
-                    <div
-                      key={idx}
-                      className={`sns-imgWrapper ${idx === 0 ? "first" : ""}`}
-                    >
-                      <img
-                        src={src}
-                        className="sns-img"
-                        alt={`img-${idx}`}
-                        sizes="100%"
-                      />
-                    </div>
-                  )
-                )}
+                {imagesToRender.map((src: string, idx: number) => (
+                  <div
+                    key={idx}
+                    className={`sns-imgWrapper ${idx === 0 ? "first" : ""}`}
+                  >
+                    <img
+                      src={src}
+                      className="sns-img"
+                      alt={`img-${idx}`}
+                      sizes="100%"
+                    />
+                  </div>
+                ))}
               </div>
 
               <div className="sns-textBox">
@@ -83,6 +91,7 @@ const SnsPost = ({ data, variant }: snspostprops) => {
           );
         })}
       </div>
+
       <SlideComponent
         imgModal={imgModal}
         setImgModal={setImgModal}

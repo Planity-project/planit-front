@@ -59,11 +59,13 @@ const SnsDetail = () => {
   }, [id, user?.id]);
 
   const heart = () => {
-    api
-      .post("/likes/post", { userId: user?.id, postId: data.id })
-      .then((res: any) => {
-        console.log(res.data);
-      });
+    api.post(`/likes/post?postId=${data.id}`).then((res: any) => {
+      console.log(res.data);
+      setData((prev: any) => ({
+        ...prev,
+        like: res.data.liked,
+      }));
+    });
   };
   const delPost = () => {
     api

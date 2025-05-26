@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Button, Input, Upload, message, Select } from "antd";
+import { Modal, Button, Input, Upload, message, Select, Rate } from "antd";
 import type {
   UploadFile,
   RcFile,
@@ -7,16 +7,29 @@ import type {
 } from "antd/es/upload/interface";
 import { PlusOutlined } from "@ant-design/icons";
 import api from "@/util/api";
+import { DaypostStyled, ModalStyled } from "./styled";
+import { useUser } from "@/context/UserContext";
 
-interface Props {}
+interface Props {
+  tripId: number;
+  visible: boolean;
+  onClose: () => void;
+  onUpdatedTrip: () => void;
+}
 
-const ShareSubmitModal: React.FC<Props> = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+const ShareSubmitModal: React.FC<Props> = ({
+  tripId,
+  visible,
+  onClose,
+  onUpdatedTrip,
+}) => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [hashtags, setHashtags] = useState<string[]>([]);
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
-  const showModal = () => setIsModalOpen(true);
+  const [rating, setRating] = useState<number>(0);
+  const { user } = useUser();
+
   const handleOk = async () => {
     if (!title.trim() || !content.trim()) {
       message.error("제목과 소개글을 입력해주세요.");
@@ -27,32 +40,33 @@ const ShareSubmitModal: React.FC<Props> = () => {
       const formData = new FormData();
       formData.append("title", title);
       formData.append("content", content);
-      formData.append("hashtags", JSON.stringify(hashtags)); // 배열을 문자열로 전송
-      formData.append("tripId", String(1));
-      // fileList 중 서버에 업로드할 파일만 append (originFileObj가 실제 파일 객체)
+      formData.append("hashtags", JSON.stringify(hashtags));
+      formData.append("tripId", String(tripId));
+      formData.append("userId", String(user?.id));
+      formData.append("rating", String(rating));
+
       fileList.forEach((file) => {
         if (file.originFileObj) {
           formData.append("files", file.originFileObj);
         }
       });
 
-      const res = await api.post("/posts/create", formData);
-
+      await api.post("/posts/create", formData);
       message.success("성공적으로 제출되었습니다!");
-      setIsModalOpen(false);
-      // 필요 시 초기화
+
+      // 초기화 후 닫기
       setTitle("");
       setContent("");
       setHashtags([]);
       setFileList([]);
+      onClose();
+      onUpdatedTrip();
     } catch (error) {
       console.error(error);
       message.error("제출 중 오류가 발생했습니다.");
     }
   };
-  const handleCancel = () => setIsModalOpen(false);
 
-  // 업로드 전 파일 검사 (최대 5개 제한)
   const beforeUpload = (file: RcFile) => {
     if (fileList.length >= 5) {
       message.error("최대 5개까지 업로드 가능합니다.");
@@ -61,7 +75,6 @@ const ShareSubmitModal: React.FC<Props> = () => {
     return true;
   };
 
-  // 업로드 시 파일 리스트 변경 처리
   const onChangeUpload = (info: UploadChangeParam<UploadFile<any>>) => {
     if (info.fileList.length <= 5) {
       setFileList(info.fileList);
@@ -69,83 +82,84 @@ const ShareSubmitModal: React.FC<Props> = () => {
   };
 
   const hashtagChange = (value: string[]) => {
-    const newTags: any = value.map((tag) =>
-      tag.startsWith("#") ? tag : `#${tag}`
-    );
+    const newTags = value.map((tag) => (tag.startsWith("#") ? tag : `#${tag}`));
     setHashtags(newTags);
   };
 
   return (
-    <>
-      <Button type="primary" onClick={showModal}>
-        모달 열기
-      </Button>
+    <ModalStyled>
       <Modal
         title="이 일정을 다른 사람들과 공유해보세요"
-        open={isModalOpen}
+        open={visible}
         onOk={handleOk}
-        onCancel={handleCancel}
+        onCancel={onClose}
         okText="완료"
       >
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleOk();
-          }}
-        >
-          <h3>제목</h3>
-          <Input
-            type="text"
-            name="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="제목을 입력하세요"
-            required
-          />
-
-          <h3>소개</h3>
-          <Input.TextArea
-            name="content"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            placeholder="소개글을 입력하세요"
-            rows={4}
-            required
-          />
-
-          <h3>hashtag</h3>
-          <Select
-            mode="tags"
-            style={{ width: "100%" }}
-            placeholder="#여행  #일정 공유  #CSS"
-            onChange={hashtagChange}
-            value={hashtags}
-            tokenSeparators={[" ", ","]}
-            allowClear
-            notFoundContent={null}
-          />
-
-          <h3>이미지 (최대 5개)</h3>
-          <Upload
-            multiple
-            listType="picture-card"
-            fileList={fileList}
-            beforeUpload={beforeUpload}
-            onChange={onChangeUpload}
-            onRemove={(file) => {
-              setFileList(fileList.filter((item) => item.uid !== file.uid));
+        {" "}
+        <DaypostStyled>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleOk();
             }}
           >
-            {fileList.length >= 5 ? null : (
-              <div>
-                <PlusOutlined />
-                <div>업로드</div>
-              </div>
-            )}
-          </Upload>
-        </form>
+            <h3>제목</h3>
+            <Input
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+            />
+
+            <h3>소개</h3>
+            <Input.TextArea
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              rows={4}
+              required
+            />
+
+            <h3>hashtag</h3>
+            <Select
+              mode="tags"
+              style={{ width: "100%" }}
+              placeholder="#재미난 여행  #레알 ㅋㅋ #진짜 ㅋㅋ"
+              onChange={hashtagChange}
+              value={hashtags}
+              tokenSeparators={[" ", ","]}
+              allowClear
+              notFoundContent={null}
+            />
+
+            <h3>이미지 (최대 5개)</h3>
+            <Upload
+              multiple
+              listType="picture-card"
+              fileList={fileList}
+              beforeUpload={beforeUpload}
+              onChange={onChangeUpload}
+              onRemove={(file) => {
+                setFileList(fileList.filter((item) => item.uid !== file.uid));
+              }}
+            >
+              {fileList.length >= 5 ? null : (
+                <div>
+                  <PlusOutlined />
+                  <div>업로드</div>
+                </div>
+              )}
+            </Upload>
+            <div className="daypost-title">이번 여행의 별점을 매겨주세요!</div>
+            <div>
+              <Rate
+                allowHalf
+                value={rating}
+                onChange={(value) => setRating(value)}
+              />
+            </div>
+          </form>{" "}
+        </DaypostStyled>
       </Modal>
-    </>
+    </ModalStyled>
   );
 };
 
