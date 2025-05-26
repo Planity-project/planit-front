@@ -14,9 +14,15 @@ interface Props {
   tripId: number;
   visible: boolean;
   onClose: () => void;
+  onUpdatedTrip: () => void;
 }
 
-const ShareSubmitModal: React.FC<Props> = ({ tripId, visible, onClose }) => {
+const ShareSubmitModal: React.FC<Props> = ({
+  tripId,
+  visible,
+  onClose,
+  onUpdatedTrip,
+}) => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [hashtags, setHashtags] = useState<string[]>([]);
   const [title, setTitle] = useState<string>("");
@@ -54,6 +60,7 @@ const ShareSubmitModal: React.FC<Props> = ({ tripId, visible, onClose }) => {
       setHashtags([]);
       setFileList([]);
       onClose();
+      onUpdatedTrip();
     } catch (error) {
       console.error(error);
       message.error("제출 중 오류가 발생했습니다.");

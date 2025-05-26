@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Popover, Spin } from "antd";
+import { Popover, Spin, Badge } from "antd";
 import { BellOutlined } from "@ant-design/icons";
 import api from "@/util/api";
 import { NotificationStyled } from "./styled";
@@ -17,31 +17,43 @@ interface Notification {
     reportCount?: number;
   };
 }
-
+interface Props {
+  notifications: Notification[];
+  setNotifications: React.Dispatch<React.SetStateAction<Notification[]>>;
+  loading: boolean;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  fetchNotifications: () => Promise<void>;
+}
 const categories = ["전체", "게시글", "일정", "앨범", "신고"] as const;
 type Category = (typeof categories)[number];
 
-const NotificationPopover = () => {
+const NotificationPopover = ({
+  notifications,
+  setNotifications,
+  loading,
+  setLoading,
+  fetchNotifications,
+}: Props) => {
   const router = useRouter();
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [notifications, setNotifications] = useState<Notification[]>([]);
+
   const [selectedCategory, setSelectedCategory] = useState<Category>("전체");
 
   const [shareModalVisible, setShareModalVisible] = useState(false);
   const [selectedTripId, setSelectedTripId] = useState<number | null>(null);
 
-  const fetchNotifications = async () => {
-    setLoading(true);
-    try {
-      const res = await api.get("/notifications");
-      setNotifications(res.data);
-    } catch (error) {
-      console.error("알림 로딩 실패:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const unreadCount = notifications.filter((n) => !n.isRead).length;
+  // const fetchNotifications = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const res = await api.get("/notifications");
+  //     setNotifications(res.data);
+  //   } catch (error) {
+  //     console.error("알림 로딩 실패:", error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const typeToPathMap: Record<Notification["type"], string> = {
     POST: "posts",
@@ -59,15 +71,33 @@ const NotificationPopover = () => {
         );
       }
 
+      // TRIP은 모달 띄우고 종료
       if (noti.type === "TRIP" && noti.targetId) {
         setSelectedTripId(noti.targetId);
         setShareModalVisible(true);
-        return; // 모달만 띄우고 리턴
+        return;
       }
 
-      const path = typeToPathMap[noti.type];
-      if (noti.targetId && path) {
-        router.push(`/${path}/${noti.targetId}`);
+      // 경로 처리
+      if (noti.targetId) {
+        let targetPath = "";
+
+        switch (noti.type) {
+          case "ALBUM":
+            targetPath = `/album/detail/${noti.targetId}`;
+            break;
+          case "POST":
+            targetPath = `/snsmainpage/snsdetail/${noti.targetId}`;
+            break;
+          case "REPORT":
+            targetPath = `/reports/${noti.targetId}`;
+            break;
+          default:
+            console.warn("처리되지 않은 알림 타입:", noti.type);
+            return;
+        }
+
+        router.push(targetPath);
       }
     } catch (error) {
       console.error("알림 처리 실패:", error);
@@ -172,7 +202,9 @@ const NotificationPopover = () => {
         placement="bottom"
         overlayInnerStyle={{ marginLeft: "-100px", padding: 0 }}
       >
-        <BellOutlined className="Header-alarmIcon" />
+        <Badge dot={unreadCount > 0}>
+          <BellOutlined className="Header-alarmIcon" />
+        </Badge>
       </Popover>
 
       {selectedTripId && (
@@ -180,6 +212,15 @@ const NotificationPopover = () => {
           tripId={selectedTripId}
           visible={shareModalVisible}
           onClose={() => setShareModalVisible(false)}
+          onUpdatedTrip={() => {
+            // 알림 목록에서 해당 Trip 알림 제거
+            setNotifications((prev) =>
+              prev.filter(
+                (n) => !(n.type === "TRIP" && n.targetId === selectedTripId)
+              )
+            );
+            setShareModalVisible(false);
+          }}
         />
       )}
     </>
