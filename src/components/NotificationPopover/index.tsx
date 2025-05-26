@@ -120,8 +120,16 @@ const NotificationPopover = ({
     return false;
   });
 
-  const markAllAsRead = () => {
-    setNotifications((prev) => prev.map((noti) => ({ ...noti, isRead: true })));
+  const markAllAsRead = async () => {
+    try {
+      console.log("모두읽음");
+      await api.patch("/notifications/read-all"); // 백엔드 요청
+      setNotifications(
+        (prev) => prev.map((noti) => ({ ...noti, isRead: true })) // 프론트 상태 동기화
+      );
+    } catch (err) {
+      console.error("모두 읽음 처리 실패:", err);
+    }
   };
 
   const content = (
@@ -202,7 +210,7 @@ const NotificationPopover = ({
         placement="bottom"
         overlayInnerStyle={{ marginLeft: "-100px", padding: 0 }}
       >
-        <Badge dot={unreadCount > 0}>
+        <Badge dot={unreadCount > 0} offset={[-2, 2]}>
           <BellOutlined className="Header-alarmIcon" />
         </Badge>
       </Popover>
