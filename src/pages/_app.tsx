@@ -30,7 +30,7 @@ function AppWithAuthGuard({ Component, pageProps }: AppProps) {
   ];
   const isFooterExcluded = excludedFooterPages.includes(pathname ?? "");
 
-  const publicRoutes = ["/", "/loginpage", "/snsmainpage"];
+  const publicRoutes = ["/", "/loginpage", "/snsmainpage", "/invite"];
   const isPublicRoute = publicRoutes.includes(pathname ?? "");
 
   useEffect(() => {

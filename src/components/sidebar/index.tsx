@@ -8,7 +8,7 @@ import {
   SettingOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useUser } from "@/context/UserContext";
 import { useRouter } from "next/router";
@@ -83,6 +83,25 @@ interface SideBarProps {
 const SideBar = ({ isOpen, setIsOpen }: SideBarProps) => {
   const router = useRouter();
   const { user } = useUser();
+  const sidebarRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        isOpen &&
+        sidebarRef.current &&
+        !sidebarRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen, setIsOpen]);
+
   const logout = () => {
     api.get("auth/logout").then(() => {
       router.push("/").then(() => {
@@ -98,7 +117,7 @@ const SideBar = ({ isOpen, setIsOpen }: SideBarProps) => {
   };
 
   return (
-    <SidebarStyled $isOpen={isOpen}>
+    <SidebarStyled $isOpen={isOpen} ref={sidebarRef}>
       <div className="sideBar-closeBtn">
         <Image
           onClick={() => setIsOpen(false)}
