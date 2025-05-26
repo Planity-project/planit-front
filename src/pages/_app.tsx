@@ -26,10 +26,9 @@ function AppWithAuthGuard({ Component, pageProps }: AppProps) {
     "/signup",
     "/album",
     "/snsmainpage",
+    "/invite",
   ];
-  const isFooterExcluded =
-    excludedFooterPages.includes(pathname ?? "") ||
-    (pathname?.startsWith("/snsmainpage/snsdetail") ?? false);
+  const isFooterExcluded = excludedFooterPages.includes(pathname ?? "");
 
   const publicRoutes = ["/", "/loginpage", "/snsmainpage"];
   const isPublicRoute = publicRoutes.includes(pathname ?? "");
