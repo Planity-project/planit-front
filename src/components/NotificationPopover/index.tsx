@@ -4,7 +4,7 @@ import { BellOutlined } from "@ant-design/icons";
 import api from "@/util/api";
 import { NotificationStyled } from "./styled";
 import { useRouter } from "next/router";
-
+import ShareSubmitModal from "../SubmitModal";
 interface Notification {
   id: number;
   type: "ALBUM" | "TRIP" | "POST" | "REPORT";
@@ -28,11 +28,13 @@ const NotificationPopover = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<Category>("전체");
 
+  const [shareModalVisible, setShareModalVisible] = useState(false);
+  const [selectedTripId, setSelectedTripId] = useState<number | null>(null);
+
   const fetchNotifications = async () => {
     setLoading(true);
     try {
       const res = await api.get("/notifications");
-      console.log("🔔 받은 알림 데이터:", res.data);
       setNotifications(res.data);
     } catch (error) {
       console.error("알림 로딩 실패:", error);
@@ -55,6 +57,12 @@ const NotificationPopover = () => {
         setNotifications((prev) =>
           prev.map((n) => (n.id === noti.id ? { ...n, isRead: true } : n))
         );
+      }
+
+      if (noti.type === "TRIP" && noti.targetId) {
+        setSelectedTripId(noti.targetId);
+        setShareModalVisible(true);
+        return; // 모달만 띄우고 리턴
       }
 
       const path = typeToPathMap[noti.type];
@@ -155,16 +163,26 @@ const NotificationPopover = () => {
   );
 
   return (
-    <Popover
-      content={content}
-      trigger="click"
-      open={open}
-      onOpenChange={handleVisibleChange}
-      placement="bottom"
-      overlayInnerStyle={{ marginLeft: "-100px", padding: 0 }}
-    >
-      <BellOutlined className="Header-alarmIcon" />
-    </Popover>
+    <>
+      <Popover
+        content={content}
+        trigger="click"
+        open={open}
+        onOpenChange={handleVisibleChange}
+        placement="bottom"
+        overlayInnerStyle={{ marginLeft: "-100px", padding: 0 }}
+      >
+        <BellOutlined className="Header-alarmIcon" />
+      </Popover>
+
+      {selectedTripId && (
+        <ShareSubmitModal
+          tripId={selectedTripId}
+          visible={shareModalVisible}
+          onClose={() => setShareModalVisible(false)}
+        />
+      )}
+    </>
   );
 };
 
