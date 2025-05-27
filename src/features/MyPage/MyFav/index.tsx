@@ -16,7 +16,6 @@ const MyFav = ({ user }: infoprops) => {
     api
       .get("/posts/likePosts", { params: { userId: user.id } })
       .then((res: any) => {
-        console.log(res.data, "posts/likePosts");
         setData(res.data);
       });
   }, []);
@@ -52,9 +51,6 @@ const MyFav = ({ user }: infoprops) => {
               </div>
             ))
           )}
-        </div>
-        <div className="AddBanner">
-          <AddBanner />
         </div>
       </div>
     </MyfavStyled>
