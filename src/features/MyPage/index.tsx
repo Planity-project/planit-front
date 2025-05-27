@@ -16,24 +16,35 @@ const MyPage = () => {
     else if (id === "2") setClick(1);
     else setClick(2);
   }, [router.isReady, router.query]);
+  const handleTabClick = (index: number) => {
+    setClick(index);
+    // URL에서 쿼리 제거
+    router.replace("/mypage", undefined, { shallow: true });
+  };
   return (
     <MypageStyled>
       <div className="mypage-wrap">
         <div className="mypage-sideBar">
           <div
-            onClick={() => setClick(0)}
+            onClick={() => {
+              handleTabClick(0);
+            }}
             className={`mypage-myinfo ${click === 0 ? "active" : ""}`}
           >
             내 정보
           </div>
           <div
-            onClick={() => setClick(1)}
+            onClick={() => {
+              handleTabClick(1);
+            }}
             className={`mypage-mydays ${click === 1 ? "active" : ""}`}
           >
             내 일정
           </div>
           <div
-            onClick={() => setClick(2)}
+            onClick={() => {
+              handleTabClick(2);
+            }}
             className={`mypage-likepost ${click === 2 ? "active" : ""}`}
           >
             관심 일정
