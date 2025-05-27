@@ -162,7 +162,10 @@ const CreateStay = ({
       (item) => item.place === null
     );
     if (emptyIndex === -1) {
-      alert("더 이상의 숙소 등록은 불가능합니다.");
+      Modal.error({
+        centered: true,
+        title: "더 이상의 숙소 등록은 불가능합니다.",
+      });
       return;
     }
 
@@ -202,7 +205,10 @@ const CreateStay = ({
           router.push(`/snsmainpage/snsdetail/${res.data}`);
         });
     } catch (err) {
-      alert("일정 생성 중 오류가 발생했습니다.");
+      Modal.error({
+        centered: true,
+        title: "일정 생성중 오류가 발생했습니다.",
+      });
     } finally {
       setresultLoading(false); // 로딩 종료
     }

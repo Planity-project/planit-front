@@ -12,7 +12,7 @@ import { Modal } from "antd";
 import Loding from "@/components/Loding";
 import { useUser, UserProvider } from "@/context/UserContext";
 import { usePathname } from "next/navigation";
-
+import { clientUrl } from "@/util/api";
 // ✅ 로그인 검사 포함된 컴포넌트
 function AppWithAuthGuard({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -91,6 +91,14 @@ export default function MyApp(appProps: AppProps) {
     <>
       <Head>
         <title>PLANIT</title>
+        <meta property="og:title" content="Planit 여행 플래너!" />
+        <meta
+          property="og:description"
+          content="함께한 추억을 사진으로 공유해보세요."
+        />
+        <meta property="og:image" content={`${clientUrl}/defaultImage.png`} />
+        <meta property="og:url" content={clientUrl} />
+        <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <UserProvider>
         <AppWithAuthGuard {...appProps} />

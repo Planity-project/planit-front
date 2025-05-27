@@ -90,7 +90,6 @@ const NotificationPopover = ({
             targetPath = `/snsmainpage/snsdetail/${noti.targetId}`;
             break;
           case "REPORT":
-            targetPath = `/reports/${noti.targetId}`;
             break;
           default:
             console.warn("처리되지 않은 알림 타입:", noti.type);
@@ -122,7 +121,6 @@ const NotificationPopover = ({
 
   const markAllAsRead = async () => {
     try {
-      console.log("모두읽음");
       await api.patch("/notifications/read-all"); // 백엔드 요청
       setNotifications(
         (prev) => prev.map((noti) => ({ ...noti, isRead: true })) // 프론트 상태 동기화

@@ -9,17 +9,10 @@ interface infoprops {
 const Myinfodays = ({ user }: infoprops) => {
   const [data, setData] = useState<any[]>([]);
 
-  const dummy = [
-    { userid: 1, postId: 2, title: "재미진 여수 여행", endDate: "2025-05-30" },
-    { userid: 1, postId: 3, title: "재미진 부산 여행", endDate: "2025-05-03" },
-    { userid: 1, postId: 4, title: "재미진 제주 여행", endDate: "2025-06-01" },
-    { userid: 1, postId: 5, title: "재미진 서울 여행", endDate: "2025-05-01" },
-  ];
   useEffect(() => {
     api
       .get("posts/myPosts", { params: { userId: user.id } })
       .then((res: any) => {
-        console.log(res.data, "posts/myPosts");
         setData(res.data);
       });
   }, [user]);

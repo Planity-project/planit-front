@@ -8,7 +8,7 @@ import React, {
 import api from "@/util/api";
 import { CreateDaysStyled } from "./styled";
 import ShowWhich from "@/components/ShowWhich";
-import { Button, Skeleton } from "antd";
+import { Button, Skeleton, Modal } from "antd";
 import { Input } from "antd";
 import { SearchOutlined, CheckOutlined } from "@ant-design/icons";
 import { ScheduleType } from "..";
@@ -240,6 +240,20 @@ const CreateDays = ({
   const totalHours = Math.floor(totalTime / 60);
   const totalMinutes = totalTime % 60;
 
+  const handleNextClick = () => {
+    const allowedTime = time.hrs * 60 + time.mins;
+
+    if (totalTime > allowedTime) {
+      Modal.error({
+        title: "총 시간을 초과했습니다 시간을 조절해주세요.",
+        centered: true,
+      });
+      return;
+    }
+
+    onNext(); // 시간 초과가 아닐 경우에만 다음 단계로
+  };
+
   return (
     <CreateDaysStyled>
       <div className="create-wrap">
@@ -359,7 +373,7 @@ const CreateDays = ({
       </div>
 
       <div className="choice-btnDiv">
-        <Button type="primary" onClick={onNext}>
+        <Button type="primary" onClick={handleNextClick}>
           다음
         </Button>
       </div>
