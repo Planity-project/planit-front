@@ -2,7 +2,7 @@ import { Modal } from "antd";
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://planit.ai.kr/api", // ✅ 기본 주소 설정
+  baseURL: "https://planit.ai.kr/api", // ✅ 기본 주소 설정
   withCredentials: true, // 필요한 경우 쿠키 포함 요청
 });
 
