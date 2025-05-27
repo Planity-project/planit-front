@@ -34,9 +34,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    api
-      .get("/auth/cookieCheck")
-      .then((res: any) => {
+    (api.get("/auth/cookieCheck") as Promise<any>)
+      .then((res) => {
         if (res.data.result) {
           setUser(res.data.user);
         } else {

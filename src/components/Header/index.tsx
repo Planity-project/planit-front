@@ -31,7 +31,7 @@ const Header = () => {
   const fetchNotifications = async () => {
     setLoading(true);
     try {
-      const res = await api.get("/notifications");
+      const res = await api.get<Notification[]>("/notifications");
       setNotifications(res.data);
     } catch (error) {
       console.error("알림 로딩 실패:", error);

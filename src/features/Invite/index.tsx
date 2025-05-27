@@ -16,13 +16,12 @@ const Invite = () => {
   useEffect(() => {
     const currentUrl = window.location.href;
     setLoading(true);
-    console.log(currentUrl, "현재 url 주소");
-    api
-      .get("album/inviteFind", { params: { currentUrl } })
-      .then((res: any) => {
+
+    (api.get("album/inviteFind", { params: { currentUrl } }) as Promise<any>)
+      .then((res) => {
         setData(res.data);
       })
-      .catch((err: any) => {
+      .catch((err) => {
         console.error("초대 앨범 불러오기 실패:", err);
       })
       .finally(() => {

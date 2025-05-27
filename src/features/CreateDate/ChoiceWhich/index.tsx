@@ -37,7 +37,7 @@ const ChoiceWhich = ({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await api.get("location/findAll");
+        const res = await api.get<any>("location/findAll");
         const arr = res.data;
         setArray(arr);
         setLocation(arr);

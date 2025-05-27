@@ -1,7 +1,7 @@
 import { Modal } from "antd";
 import axios from "axios";
 
-const api = axios.create({
+const api = axios.create<any>({
   baseURL: "http://localhost:5001", // ✅ 기본 주소 설정
   withCredentials: true, // 필요한 경우 쿠키 포함 요청
 });

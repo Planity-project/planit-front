@@ -72,7 +72,7 @@ const CreateDays = ({
       setLoading(true);
       try {
         console.log(selectedCategories, "선택된 카테고리");
-        const res = await api.post("/map/nearby", {
+        const res = await api.post<any>("/map/nearby", {
           address: selectedPlace.name,
           page,
           type: 1,
@@ -133,7 +133,7 @@ const CreateDays = ({
     if (!selectedPlace) return;
 
     try {
-      const res = await api.post("/map/searchNearby", {
+      const res = await api.post<any>("/map/searchNearby", {
         address: selectedPlace.name,
         page: 0,
         type: 1,

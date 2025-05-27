@@ -31,16 +31,13 @@ const CreateDatePage: React.FC = () => {
   const [time, setTime] = useState<TimeType>();
   const [resultLoading, setresultLoading] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [comment, setComment] = useState("");
   const [schedule, setSchedule] = useState<ScheduleType>({
     dataTime: [],
     dataPlace: [],
     dataStay: [],
     userId: user?.id,
   });
-
-  useEffect(() => {
-    console.log("최종 schedule 상태:", schedule);
-  }, [schedule]);
 
   const isRangeValid =
     range?.from instanceof Date &&
@@ -57,6 +54,27 @@ const CreateDatePage: React.FC = () => {
     setCurrent(value);
   };
 
+  const commentSet = (step: number) => {
+    switch (step) {
+      case 0:
+        return "여행 날짜를 정해 나만의 특별한 시간을 계획하세요.";
+      case 1:
+        return "떠날 장소를 선택해 꿈꾸던 여행을 시작하세요.";
+      case 2:
+        return "하루의 시간을 정해 알찬 일정을 준비하세요.";
+      case 3:
+        return "일정을 직접 추가해 나만의 완벽한 계획을 만들어보세요.";
+      case 4:
+        return "숙소를 골라 편안한 휴식을 위한 준비를 마치세요.";
+      default:
+        return "";
+    }
+  };
+
+  useEffect(() => {
+    setComment(commentSet(current));
+  }, [current]);
+
   const handleNextStep = () => {
     setCurrent((prev) => prev + 1);
   };
@@ -67,7 +85,6 @@ const CreateDatePage: React.FC = () => {
         location: selectedPlace,
       };
     });
-    console.log("선택 지역", selectedPlace);
   }, [selectedPlace]);
   if (resultLoading) {
     return <Loding state="day" />;
@@ -81,7 +98,7 @@ const CreateDatePage: React.FC = () => {
           ? "어디로 여행을 떠나시나요?"
           : "어떤 하루를 보낼지 정해볼까요?"}
       </div>
-
+      <div className="createpage-minitext">{comment}</div>
       <div className="createpage-step">
         <Steps
           current={current}

@@ -43,7 +43,7 @@ const Myinfo = ({ user }: infoprops) => {
     formData.append("userId", user.id);
 
     try {
-      const res = await api.put(`/users/me/profile-image`, formData);
+      const res = await api.put<any>(`/users/me/profile-image`, formData);
       if (res.data.result) {
         Modal.success({
           centered: true,
@@ -67,7 +67,6 @@ const Myinfo = ({ user }: infoprops) => {
   // 닉네임 변경 함수
   const changeNick = async () => {
     if (name.length < 1) {
-      console.log(name);
       Modal.warning({
         centered: true,
         title: "2글자 이상 입력해주세요",
@@ -93,13 +92,12 @@ const Myinfo = ({ user }: infoprops) => {
             });
             return;
           }
+          Modal.warning({
+            centered: true,
+            title: "닉네임이 성공적으로 변경되었습니다.",
+          });
         });
-      Modal.warning({
-        centered: true,
-        title: "닉네임이 성공적으로 변경되었습니다.",
-      });
     } catch (error) {
-      console.error("닉네임 변경 실패:", error);
       Modal.warning({
         centered: true,
         title: "닉네임 변경에 실패했습니다.",
@@ -110,7 +108,9 @@ const Myinfo = ({ user }: infoprops) => {
   // 프로필 이미지 삭제 요청
   const profileDelete = async () => {
     try {
-      const res = await api.delete(`users/me/profile-image?userId=${user.id}`);
+      const res = await api.delete<any>(
+        `users/me/profile-image?userId=${user.id}`
+      );
       if (res.data.result) {
         Modal.success({
           centered: true,
@@ -133,9 +133,8 @@ const Myinfo = ({ user }: infoprops) => {
 
   // 회원탈퇴
   const userexit = async () => {
-    console.log(user.id);
     try {
-      const res = await api.delete(`users/me/destroy/${user.id}`);
+      const res = await api.delete<any>(`users/me/destroy/${user.id}`);
       if (res.data.result) {
         Modal.success({
           centered: true,
@@ -159,7 +158,7 @@ const Myinfo = ({ user }: infoprops) => {
 
     const fetchPaymentData = async () => {
       try {
-        const res = await api.get(`/payments/user/${user.id}`);
+        const res = await api.get<any>(`/payments/user/${user.id}`);
         const rawData = res.data.data;
 
         const formattedData = rawData.map((item: any) => ({

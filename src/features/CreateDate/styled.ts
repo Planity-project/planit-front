@@ -24,6 +24,15 @@ export const Createpage = styled.div`
     font-weight: 700;
     text-align: center;
   }
+  .createpage-minitext {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+    font-size: 15px;
+    font-weight: 400;
+    text-align: center;
+  }
 
   .ant-steps-item-process .ant-steps-item-icon {
     background-color: rgba(83, 183, 232, 0.6);

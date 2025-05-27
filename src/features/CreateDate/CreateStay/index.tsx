@@ -82,7 +82,7 @@ const CreateStay = ({
     setLoading(true);
     // selectedCategories 한글 → 구글 카테고리명 변환
     try {
-      const res = await api.post("/map/nearby", {
+      const res = await api.post<any>("/map/nearby", {
         address: selectedPlace.name,
         page: currentPage,
         type: 2,
@@ -122,7 +122,7 @@ const CreateStay = ({
     if (!selectedPlace) return;
 
     try {
-      const res = await api.post("/map/searchNearby", {
+      const res = await api.post<any>("/map/searchNearby", {
         address: selectedPlace.name,
         page: 0,
         str,

@@ -106,7 +106,7 @@ const SnsDetail = () => {
   const selectedDaySchedule = useMemo(() => {
     return schedule[day - 1]?.plan || [];
   }, [schedule, day]);
-  console.log(data);
+
   return (
     <SnsDetailStyled>
       <div className="snspost-mydaysbar">

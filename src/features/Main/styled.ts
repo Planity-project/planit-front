@@ -23,8 +23,13 @@ export const MainStyled = styled.div`
     gap: 10px;
   }
   .main-gifBox {
+    width: 40%;
     margin-top: 250px;
     font-size: 50px;
+  }
+  .main-gif {
+    width: 100%;
+    height: 100%;
   }
   .main-btnBox .ant-btn {
     background-color: black;
@@ -58,11 +63,20 @@ export const MainStyled = styled.div`
     }
     .main-title {
       text-align: center;
-      font-size: 35px;
+      font-size: 30px;
+      font-weight: 700;
+    }
+    .main-title2 {
+      text-align: center;
+      font-size: 50px;
       font-weight: 700;
     }
     .main-titleBox {
       margin-top: 140px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
     .main-btnBox {
       display: flex;

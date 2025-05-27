@@ -95,7 +95,7 @@ const DateChoice = ({ range, setRange, onNext }: DateChoiceProps) => {
     }
 
     const start = new Date(fromDate.setHours(0, 0, 0, 0));
-    const end = addDays(start, 10);
+    const end = addDays(start, 9);
     return [{ before: today }, { before: start }, { after: end }];
   };
 

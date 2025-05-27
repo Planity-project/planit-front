@@ -33,7 +33,7 @@ export const SnsDetailStyled = styled.div`
     cursor: pointer;
   }
   .snspost-mydayright {
-    width: 75%;
+    width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;

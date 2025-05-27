@@ -14,10 +14,11 @@
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@googlemaps/js-api-loader": "^1.16.8",
+    "@lottiefiles/dotlottie-react": "^0.13.5",
     "@portone/browser-sdk": "^0.0.20",
     "@types/navermaps": "^3.7.9",
     "antd": "^4.24.13",
-    "axios": "^1.9.0",
+    "axios": "^1.8.4",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "dotenv": "^16.5.0",
@@ -35,6 +36,7 @@
     "swiper": "^11.2.6"
   },
   "devDependencies": {
+    "@types/axios": "^0.9.36",
     "@types/google.maps": "^3.58.1",
     "@types/node": "^20",
     "@types/react": "^19",

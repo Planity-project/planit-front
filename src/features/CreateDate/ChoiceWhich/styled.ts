@@ -81,6 +81,7 @@ export const ChioceWhiceStyled = styled.div`
     width: 100%;
     padding: 10px 10px;
     background-color: whitesmoke;
+    cursor: pointer;
   }
   .which-mapDiv:hover {
     background-color: rgb(83, 183, 232, 0.2);

@@ -23,7 +23,7 @@ const AlbumMain = () => {
 
     setLoading(true);
     try {
-      const res = await api.get("/album/allData", {
+      const res = await api.get<any>("/album/allData", {
         params: { page, limit, userId: user?.id },
       });
 

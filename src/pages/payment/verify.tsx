@@ -24,7 +24,7 @@ export default function VerifyPaymentPage() {
           // 원하면 라우팅 처리도 가능
           router.push(`/albums/detail/${albumId}`);
         })
-        .catch((err) => {
+        .catch((err: any) => {
           console.error("결제 서버 전송 실패", err);
         });
     }

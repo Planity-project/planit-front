@@ -16,12 +16,12 @@ const AddBanner = () => {
   useEffect(() => {
     api
       .get("/banner")
-      .then((res) => {
+      .then((res: any) => {
         setBanners(res.data);
         // 초기 배너는 0번
         setCurrentBannerIndex(0);
       })
-      .catch((err) => {
+      .catch((err: any) => {
         console.error("배너 불러오기 실패", err);
       });
   }, []);

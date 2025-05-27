@@ -1,6 +1,8 @@
 import { MainStyled } from "./styled";
 import { Button } from "antd";
 import { useRouter } from "next/router";
+import MainGif from "@/assets/images/planitmaingif.gif";
+import Image from "next/image";
 const MainPage = () => {
   const router = useRouter();
   return (
@@ -28,7 +30,15 @@ const MainPage = () => {
             </Button>
           </div>
         </div>
-        <div className="main-gifBox">GIF</div>
+        <div className="main-gifBox">
+          <Image
+            src={MainGif}
+            alt=""
+            className="main-gif"
+            width={200}
+            height={200}
+          />
+        </div>
       </div>
     </MainStyled>
   );
