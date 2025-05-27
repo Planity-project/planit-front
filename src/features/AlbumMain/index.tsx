@@ -5,6 +5,7 @@ import AlbumCreate from "../AlbumCreate";
 import { useEffect, useState } from "react";
 import Footer from "@/components/Footer";
 import api from "@/util/api";
+import { useUser } from "@/context/UserContext";
 
 const AlbumMain = () => {
   const [modal, setModal] = useState<boolean>(false);
@@ -15,6 +16,7 @@ const AlbumMain = () => {
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [total, setTotal] = useState<number>(0);
   const [lastFetchedPage, setLastFetchedPage] = useState<number>(0);
+  const { user } = useUser();
 
   const fetchData = async () => {
     if (loading || page === lastFetchedPage || !hasMore) return;
@@ -22,7 +24,7 @@ const AlbumMain = () => {
     setLoading(true);
     try {
       const res = await api.get("/album/allData", {
-        params: { page, limit },
+        params: { page, limit, userId: user?.id },
       });
 
       const newItems = res.data.items;
