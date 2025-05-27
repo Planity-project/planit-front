@@ -24,7 +24,7 @@ export const MainStyled = styled.div`
   }
   .main-gifBox {
     width: 40%;
-    margin-top: 250px;
+    margin-top: 150px;
     font-size: 50px;
   }
   .main-gif {
@@ -55,8 +55,9 @@ export const MainStyled = styled.div`
       flex-direction: column-reverse;
     }
     .main-gifBox {
-      margin-top: 10px;
+      margin-top: 30px;
       font-size: 50px;
+      width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -81,6 +82,7 @@ export const MainStyled = styled.div`
     .main-btnBox {
       display: flex;
       justify-content: center;
+      margin-bottom: 150px;
     }
     .main-btnBox .ant-btn {
       background-color: black;
