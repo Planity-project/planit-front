@@ -18,9 +18,10 @@ const Invite = () => {
     setLoading(true);
     console.log(currentUrl, "현재 url 주소");
     api
-      .get("album/inviteFind", { params: { currentUrl } })
+      .get("album/inviteFind", { params: { invite: currentUrl } })
       .then((res: any) => {
         setData(res.data);
+        console.log(res.data, currentUrl);
       })
       .catch((err: any) => {
         console.error("초대 앨범 불러오기 실패:", err);
