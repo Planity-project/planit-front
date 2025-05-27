@@ -49,7 +49,15 @@ export const MyfavStyled = styled.div`
       font-size: 0.95rem;
       cursor: pointer;
     }
-
+    .chat-bubble2 {
+      position: relative;
+      width: 40%;
+      padding: 8px 12px;
+      background-color: white;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
     .chat-row.left .chat-bubble::before {
       content: "";
       position: absolute;
@@ -91,7 +99,10 @@ export const MyfavStyled = styled.div`
 
     @media (max-width: 900px) {
       .chat-bubble {
-        max-width: 85%;
+        width: 85%;
+      }
+      .chat-bubble2 {
+        display: none;
       }
     }
   }

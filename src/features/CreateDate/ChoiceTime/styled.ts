@@ -1,12 +1,15 @@
 import styled from "styled-components";
 
 export const ChioceTimeStyled = styled.div`
-  max-width: 500px;
   width: 100%;
   margin: 50px auto 0 auto;
   padding: 10px;
   font-family: sans-serif;
   box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 
   /* display: flex;
   flex-direction: column;
@@ -53,8 +56,8 @@ export const ChioceTimeStyled = styled.div`
   .start-endpoint {
     display: flex;
     gap: 140px;
-    padding-left: 160px;
     margin-top: 30px;
+    margin-left: 120px;
   }
 
   .time-block {
@@ -62,7 +65,7 @@ export const ChioceTimeStyled = styled.div`
     flex-direction: column;
     align-items: flex-start;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 15px;
   }
 
   /* 버튼 */
@@ -88,10 +91,11 @@ export const ChioceTimeStyled = styled.div`
   .day-row {
     display: flex;
     align-items: center;
-    padding: 0.75rem 0;
+    padding: 0.55rem 0;
+    margin-top: 10px;
+    gap: 20px;
 
     .date {
-      width: 120px;
       font-weight: bold;
     }
 
@@ -109,31 +113,24 @@ export const ChioceTimeStyled = styled.div`
         font-size: 1.2rem;
       }
     }
+  }
 
-    @media (max-width: 768px) {
-      .start-endpoint {
-        flex-direction: column;
-        align-items: flex-end;
-      }
-
-      .day-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-      }
-
-      .day-row .times {
-        flex-direction: column;
-        align-items: flex-start;
-
-        span {
-          display: none;
-        }
-      }
-
-      .choice-btnDiv {
-        justify-content: center;
-      }
+  @media (max-width: 500px) {
+    .time-block {
+      font-size: 12px !important;
+    }
+    .day-row {
+      display: flex;
+      flex-direction: column;
+    }
+    .start-endpoint {
+      display: flex;
+      gap: 160px;
+      margin-top: 30px;
+      margin-left: 50px;
+    }
+    .date {
+      width: 90%;
     }
   }
 `;

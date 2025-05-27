@@ -86,7 +86,10 @@ export const MyinfoDaysStyled = styled.div`
 
   @media (max-width: 600px) {
     .chat-bubble {
-      max-width: 85%;
+      width: 85%;
+    }
+    .chat-titleBox {
+      display: none;
     }
   }
 `;

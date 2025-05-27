@@ -30,7 +30,7 @@ const MyFav = ({ user }: infoprops) => {
               className="chat-row left"
               onClick={() => router.push(`/snsmainpage`)}
             >
-              <div className="chat-bubble">
+              <div className="chat-bubble2">
                 아직 관심있는 일정이 없어요!
                 <div>한번 추가 해보실까요?</div>
               </div>

@@ -190,12 +190,8 @@ const ChoiceTime = ({
 
       {/* 시작시간, 종료시간 */}
       <div className="start-endpoint">
-        <div className="time-block">
-          <p>시작 시간</p>
-        </div>
-        <div className="time-block">
-          <p>종료 시간</p>
-        </div>
+        <div className="time-block">시작 시간</div>
+        <div className="time-block">종료 시간</div>
       </div>
 
       {days.map((d) => {
