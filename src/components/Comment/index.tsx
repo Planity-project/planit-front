@@ -79,7 +79,6 @@ const CommentComponent = ({
     setReportModalOpen(true);
   };
 
-  console.log(mini);
   return (
     <>
       <CommentStyled>

@@ -15,7 +15,7 @@ const SnsPost = ({ data, variant }: snspostprops) => {
   const [list, setList] = useState<string[]>([]);
   const [id, setId] = useState(0);
   const router = useRouter();
-  console.log(data, "dsjakbdiujsabdjksabfksdbkjfhsa");
+
   const handleClick = (id: number) => {
     if (variant === "album") {
       router.push(`/album/detail/${id}`);
@@ -31,7 +31,6 @@ const SnsPost = ({ data, variant }: snspostprops) => {
           const imgList = Array.isArray(x.img) ? x.img : [];
           const titleImg =
             x.titleImg !== null ? x.titleImg : "/defaultImage.png";
-          console.log(imgList, "이미지 확인용");
 
           const imagesToRender =
             variant === "album"

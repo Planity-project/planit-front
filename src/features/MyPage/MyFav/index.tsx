@@ -3,6 +3,7 @@ import { MyfavStyled } from "./styled";
 import { useEffect, useState } from "react";
 import api from "@/util/api";
 import { useRouter } from "next/router";
+
 interface infoprops {
   user: any;
 }
@@ -10,6 +11,7 @@ interface infoprops {
 const MyFav = ({ user }: infoprops) => {
   const [data, setData] = useState<any[]>([]);
   const router = useRouter();
+
   useEffect(() => {
     api
       .get("/posts/likePosts", { params: { userId: user.id } })
@@ -18,6 +20,7 @@ const MyFav = ({ user }: infoprops) => {
         setData(res.data);
       });
   }, []);
+
   return (
     <MyfavStyled>
       <div className="myfav-wrap">
@@ -25,27 +28,33 @@ const MyFav = ({ user }: infoprops) => {
           <div className="myfav-title">📌 관심 일정</div>
           {data.length < 1 ? (
             <div
-              className={`chat-bubble left`}
-              onClick={() => {
-                router.push(`/snsmainpage`);
-              }}
+              className="chat-row left"
+              onClick={() => router.push(`/snsmainpage`)}
             >
-              아직 관심있는 일정이 없어요!<div> 한번 추가 해보실까요?</div>
+              <div className="chat-bubble">
+                아직 관심있는 일정이 없어요!
+                <div>한번 추가 해보실까요?</div>
+              </div>
             </div>
           ) : (
             data.map((item, idx) => (
               <div
-                onClick={() => {
-                  router.push(`/snsmainpage/snsdetail/${item.postId}`);
-                }}
                 key={idx}
-                className={`chat-bubble left`}
+                className="chat-row left"
+                onClick={() =>
+                  router.push(`/snsmainpage/snsdetail/${item.postId}`)
+                }
               >
-                <div className="bubble-content">{item.title}</div>
-                <div className="chat-date">{item.nickname}</div>
+                <div className="chat-bubble">
+                  <div className="bubble-content">{item.title}</div>
+                  <div className="chat-date">{item.nickname}</div>
+                </div>
               </div>
             ))
           )}
+        </div>
+        <div className="AddBanner">
+          <AddBanner />
         </div>
       </div>
     </MyfavStyled>

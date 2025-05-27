@@ -58,7 +58,9 @@ const CreateDays = ({
   const [totalTime, setTotalTime] = useState(0);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [editedMinutes, setEditedMinutes] = useState<number>(120);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([
+    "전체",
+  ]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
 
@@ -151,11 +153,22 @@ const CreateDays = ({
   };
 
   const toggleCategory = (category: string) => {
-    setSelectedCategories((prev) =>
-      prev.includes(category)
-        ? prev.filter((c) => c !== category)
-        : [...prev, category]
-    );
+    if (category === "전체") {
+      // "전체" 선택 시 다른 선택 무시하고 전체만
+      setSelectedCategories(["전체"]);
+    } else {
+      setSelectedCategories((prev) => {
+        const isSelected = prev.includes(category);
+        const filtered = prev.filter((c) => c !== "전체");
+
+        if (isSelected) {
+          const newSelected = filtered.filter((c) => c !== category);
+          return newSelected.length === 0 ? ["전체"] : newSelected;
+        } else {
+          return [...filtered, category];
+        }
+      });
+    }
   };
 
   const handlePlaceClick = (i: number) => {
@@ -247,7 +260,7 @@ const CreateDays = ({
 
           <div className="create-all">
             <div className="create-topleft">
-              {["명소", "식당", "카페"].map((label) => (
+              {["전체", "명소", "식당", "카페"].map((label) => (
                 <button
                   key={label}
                   onClick={() => toggleCategory(label)}

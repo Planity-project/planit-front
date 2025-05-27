@@ -5,6 +5,7 @@ export const MyfavStyled = styled.div`
   height: 100%;
   display: flex;
   justify-content: center;
+
   .myfav-wrap {
     width: 70%;
     height: 100%;
@@ -29,22 +30,36 @@ export const MyfavStyled = styled.div`
       margin-bottom: 20px;
     }
 
+    .chat-row {
+      display: flex;
+      width: 100%;
+      padding: 10px;
+    }
+
+    .chat-row.left {
+      justify-content: flex-start;
+    }
+
     .chat-bubble {
-      max-width: 60%;
-      width: 40%;
-      padding: 8px 15px;
-      border-radius: 10px;
-      font-size: 1rem;
-      line-height: 1.4;
       position: relative;
-      word-wrap: break-word;
+      width: 40%;
+      padding: 8px 12px;
+      background-color: white;
+      border-radius: 6px;
+      font-size: 0.95rem;
       cursor: pointer;
     }
 
-    .left {
-      align-self: flex-start;
-      background-color: white;
-      border-bottom-left-radius: 0;
+    .chat-row.left .chat-bubble::before {
+      content: "";
+      position: absolute;
+      top: 0px;
+      left: -7px;
+      width: 0;
+      height: 0;
+      border-top: 12px solid transparent;
+      border-bottom: 12px solid transparent;
+      border-right: 14px solid white;
     }
 
     .chat-date {
@@ -76,7 +91,7 @@ export const MyfavStyled = styled.div`
 
     @media (max-width: 900px) {
       .chat-bubble {
-        max-width: 80%;
+        max-width: 85%;
       }
     }
   }
