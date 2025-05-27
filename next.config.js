@@ -45,7 +45,7 @@ module.exports = {
   },
 
   images: {
-    domains: ["localhost", "maps.googleapis.com"], // 외부 이미지 도메인 설정
+    domains: ["localhost", "maps.googleapis.com", "planit.ai.kr"], // 외부 이미지 도메인 설정
     loader: "default", // 이미지를 최적화하는 로더 설정
     formats: ["image/webp"], // 최적화된 웹포맷 설정
   },
