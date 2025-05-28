@@ -294,7 +294,16 @@ const Myinfo = ({ user }: infoprops) => {
         </div>
 
         <div
-          onClick={userexit}
+          onClick={() => {
+            Modal.confirm({
+              title: "진짜 탈퇴 할려고?",
+              onOk: () => {
+                userexit();
+              },
+              okText: "네",
+              cancelText: "아니요",
+            });
+          }}
           style={{ cursor: "pointer" }}
           className="myinfo-exit"
         >
