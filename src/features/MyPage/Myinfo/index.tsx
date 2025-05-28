@@ -56,7 +56,6 @@ const Myinfo = ({ user }: infoprops) => {
         throw new Error("업로드 실패");
       }
     } catch (error) {
-      console.error("프로필 업로드 실패:", error);
       Modal.error({
         centered: true,
         title: "업로드에 실패했습니다.",
@@ -66,7 +65,6 @@ const Myinfo = ({ user }: infoprops) => {
 
   // 닉네임 변경 함수
   const changeNick = async () => {
-    console.log(user, user.id, "유저 컨테스트 값 확인");
     if (name.length < 1) {
       Modal.warning({
         centered: true,
@@ -83,7 +81,6 @@ const Myinfo = ({ user }: infoprops) => {
     }
 
     try {
-      console.log(user, "요청 시작 트라이문 안");
       await api
         .post("users/nicknameUpdate", { nickname: name, userId: user.id })
         .then((res: any) => {
@@ -97,6 +94,9 @@ const Myinfo = ({ user }: infoprops) => {
           Modal.warning({
             centered: true,
             title: "닉네임이 성공적으로 변경되었습니다.",
+            onOk: () => {
+              window.location.reload();
+            },
           });
         });
     } catch (error) {

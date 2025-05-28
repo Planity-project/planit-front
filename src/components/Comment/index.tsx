@@ -43,9 +43,9 @@ const CommentComponent = ({
   const commentHeart = async (commentId?: number) => {
     if (!user?.id) return;
     try {
-      await api.post(`/likes/comment/${commentId}/toggle`).then((res: any) => {
-        console.log(res.data);
-      });
+      await api
+        .post(`/likes/comment/${commentId}/toggle`)
+        .then((res: any) => {});
       setNum(num + 1);
     } catch (err) {
       console.error("좋아요 처리 중 오류:", err);
