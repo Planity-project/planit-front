@@ -58,7 +58,8 @@ export const MyfavStyled = styled.div`
       font-size: 0.95rem;
       cursor: pointer;
     }
-    .chat-row.left .chat-bubble::before {
+    .chat-row.left .chat-bubble::before,
+    .chat-row.left .chat-bubble2::before {
       content: "";
       position: absolute;
       top: 0px;
