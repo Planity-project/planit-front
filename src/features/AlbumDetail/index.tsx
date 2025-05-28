@@ -314,7 +314,7 @@ const AlbumDetail = () => {
 
                 {openMenuIndex === i && (
                   <div ref={menuRef} className="member-popup-menu">
-                    {userrole === "owner" ? (
+                    {userrole === "OWNER" ? (
                       <>
                         <div className="menu-item">강퇴</div>
                         <div className="menu-item">그룹장 위임</div>
