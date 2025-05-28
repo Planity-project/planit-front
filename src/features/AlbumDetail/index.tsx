@@ -97,11 +97,9 @@ const AlbumDetail = () => {
     setAlbumId(id);
   };
   const delAlbum = () => {
-    api
-      .delete("/album/delAlbum", { params: { albumId: id } })
-      .then((res: any) => {
-        window.location.href = "/album";
-      });
+    api.delete("/album/delAlbum", { params: { albumId: id } }).then((res) => {
+      window.location.href = "/album";
+    });
   };
   // 앨범 정보 요청
   useEffect(() => {
@@ -140,9 +138,13 @@ const AlbumDetail = () => {
       });
   };
   const ownerChange = (targetId) => {
-    api.get("album/delegation", {
-      params: { userId: user.id, albumId: id, targetId },
-    });
+    api
+      .get("album/delegation", {
+        params: { userId: user.id, albumId: id, targetId },
+      })
+      .then((res) => {
+        setNum(num + 1);
+      });
   };
   const getMaxLength = () => {
     const width = window.innerWidth;
@@ -323,7 +325,14 @@ const AlbumDetail = () => {
                         <div className="menu-item">강퇴</div>
                         <div
                           onClick={() => {
-                            ownerChange(x.userId);
+                            Modal.confirm({
+                              title: "그룹장 권한을 위임하시겠습니까?",
+                              onOk: () => {
+                                ownerChange(x.userId);
+                              },
+                              cancelText: "아니요",
+                              okText: "네",
+                            });
                           }}
                           className="menu-item"
                         >
