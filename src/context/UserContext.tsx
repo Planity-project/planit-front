@@ -80,8 +80,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     } catch (err) {
       console.error("로그아웃 실패:", err);
     } finally {
-      // 로그아웃 완료 후 리디렉션
-      router.push("/");
+      router.replace("/login");
+      window.location.reload();
     }
   };
 
