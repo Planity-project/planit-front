@@ -43,7 +43,13 @@ export const HeaderStyled = styled.div`
   .Header-sideImg {
     cursor: pointer;
   }
-
+  .header-sideBarClick {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    margin-right: 15px;
+  }
   @media (max-width: 1280px) {
     .Header-container {
       margin: 0 30px;
