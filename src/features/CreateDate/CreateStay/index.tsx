@@ -193,9 +193,13 @@ const CreateStay = ({
     window.scrollTo({ top: 0, behavior: "smooth" });
     try {
       const res = await api
-        .post("/trip/generateDate", {
-          schedule,
-        })
+        .post(
+          "/trip/generateDate",
+          {
+            schedule,
+          },
+          { timeout: 180000 }
+        )
         .then((res: any) => {
           router.push(`/snsmainpage/snsdetail/${res.data}`);
         });
