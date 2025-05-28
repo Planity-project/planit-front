@@ -17,9 +17,14 @@ const Invite = () => {
     const currentUrl = window.location.href;
     setLoading(true);
 
-    (api.get("album/inviteFind", { params: { currentUrl } }) as Promise<any>)
+    (
+      api.get("album/inviteFind", {
+        params: { invite: currentUrl },
+      }) as Promise<any>
+    )
       .then((res) => {
         setData(res.data);
+        console.log(res.data, "data");
       })
       .catch((err) => {
         console.error("초대 앨범 불러오기 실패:", err);
