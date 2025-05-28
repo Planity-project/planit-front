@@ -147,8 +147,8 @@ const SideBar = ({ isOpen, setIsOpen }: SideBarProps) => {
           items={items}
           onClick={({ key }) => {
             if (key === "sub3") navigateIfChanged("/album");
-            if (key === "sub1") navigateIfChanged("/mypage/2");
-            if (key === "sub2") navigateIfChanged("/mypage/1");
+            if (key === "sub1") navigateIfChanged("/mypage/days");
+            if (key === "sub2") navigateIfChanged("/mypage/info");
           }}
         />
         <div className="sideBar-logoutText" onClick={logout}>

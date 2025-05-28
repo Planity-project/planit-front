@@ -82,7 +82,7 @@ const Header = () => {
               <div
                 className="Header-sideText"
                 onClick={() => {
-                  router.push("/mypage/2");
+                  router.push("/mypage/days");
                 }}
               >
                 내 일정
