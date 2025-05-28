@@ -6,7 +6,13 @@ export const HeaderStyled = styled.div`
   height: 70px;
   align-items: center;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-
+  .header-iconwrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-right: 10px;
+  }
   .Header-container {
     height: 20%;
     width: 100%;
@@ -50,6 +56,7 @@ export const HeaderStyled = styled.div`
     gap: 25px;
     margin-right: 15px;
   }
+
   @media (max-width: 1280px) {
     .Header-container {
       margin: 0 30px;
