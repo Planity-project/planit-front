@@ -7,7 +7,7 @@ import {
 } from "react";
 import api from "@/util/api";
 import BannedModal from "@/features/BannedModal";
-
+import { useRouter } from "next/router";
 interface User {
   id: number;
   email: string;
@@ -40,7 +40,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [banReason, setBanReason] = useState<string | undefined>(undefined);
   const [banEndDate, setBanEndDate] = useState<string | undefined>(undefined);
-
+  const router = useRouter();
   useEffect(() => {
     (async () => {
       try {
@@ -80,8 +80,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     } catch (err) {
       console.error("로그아웃 실패:", err);
     } finally {
-      // 로그아웃 완료 후 리디렉션
-      window.location.href = "/login";
+      router.replace("/login");
+      window.location.reload();
     }
   };
 
