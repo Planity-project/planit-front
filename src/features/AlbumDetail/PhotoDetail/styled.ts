@@ -128,6 +128,7 @@ export const PhotoStyled = styled.div<{ $modal?: true | false }>`
     width: 80%;
     border: none;
     border-bottom: 1px solid black;
+    border-radius: 0px !important;
   }
   .photo-delphoto {
     font-size: 11px;

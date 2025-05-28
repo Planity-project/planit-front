@@ -67,7 +67,7 @@ const DateChoice = ({ range, setRange, onNext }: DateChoiceProps) => {
 
     // 두 번째 선택이며, 10일 범위 내에서 선택된 경우
     if (initialFrom && from && to) {
-      const maxTo = addDays(initialFrom, 10);
+      const maxTo = addDays(initialFrom, 4);
       if (isAfter(to, maxTo)) {
         // 범위 초과 → 무시
         return;
@@ -95,7 +95,7 @@ const DateChoice = ({ range, setRange, onNext }: DateChoiceProps) => {
     }
 
     const start = new Date(fromDate.setHours(0, 0, 0, 0));
-    const end = addDays(start, 9);
+    const end = addDays(start, 4);
     return [{ before: today }, { before: start }, { after: end }];
   };
 

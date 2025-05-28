@@ -67,10 +67,16 @@ const SnsMain = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [hasMore, loading]);
-
   return (
     <>
-      <SnsPost data={data} /> {loading && <Spin style={{ marginTop: 20 }} />}
+      {data.length === 0 && !loading ? (
+        <div className="AlbumMain-noData">아직 게시된 게시글이 없습니다</div>
+      ) : (
+        <>
+          <SnsPost data={data} />
+          {loading && <Spin style={{ marginTop: 20 }} />}
+        </>
+      )}
       {!hasMore && !loading && <Footer />}
     </>
   );

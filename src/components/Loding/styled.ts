@@ -11,4 +11,11 @@ export const LodingStyled = styled.div`
   .loding-img {
     border-radius: 50%;
   }
+  .loding-text {
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #333;
+  }
 `;
