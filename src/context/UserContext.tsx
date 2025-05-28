@@ -75,8 +75,14 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   const handleConfirm = async () => {
     setModalOpen(false);
-    await api.post("/auth/logout"); // 로그아웃 API 호출
-    window.location.href = "/login"; // 로그인 페이지로 이동
+    try {
+      await api.get("/auth/logout");
+    } catch (err) {
+      console.error("로그아웃 실패:", err);
+    } finally {
+      // 로그아웃 완료 후 리디렉션
+      window.location.href = "/login";
+    }
   };
 
   return (
