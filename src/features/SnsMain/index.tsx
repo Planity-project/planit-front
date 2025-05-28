@@ -3,6 +3,7 @@ import SnsPost from "@/components/SnsPost";
 import { useEffect, useState } from "react";
 import Footer from "@/components/Footer";
 import api from "@/util/api";
+import { SnsMainStyled } from "./styled";
 const SnsMain = () => {
   const [data, setData] = useState<any[]>([]);
   const [page, setPage] = useState<number>(1);
@@ -68,9 +69,9 @@ const SnsMain = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [hasMore, loading]);
   return (
-    <>
+    <SnsMainStyled>
       {data.length === 0 && !loading ? (
-        <div className="AlbumMain-noData">아직 게시된 게시글이 없습니다</div>
+        <div className="snsmain-noData">아직 게시된 게시글이 없습니다</div>
       ) : (
         <>
           <SnsPost data={data} />
@@ -78,7 +79,7 @@ const SnsMain = () => {
         </>
       )}
       {!hasMore && !loading && <Footer />}
-    </>
+    </SnsMainStyled>
   );
 };
 
