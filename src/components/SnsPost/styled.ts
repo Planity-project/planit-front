@@ -13,7 +13,7 @@ export const SnsPostStyled = styled.div<{ $variant?: "default" | "album" }>`
     justify-content: flex-start;
     flex-wrap: wrap;
     gap: 20px;
-    width: ${(props) => (props.$variant === "album" ? "75%" : "40%")};
+    width: ${(props) => (props.$variant === "album" ? "75%" : "50%")};
     max-width: 1280px;
   }
 
