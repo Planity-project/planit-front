@@ -50,7 +50,15 @@ export const SnsStyled = styled.div`
     border-radius: 10px;
     object-fit: cover;
   }
-
+  .AlbumMain-noData {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 500;
+    margin: 200px auto;
+  }
   .sns-imgWrapper.first {
     grid-column: 1 / 2;
     grid-row: 1 / -1;
