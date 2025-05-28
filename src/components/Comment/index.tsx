@@ -115,13 +115,15 @@ const CommentComponent = ({
                     <EllipsisOutlined />
                     {openMenuId === comment.id && (
                       <div className="comment-menu">
-                        <div
-                          className="comment-textdiv"
-                          onClick={() => deleteComment(comment.id)}
-                          style={{ cursor: "pointer" }}
-                        >
-                          삭제
-                        </div>
+                        {user?.id === comment.userId && (
+                          <div
+                            className="comment-textdiv"
+                            onClick={() => deleteComment(comment.id)}
+                            style={{ cursor: "pointer" }}
+                          >
+                            삭제
+                          </div>
+                        )}
                         <div
                           className="comment-textdiv"
                           onClick={() => openReportModal(comment.id)}
