@@ -67,12 +67,24 @@ const ShareSubmitModal: React.FC<Props> = ({
     }
   };
 
-  const beforeUpload = (file: RcFile) => {
+  const beforeUpload = async (file: RcFile) => {
     if (fileList.length >= 5) {
       message.error("최대 5개까지 업로드 가능합니다.");
       return Upload.LIST_IGNORE;
     }
-    return true;
+
+    const preview = await getBase64(file);
+
+    const newFile: UploadFile = {
+      uid: file.uid,
+      name: file.name,
+      status: "done", // ✅ 상태 설정
+      url: preview,
+      originFileObj: file,
+    };
+
+    setFileList((prev) => [...prev, newFile]);
+    return Upload.LIST_IGNORE; // ✅ 실제 업로드는 하지 않음
   };
 
   const onChangeUpload = (info: UploadChangeParam<UploadFile<any>>) => {
@@ -85,7 +97,27 @@ const ShareSubmitModal: React.FC<Props> = ({
     const newTags = value.map((tag) => (tag.startsWith("#") ? tag : `#${tag}`));
     setHashtags(newTags);
   };
+  const getBase64 = (file: RcFile): Promise<string> =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = (error) => reject(error);
+    });
 
+  // 이미지 미리보기 핸들러 추가
+  const handlePreview = async (file: UploadFile) => {
+    let src = file.url;
+
+    if (!src && file.originFileObj) {
+      src = await getBase64(file.originFileObj as RcFile);
+    }
+
+    const image = new Image();
+    image.src = src!;
+    const imgWindow = window.open(src);
+    imgWindow?.document.write(image.outerHTML);
+  };
   return (
     <ModalStyled>
       <Modal
@@ -136,9 +168,11 @@ const ShareSubmitModal: React.FC<Props> = ({
               listType="picture-card"
               fileList={fileList}
               beforeUpload={beforeUpload}
-              onChange={onChangeUpload}
+              onPreview={handlePreview}
               onRemove={(file) => {
-                setFileList(fileList.filter((item) => item.uid !== file.uid));
+                setFileList((prev) =>
+                  prev.filter((item) => item.uid !== file.uid)
+                );
               }}
             >
               {fileList.length >= 5 ? null : (
