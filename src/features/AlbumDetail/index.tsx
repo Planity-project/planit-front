@@ -139,7 +139,11 @@ const AlbumDetail = () => {
         setNum(num + 1);
       });
   };
-
+  const ownerChange = (targetId) => {
+    api.get("album/delegation", {
+      params: { userId: user.id, albumId: id, targetId },
+    });
+  };
   const getMaxLength = () => {
     const width = window.innerWidth;
     if (width >= 1024) return 20; // 데스크탑
@@ -317,7 +321,14 @@ const AlbumDetail = () => {
                     {userrole === "OWNER" ? (
                       <>
                         <div className="menu-item">강퇴</div>
-                        <div className="menu-item">그룹장 위임</div>
+                        <div
+                          onClick={() => {
+                            ownerChange(x.userId);
+                          }}
+                          className="menu-item"
+                        >
+                          그룹장 위임
+                        </div>
                         <div
                           onClick={() => {
                             setModalOpen(true);
