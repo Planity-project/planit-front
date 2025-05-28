@@ -92,9 +92,7 @@ const CreateStay = ({
       const newPlaces = res.data.locations;
       if (newPlaces.length === 0) setHasMore(false);
       else setPlaces((prev) => [...prev, ...newPlaces]);
-      console.log("응답", newPlaces);
     } catch (err) {
-      console.log(err);
     } finally {
       setLoading(false);
     }
@@ -131,9 +129,7 @@ const CreateStay = ({
       const filteredPlaces = res.data.locations;
       setPlaces(filteredPlaces);
       setHasMore(false);
-    } catch (err) {
-      console.log("검색 오류", err);
-    }
+    } catch (err) {}
   };
 
   const handleSearchClick = () => {
@@ -201,7 +197,6 @@ const CreateStay = ({
           schedule,
         })
         .then((res: any) => {
-          console.log(res.data);
           router.push(`/snsmainpage/snsdetail/${res.data}`);
         });
     } catch (err) {

@@ -18,7 +18,7 @@ export const handlePayment = async (albumId: number, user: any) => {
       },
       redirectUrl: `http://localhost:3000/payment/verify?albumId=${albumId}&userId=${user?.id}`,
     });
-    console.log(paymentResult, "결제 정보");
+
     if (paymentResult) {
       const res = await api.post("/payments/verify", {
         paymentId: paymentResult.paymentId,
@@ -27,7 +27,6 @@ export const handlePayment = async (albumId: number, user: any) => {
         txId: paymentResult.txId,
         type: "desktop",
       });
-      console.log(res.data);
     }
 
     // 결제 성공 후 서버에 결제정보 전달

@@ -34,7 +34,7 @@ const SnsMain = () => {
 
       setTotal(totalItems);
       setLastFetchedPage(page);
-      console.log("postData", res.data);
+
       if (page * limit >= totalItems) {
         setHasMore(false);
       }

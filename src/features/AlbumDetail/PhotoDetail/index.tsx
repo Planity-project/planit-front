@@ -67,8 +67,6 @@ const PhotoDetail = ({ modal, setModal, albumId, userrole }: Albumprops) => {
         params: { albumId: albumId, userId: user?.id },
       })
       .then((res: any) => {
-        console.log(res.data, "dsadasdasdasd");
-        console.log(num);
         setData(res.data);
       });
   }, [id, num, user, albumId]);
@@ -148,7 +146,6 @@ const PhotoDetail = ({ modal, setModal, albumId, userrole }: Albumprops) => {
             }}
           >
             {data?.titleImg?.map((img: any, idx: number) => {
-              console.log("이미지 확인:", img.src);
               return (
                 <div key={idx} className="slider-item">
                   <img

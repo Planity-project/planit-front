@@ -93,8 +93,6 @@ const AlbumDetail = () => {
     }
   };
   const movePhoto = (id: number) => {
-    console.log(modal);
-    console.log(id, "선택 앨범 id");
     setModal(true);
     setAlbumId(id);
   };
@@ -179,7 +177,6 @@ const AlbumDetail = () => {
         </Button>
         <Button
           onClick={() => {
-            console.log("image length:", arr.image.length);
             if (!arr.state) {
               if (arr.image.length < 3) {
                 setUploadModalOpen(true);
@@ -325,7 +322,6 @@ const AlbumDetail = () => {
                           onClick={() => {
                             setModalOpen(true);
                             setUserId(x.userId);
-                            console.log("신고 대상 유저 ID:", x.userId);
                           }}
                           className="menu-item"
                         >

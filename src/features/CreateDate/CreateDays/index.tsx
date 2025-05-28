@@ -71,7 +71,6 @@ const CreateDays = ({
 
       setLoading(true);
       try {
-        console.log(selectedCategories, "선택된 카테고리");
         const res = await api.post<any>("/map/nearby", {
           address: selectedPlace.name,
           page,
@@ -85,9 +84,7 @@ const CreateDays = ({
           setPlaces((prev) =>
             page === 0 ? newPlaces : [...prev, ...newPlaces]
           );
-        console.log("응답", newPlaces);
       } catch (err) {
-        console.log(err);
       } finally {
         setLoading(false);
       }
@@ -142,9 +139,7 @@ const CreateDays = ({
       const filteredPlaces = res.data.locations;
       setPlaces(filteredPlaces);
       setHasMore(false);
-    } catch (err) {
-      console.log("검색 오류", err);
-    }
+    } catch (err) {}
   };
 
   const handleSearchClick = () => {

@@ -19,30 +19,24 @@ const Myinfodays = ({ user }: infoprops) => {
   const router = useRouter();
   const today = new Date();
 
-  const upcoming = data
-    ?.filter((item: any) => new Date(item.endDate) >= today)
-    .sort(
-      (a: any, b: any) =>
-        new Date(a.endDate).getTime() - new Date(b.endDate).getTime()
-    );
+  const leftItems = data
+    .filter((item: any) => item.state === false)
+    .map((item) => ({ ...item, type: "left" }));
 
-  const past = data
-    .filter((item: any) => new Date(item.endDate) < today)
-    .sort(
-      (a: any, b: any) =>
-        new Date(a.endDate).getTime() - new Date(b.endDate).getTime()
-    );
+  const rightItems = data
+    .filter((item: any) => item.state === true)
+    .map((item) => ({ ...item, type: "right" }));
 
   // 번갈아 출력용 배열
-  const maxLength = Math.max(upcoming.length, past.length);
+  const maxLength = Math.max(leftItems.length, rightItems.length);
   const combined = [];
 
   for (let i = 0; i < maxLength; i++) {
-    if (i < upcoming.length) {
-      combined.push({ ...upcoming[i], type: "upcoming" });
+    if (i < leftItems.length) {
+      combined.push(leftItems[i]);
     }
-    if (i < past.length) {
-      combined.push({ ...past[i], type: "past" });
+    if (i < rightItems.length) {
+      combined.push(rightItems[i]);
     }
   }
 
@@ -61,9 +55,7 @@ const Myinfodays = ({ user }: infoprops) => {
               router.push(`/snsmainpage/snsdetail/${item.postId}`);
             }}
             key={idx}
-            className={`chat-row ${
-              item.type === "upcoming" ? "left" : "right"
-            }`}
+            className={`chat-row ${item.type}`}
           >
             <div className="chat-bubble">
               <div>{item.title}</div>

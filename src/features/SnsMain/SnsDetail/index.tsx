@@ -53,14 +53,12 @@ const SnsDetail = () => {
         params: { postId: id, userId: user.id },
       })
       .then((res: any) => {
-        console.log(res.data, "dsadasds");
         setData(res.data.dayData);
       });
   }, [id, user?.id]);
 
   const heart = () => {
     api.post(`/likes/post?postId=${data.id}`).then((res: any) => {
-      console.log(res.data);
       setData((prev: any) => ({
         ...prev,
         like: res.data.liked,
