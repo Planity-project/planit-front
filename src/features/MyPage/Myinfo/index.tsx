@@ -23,11 +23,7 @@ const Myinfo = ({ user }: infoprops) => {
   const handleImageClick = () => {
     fileInputRef.current?.click();
   };
-  const handleTabClick = (index: number) => {
-    setClick(index);
-    // URL에서 쿼리 제거
-    router.replace("/mypage", undefined, { shallow: true });
-  };
+
   // 파일 선택 시 바로 업로드
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
