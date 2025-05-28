@@ -143,6 +143,7 @@ const AlbumDetail = () => {
         params: { userId: user.id, albumId: id, targetId },
       })
       .then((res) => {
+        console.log(res.data);
         setNum(num + 1);
       });
   };
