@@ -143,7 +143,7 @@ const AlbumDetail = () => {
         params: { userId: user.id, albumId: id, targetId },
       })
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data, "관리자 권한 변경 요청 응답");
         setNum(num + 1);
       });
   };
