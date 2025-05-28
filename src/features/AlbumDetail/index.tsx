@@ -203,8 +203,19 @@ const AlbumDetail = () => {
                   content: "9,900원 결제 시 무제한 업로드가 가능합니다.",
                   okText: "예",
                   cancelText: "아니오",
-                  onOk: () => {
-                    handlePayment(id, user);
+                  onOk: async () => {
+                    const result = await handlePayment(id, user);
+                    if (result) {
+                      Modal.success({
+                        title: "결제 성공",
+                        content: "이미지 업로드 제한이 해제되었습니다.",
+                      });
+                    } else {
+                      Modal.error({
+                        title: "결제 실패",
+                        content: "결제에 실패했습니다. 다시 시도해 주세요.",
+                      });
+                    }
                   },
                 });
               }
