@@ -1,12 +1,13 @@
 import styled from "styled-components";
 
 export const NotificationStyled = styled.div`
+  width: 100%;
   .notification-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid;
-    padding: 8px 12px;
+    padding: 8px 6px;
 
     .tab {
       background: none;
@@ -21,7 +22,6 @@ export const NotificationStyled = styled.div`
     }
 
     .mark-all-read {
-      margin-left: auto;
       background: none;
       border: none;
       color: rgb(83, 183, 232, 1);
@@ -31,10 +31,13 @@ export const NotificationStyled = styled.div`
   }
 
   .notification-list {
+    width: 100%;
     max-height: 300px;
     overflow-y: auto;
     cursor: pointer;
-
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     &::-webkit-scrollbar {
       width: 8px;
     }
@@ -55,6 +58,7 @@ export const NotificationStyled = styled.div`
     }
 
     .notification-item {
+      width: 100%;
       display: flex;
       padding: 10px;
       border-bottom: 1px solid rgba(0, 0, 0, 0.2);
@@ -73,14 +77,12 @@ export const NotificationStyled = styled.div`
       }
 
       .content {
-        flex: 1;
+        width: 250px;
 
         .message {
-          font-size: 14px;
+          font-size: 13px;
           color: #333;
-          white-space: nowrap;
           overflow: hidden;
-          text-overflow: ellipsis;
         }
 
         .timestamp {
@@ -92,9 +94,10 @@ export const NotificationStyled = styled.div`
     }
 
     .empty {
+      width: 250px;
       text-align: center;
       color: #999;
-      padding: 20px 0;
+      padding: 20px 10px;
     }
   }
 `;

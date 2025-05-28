@@ -61,7 +61,7 @@ const ReportModal = ({
       Modal.error({
         centered: true,
         title: "신고 실패",
-        content: "다시 시도해주세요.",
+        content: "한번 신고된 유저는 다시 신고 할 수 없습니다.",
       });
     }
   };

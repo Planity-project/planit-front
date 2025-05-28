@@ -70,7 +70,7 @@ const Header = () => {
               로그인
             </div>
           ) : (
-            <>
+            <div className="header-iconwrap">
               <NotificationPopover
                 notifications={notifications}
                 setNotifications={setNotifications}
@@ -98,7 +98,7 @@ const Header = () => {
                   alt="menu"
                 />
               </div>
-            </>
+            </div>
           )}
         </div>
       </div>
