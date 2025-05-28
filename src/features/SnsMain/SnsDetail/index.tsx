@@ -12,7 +12,7 @@ import {
   RightOutlined,
 } from "@ant-design/icons";
 import MyDaysComponent from "@/components/MyDays";
-import { Input, Modal, Rate } from "antd";
+import { Input, message, Modal, Rate } from "antd";
 import { useUser } from "@/context/UserContext";
 import GoogleMapComponent from "@/components/ShowWhichGoogle";
 import { useMemo } from "react";
@@ -46,18 +46,26 @@ const SnsDetail = () => {
   //sns 디테일 페이지 이동 시 데이터 요청 , 게시글 모든 데이터 필요(잘 정리해서 줄것: 맘에 안들면 다시 )
 
   useEffect(() => {
-    if (!id || !user?.id) return; // 값이 없으면 요청 안함
+    if (!id) return;
 
-    api
-      .get("/posts/detailTrip", {
-        params: { postId: id, userId: user.id },
-      })
-      .then((res: any) => {
-        setData(res.data.dayData);
-      });
+    const params = user?.id ? { postId: id, userId: user.id } : { postId: id };
+
+    api.get("/posts/detailTrip", { params }).then((res: any) => {
+      setData(res.data.dayData);
+    });
   }, [id, user?.id]);
-
   const heart = () => {
+    if (!user?.id) {
+      Modal.warning({
+        title: "로그인 후 이용 가능합니다.",
+        okText: "확인",
+        onOk: () => {
+          router.push("/loginpage");
+        },
+      });
+      return;
+    }
+
     api.post(`/likes/post?postId=${data.id}`).then((res: any) => {
       setData((prev: any) => ({
         ...prev,
@@ -109,7 +117,30 @@ const SnsDetail = () => {
     <SnsDetailStyled>
       <div className="snspost-mydaysbar">
         <div className="snspost-mydaytext">
-          <div>{daydetail.postTitle}</div>
+          <div
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              if (!daydetail.postTitle) {
+                navigator.clipboard
+                  .writeText(window.location.href)
+                  .then(() => {
+                    Modal.warning({
+                      title: "링크가 복사되었습니다.",
+                      content: "링크를 공유해보세요",
+                      okText: "닫기",
+                    });
+                  })
+                  .catch(() =>
+                    Modal.warning({
+                      title: "복사에 실패했습니다.",
+                      okText: "닫기",
+                    })
+                  );
+              }
+            }}
+          >
+            {daydetail.postTitle || "공유하기"}
+          </div>
           <div className="snspost-myheart">
             {data.type ? (
               data.like ? (

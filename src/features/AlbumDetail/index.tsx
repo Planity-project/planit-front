@@ -176,7 +176,13 @@ const AlbumDetail = () => {
       message.error("복사 실패");
     }
   };
-
+  const albumexit = () => {
+    api
+      .post("/album/exitalbum", { albumId: id, userId: user.id })
+      .then((res) => {
+        router.push("/album");
+      });
+  };
   return (
     <AlbumDetailStyled>
       <div className="view-toggle">
@@ -416,7 +422,21 @@ const AlbumDetail = () => {
                 방 삭제하기
               </div>
             ) : (
-              <></>
+              <div
+                className="menu-delalbum"
+                onClick={() => {
+                  Modal.confirm({
+                    title: "해당 앨범에서 나가시겠습니까?",
+                    okText: "예",
+                    cancelText: "아니오",
+                    onOk: () => {
+                      albumexit();
+                    },
+                  });
+                }}
+              >
+                방 나가기
+              </div>
             )}
           </div>
         </div>

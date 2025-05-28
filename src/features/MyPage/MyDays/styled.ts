@@ -11,6 +11,7 @@ export const MyinfoDaysStyled = styled.div`
     flex-direction: column;
     width: 100%;
     max-width: 600px;
+    max-height: 500px;
     background-color: rgba(83, 183, 232, 0.3);
     overflow-y: auto;
     padding: 12px;

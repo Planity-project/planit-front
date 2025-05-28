@@ -1,13 +1,15 @@
 import styled from "styled-components";
 
 export const MyfavStyled = styled.div`
+  padding: 2rem;
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
 
   .myfav-wrap {
-    width: 70%;
+    max-width: 600px;
+    width: 100%;
     height: 100%;
     position: relative;
 
@@ -23,6 +25,7 @@ export const MyfavStyled = styled.div`
       flex-direction: column;
       gap: 15px;
       height: 100%;
+      max-height: 500px;
       overflow-y: auto;
       padding: 12px;
       background-color: rgba(83, 183, 232, 0.3);
