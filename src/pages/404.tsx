@@ -35,11 +35,13 @@ const NotFoundStyled = styled.div`
     height: 50%;
   }
   .error-title {
-    font-size: 18px;
+    font-size: 30px;
     font-weight: 900;
+    margin-top: 10px;
   }
   .error-detail {
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 500;
+    margin-top: 20px;
   }
 `;
