@@ -36,6 +36,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   useEffect(() => {
     (api.get("/auth/cookieCheck") as Promise<any>)
       .then((res) => {
+        console.log(res.data, "데이터 전체");
         if (res.data.result) {
           setUser(res.data.user);
         } else {
