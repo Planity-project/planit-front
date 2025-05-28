@@ -98,7 +98,7 @@ export default function MyApp(appProps: AppProps) {
           property="og:description"
           content="함께한 추억을 사진으로 공유해보세요."
         />
-        <meta property="og:image" content={`${clientUrl}/defaultImage.png`} />
+        <meta property="og:image" content={`${clientUrl}/def.png`} />
         <meta property="og:url" content={clientUrl} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
