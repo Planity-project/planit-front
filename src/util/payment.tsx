@@ -1,5 +1,6 @@
 import * as PortOne from "@portone/browser-sdk/v2";
 import api from "@/util/api";
+import { Modal } from "antd";
 export const handlePayment = async (albumId: number, user: any) => {
   const shortUuid = crypto.randomUUID().slice(0, 24);
   try {
@@ -20,15 +21,19 @@ export const handlePayment = async (albumId: number, user: any) => {
     });
 
     if (paymentResult) {
-      const res = await api.post("/payments/verify", {
-        paymentId: paymentResult.paymentId,
-        albumId: albumId,
-        userId: user?.id,
-        txId: paymentResult.txId,
-        type: "desktop",
-      });
+      const res = await api
+        .post("/payments/verify", {
+          paymentId: paymentResult.paymentId,
+          albumId: albumId,
+          userId: user?.id,
+          txId: paymentResult.txId,
+          type: "desktop",
+        })
+        .then((response) => {
+          return true;
+        });
     }
-
+    return false;
     // 결제 성공 후 서버에 결제정보 전달
     // const res = await api.post("/payments/verify", {
     //   impuid: paymentResult.impUid,
@@ -39,9 +44,15 @@ export const handlePayment = async (albumId: number, user: any) => {
     // alert("결제 성공! 서버 응답: " + JSON.stringify(res.data));
   } catch (error: any) {
     if (error.code === "USER_CANCEL") {
-      alert("사용자가 결제를 취소했습니다.");
+      Modal.info({
+        title: "결제 취소",
+        content: "사용자가 결제를 취소했습니다.",
+      });
     } else {
-      alert("결제 실패: " + error.message);
+      Modal.error({
+        title: "결제 실패",
+        content: `결제 실패: ${error.message}`,
+      });
     }
   }
 };
