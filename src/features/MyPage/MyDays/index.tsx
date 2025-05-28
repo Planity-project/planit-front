@@ -13,11 +13,11 @@ const Myinfodays = ({ user }: infoprops) => {
     api
       .get("posts/myPosts", { params: { userId: user.id } })
       .then((res: any) => {
+        console.log("내 일정 응답 데이터:", res.data);
         setData(res.data);
       });
   }, [user]);
   const router = useRouter();
-  const today = new Date();
 
   const leftItems = data
     .filter((item: any) => item.state === false)
