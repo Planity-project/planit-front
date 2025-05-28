@@ -143,7 +143,14 @@ const AlbumDetail = () => {
         params: { userId: user.id, albumId: id, targetId },
       })
       .then((res) => {
-        console.log(res.data, "관리자 권한 변경 요청 응답");
+        setNum(num + 1);
+      });
+  };
+  const exitUser = (targetId) => {
+    api
+      .get("/album/destroy", { params: { userId: targetId, albumId: id } })
+      .then((res) => {
+        console.log(res.data, "강퇴 요청 응답");
         setNum(num + 1);
       });
   };
@@ -323,7 +330,21 @@ const AlbumDetail = () => {
                   <div ref={menuRef} className="member-popup-menu">
                     {userrole === "OWNER" ? (
                       <>
-                        <div className="menu-item">강퇴</div>
+                        <div
+                          onClick={() => {
+                            Modal.confirm({
+                              title: "해당 유저를 강퇴하시겠습니까?",
+                              onOk: () => {
+                                exitUser(x.userId);
+                              },
+                              cancelText: "아니요",
+                              okText: "네",
+                            });
+                          }}
+                          className="menu-item"
+                        >
+                          강퇴
+                        </div>
                         <div
                           onClick={() => {
                             Modal.confirm({
