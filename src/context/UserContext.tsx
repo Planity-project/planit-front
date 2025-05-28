@@ -45,7 +45,13 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     (async () => {
       try {
         const res = await api.get("/auth/cookieCheck");
-        const data = res.data;
+        const data = res.data as {
+          result: boolean;
+          user?: User;
+          isSuspended?: boolean;
+          reason?: string;
+          endDate?: string;
+        };
 
         if (data.result && data.user) {
           setUser(data.user);
