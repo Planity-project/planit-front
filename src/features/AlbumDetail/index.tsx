@@ -83,6 +83,7 @@ const AlbumDetail = () => {
       const res = await api
         .post("/album/update/title", formData)
         .then((res: any) => {
+          console.log(res.data, "대표이지미 변경 요청 응답");
           Modal.warning({
             title: "대표이미지가 변경되었습니다.",
           });
@@ -131,6 +132,7 @@ const AlbumDetail = () => {
         title: titleChange,
       })
       .then((res: any) => {
+        console.log(res.data);
         Modal.warning({
           title: "앨범 이름이 변경되었습니다.",
         });
@@ -147,6 +149,7 @@ const AlbumDetail = () => {
       });
   };
   const exitUser = (targetId) => {
+    console.log(targetId, id, "강퇴 요청값");
     api
       .get("/album/destroy", { params: { userId: targetId, albumId: id } })
       .then((res) => {
