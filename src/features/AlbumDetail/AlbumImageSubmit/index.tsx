@@ -68,14 +68,25 @@ const AlbumImageSubmitModal = ({
     }
   };
 
-  const beforeUpload = (file: RcFile) => {
+  const beforeUpload = async (file: RcFile) => {
     if (fileList.length >= 5) {
       message.error("최대 5개까지 업로드 가능합니다.");
       return Upload.LIST_IGNORE;
     }
-    return true;
-  };
 
+    const preview = await getBase64(file);
+
+    const newFile: UploadFile = {
+      uid: file.uid,
+      name: file.name,
+      status: "done", // ✅ 상태 설정
+      url: preview,
+      originFileObj: file,
+    };
+
+    setFileList((prev) => [...prev, newFile]);
+    return Upload.LIST_IGNORE; // ✅ 실제 업로드는 하지 않음
+  };
   const handleCancel = () => setPreviewVisible(false);
 
   return (
@@ -103,7 +114,6 @@ const AlbumImageSubmitModal = ({
             fileList={fileList}
             beforeUpload={beforeUpload}
             onPreview={handlePreview}
-            onChange={({ fileList }) => setFileList(fileList)}
             onRemove={(file) => {
               setFileList((prev) =>
                 prev.filter((item) => item.uid !== file.uid)
