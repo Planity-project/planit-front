@@ -198,7 +198,7 @@ const CreateStay = ({
           {
             schedule,
           },
-          { timeout: 180000 }
+          { timeout: 3000000 }
         )
         .then((res: any) => {
           router.push(`/snsmainpage/snsdetail/${res.data}`);
