@@ -98,6 +98,7 @@ const PhotoDetail = ({ modal, setModal, albumId, userrole }: Albumprops) => {
     }
 
     try {
+      console.log(albumId, "albumImageId");
       await api.post("/comments", {
         userId: user?.id,
         content: comment, // 댓글 본문
