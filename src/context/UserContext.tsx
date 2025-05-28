@@ -80,7 +80,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     } catch (err) {
       console.error("로그아웃 실패:", err);
     } finally {
-      router.replace("/login");
+      router.push("/");
       window.location.reload();
     }
   };
