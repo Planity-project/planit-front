@@ -18,7 +18,7 @@ const MyFav = ({ user }: infoprops) => {
       .then((res: any) => {
         setData(res.data);
       });
-  }, []);
+  }, [user]);
 
   return (
     <MyfavStyled>

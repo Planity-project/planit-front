@@ -66,6 +66,7 @@ const Myinfo = ({ user }: infoprops) => {
 
   // 닉네임 변경 함수
   const changeNick = async () => {
+    console.log(user, user.id, "유저 컨테스트 값 확인");
     if (name.length < 1) {
       Modal.warning({
         centered: true,
@@ -82,6 +83,7 @@ const Myinfo = ({ user }: infoprops) => {
     }
 
     try {
+      console.log(user, "요청 시작 트라이문 안");
       await api
         .post("users/nicknameUpdate", { nickname: name, userId: user.id })
         .then((res: any) => {
