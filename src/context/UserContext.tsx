@@ -52,7 +52,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
           reason?: string;
           endDate?: string;
         };
-
+        console.log(data, "data");
         if (data.result && data.user) {
           setUser(data.user);
 
@@ -61,6 +61,13 @@ export const UserProvider = ({ children }: UserProviderProps) => {
             setModalOpen(true);
             setBanReason(data.reason);
             setBanEndDate(data.endDate);
+            console.log(
+              "정지 테스트",
+              isSuspended,
+              modalOpen,
+              banReason,
+              banEndDate
+            );
           }
         } else {
           setUser(null);

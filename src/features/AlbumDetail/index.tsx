@@ -84,7 +84,6 @@ const AlbumDetail = () => {
       const res = await api
         .post("/album/update/title", formData)
         .then((res) => {
-          console.log(res.data, "대표이지미 변경 요청 응답");
           Modal.warning({
             title: "대표이미지가 변경되었습니다.",
           });
