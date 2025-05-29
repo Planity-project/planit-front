@@ -30,6 +30,7 @@ const AlbumImageSubmitModal = ({
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
+  const [loading, setLoading] = useState(false); // ✅ 업로드 중 여부 상태 추가
 
   const handlePreview = async (file: UploadFile) => {
     if (!file.url && !file.preview && file.originFileObj) {
@@ -45,6 +46,7 @@ const AlbumImageSubmitModal = ({
 
   const handleOk = async () => {
     try {
+      setLoading(true); // ✅ 시작 시 로딩 활성화
       const formData = new FormData();
       formData.append("userId", String(user?.id));
       formData.append("albumId", String(albumId));
@@ -65,6 +67,8 @@ const AlbumImageSubmitModal = ({
     } catch (error) {
       console.error(error);
       message.error("제출 중 오류가 발생했습니다.");
+    } finally {
+      setLoading(false); // ✅ 완료 시 로딩 비활성화
     }
   };
 
@@ -79,14 +83,15 @@ const AlbumImageSubmitModal = ({
     const newFile: UploadFile = {
       uid: file.uid,
       name: file.name,
-      status: "done", // ✅ 상태 설정
+      status: "done",
       url: preview,
       originFileObj: file,
     };
 
     setFileList((prev) => [...prev, newFile]);
-    return Upload.LIST_IGNORE; // ✅ 실제 업로드는 하지 않음
+    return Upload.LIST_IGNORE;
   };
+
   const handleCancel = () => setPreviewVisible(false);
 
   return (
@@ -98,6 +103,9 @@ const AlbumImageSubmitModal = ({
         onCancel={onClose}
         okText="완료"
         cancelText="취소"
+        confirmLoading={loading} // ✅ 버튼 로딩 상태 적용
+        okButtonProps={{ disabled: loading }} // ✅ 업로드 중 비활성화
+        cancelButtonProps={{ disabled: loading }} // ✅ 취소도 비활성화
       >
         <DaypostStyled>
           <div className="daypost-title">이미지 (최대 5개)</div>
@@ -119,8 +127,9 @@ const AlbumImageSubmitModal = ({
                 prev.filter((item) => item.uid !== file.uid)
               );
             }}
+            disabled={loading} // ✅ 업로드 중 비활성화
           >
-            {fileList.length >= 5 ? null : (
+            {fileList.length >= 5 || loading ? null : (
               <div>
                 <PlusOutlined />
                 <div>업로드</div>
