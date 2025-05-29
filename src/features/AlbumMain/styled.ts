@@ -3,9 +3,8 @@ import styled from "styled-components";
 export const AlbumMainStyled = styled.div`
   width: 100%;
   .AlbumMain-wrap {
-    margin-top: 50px;
     max-width: 1280px;
-    margin: 30px auto;
+    margin: 50px auto;
 
     @media (max-width: 768px) {
       padding: 0px 10px;

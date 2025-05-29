@@ -1,13 +1,11 @@
 import styled from "styled-components";
 
 export const SnsMainStyled = styled.div`
-  margin-top: 50px;
   width: 100%;
 
   .snsmain-wrap {
-    margin-top: 50px;
     max-width: 1280px;
-    margin: 0px auto;
+    margin: 50px auto;
 
     @media (max-width: 768px) {
       padding: 0px 10px;
@@ -23,8 +21,14 @@ export const SnsMainStyled = styled.div`
     margin: 200px auto;
   }
   .AlbumMain-title {
+    width: 100%;
     font-size: 22px;
     text-align: center;
     font-weight: 500;
+  }
+  .snsmain-container {
+    margin-top: 5px;
+    width: 100%;
+    aspect-ratio: 1 / 0.8;
   }
 `;

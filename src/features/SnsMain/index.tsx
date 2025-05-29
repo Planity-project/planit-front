@@ -75,7 +75,9 @@ const SnsMain = () => {
       ) : (
         <div className="snsmain-wrap">
           <div className="AlbumMain-title">최신 국내 여행기를 확인해보세요</div>
-          <SnsPost data={data} />
+          <div className="snsmain-container">
+            <SnsPost data={data} />
+          </div>
           {loading && <Spin style={{ marginTop: 20 }} />}
         </div>
       )}

@@ -23,14 +23,12 @@ export const SnsPostStyled = styled.div<{ $variant?: "default" | "album" }>`
 
   .sns-postBox {
     cursor: pointer;
-    width: 100%;
     aspect-ratio: ${(props) =>
-      props.$variant === "album" ? "1/0.8" : "1/0.75"};
+      props.$variant === "album" ? "1/0.8" : "1/0.8"};
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
     border-radius: 4px;
-
     background-color: #fff;
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
   }
@@ -134,8 +132,7 @@ export const SnsPostStyled = styled.div<{ $variant?: "default" | "album" }>`
     justify-content: ${(props) =>
       props.$variant === "album" ? "flex-end" : "center"};
     gap: 6px;
-
-    padding: ${(props) => (props.$variant === "album" ? "10px" : "12px 5px")};
+    padding: ${(props) => (props.$variant === "album" ? "10px" : "5px")};
   }
 
   .sns-title {
