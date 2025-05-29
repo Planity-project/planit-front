@@ -79,9 +79,9 @@ function AppWithAuthGuard({ Component, pageProps }: AppProps) {
   return (
     <div className="app">
       <Header />
-      <main className="main-content">
-        {loading ? <Loding /> : <Component {...pageProps} />}
-      </main>
+
+      {loading ? <Loding /> : <Component {...pageProps} />}
+
       {!isFooterExcluded && <Footer />}
     </div>
   );

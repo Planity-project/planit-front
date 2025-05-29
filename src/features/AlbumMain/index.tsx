@@ -11,7 +11,7 @@ const AlbumMain = () => {
   const [modal, setModal] = useState<boolean>(false);
   const [data, setData] = useState<any[]>([]);
   const [page, setPage] = useState<number>(1);
-  const [limit] = useState<number>(4);
+  const [limit, setLimit] = useState<number>(6);
   const [loading, setLoading] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [total, setTotal] = useState<number>(0);

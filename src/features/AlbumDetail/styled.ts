@@ -91,14 +91,15 @@ export const AlbumDetailStyled = styled.div`
   // 멤버 보기
   .group-member-wrap {
     display: flex;
-    gap: 150px;
-    justify-content: center;
+    gap: 50px;
+    flex-direction: column;
+    justify-content: space-around;
     align-items: center;
-    width: 80%;
+    width: 100%;
     padding: 16px;
   }
   .group-changecontainer {
-    width: 20%;
+    width: 40%;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -284,7 +285,7 @@ export const AlbumDetailStyled = styled.div`
       gap: 100px;
     }
     .group-changecontainer {
-      width: 50%;
+      width: 70%;
       display: flex;
       justify-content: center;
       flex-direction: column;
@@ -299,16 +300,16 @@ export const AlbumDetailStyled = styled.div`
       font-size: 12px;
     }
   }
-  @media (max-width: 580px) {
+  @media (max-width: 768px) {
     .group-member-wrap {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      width: 75%;
-      padding: 16px;
+      width: 100%;
+      padding: 0px 10px;
     }
     .group-changecontainer {
-      width: 70%;
+      width: 100%;
     }
     .group-membercontainer {
       width: 100%;

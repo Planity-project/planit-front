@@ -73,11 +73,11 @@ const SnsMain = () => {
       {data.length === 0 && !loading ? (
         <div className="snsmain-noData">아직 게시된 게시글이 없습니다</div>
       ) : (
-        <>
-          <div className="AlbumMain-title">공유된 일정을 살펴보세요</div>
+        <div className="snsmain-wrap">
+          <div className="AlbumMain-title">최신 국내 여행기를 확인해보세요</div>
           <SnsPost data={data} />
           {loading && <Spin style={{ marginTop: 20 }} />}
-        </>
+        </div>
       )}
       {!hasMore && !loading && <Footer />}
     </SnsMainStyled>
