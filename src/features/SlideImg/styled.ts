@@ -16,8 +16,8 @@ export const SlideStyled = styled.div<{ $imgModal?: true | false }>`
     position: relative;
     background-color: black;
     border-radius: 10px;
-    width: 30%;
-    height: 60%;
+    width: 40%;
+    aspect-ratio: 1/1;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -61,5 +61,19 @@ export const SlideStyled = styled.div<{ $imgModal?: true | false }>`
     position: relative;
     min-width: 100%;
     height: 100%;
+  }
+  @media (max-width: 768px) {
+    .photo-wrap {
+      width: 70%;
+    }
+    .arrow {
+      width: 30px;
+      font-size: 1.5rem;
+      color: white;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+      z-index: 10;
+    }
   }
 `;

@@ -21,25 +21,31 @@ const SlideComponent = ({ imgModal, setImgModal, imglist }: SlideProps) => {
   };
 
   const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % imglist.length);
+    if (currentIndex < imglist.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+    }
   };
 
   const handlePrev = () => {
-    setCurrentIndex((prev) => (prev === 0 ? imglist.length - 1 : prev - 1));
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+    }
   };
 
   return (
     <SlideStyled $imgModal={imgModal} onClick={handleBackgroundClick}>
       <div className="photo-wrap">
-        <div
-          className="arrow left"
-          onClick={(e) => {
-            handleContentClick(e);
-            handlePrev();
-          }}
-        >
-          <LeftOutlined />
-        </div>
+        {currentIndex !== 0 && (
+          <div
+            className="arrow left"
+            onClick={(e) => {
+              handleContentClick(e);
+              handlePrev();
+            }}
+          >
+            <LeftOutlined />
+          </div>
+        )}
         <div className="image-viewport" onClick={handleContentClick}>
           <div
             className="slider"
@@ -57,15 +63,17 @@ const SlideComponent = ({ imgModal, setImgModal, imglist }: SlideProps) => {
             ))}
           </div>
         </div>
-        <div
-          className="arrow right"
-          onClick={(e) => {
-            handleContentClick(e);
-            handleNext();
-          }}
-        >
-          <RightOutlined />
-        </div>
+        {currentIndex !== imglist.length - 1 && (
+          <div
+            className="arrow right"
+            onClick={(e) => {
+              handleContentClick(e);
+              handleNext();
+            }}
+          >
+            <RightOutlined />
+          </div>
+        )}
       </div>
     </SlideStyled>
   );
