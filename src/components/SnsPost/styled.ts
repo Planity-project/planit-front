@@ -1,34 +1,36 @@
 import styled from "styled-components";
 
 export const SnsPostStyled = styled.div<{ $variant?: "default" | "album" }>`
-  margin-top: 100px;
+  margin-top: 20px;
   margin-bottom: 70px;
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 
   .sns-wrap {
-    display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    gap: 20px;
-    width: ${(props) => (props.$variant === "album" ? "75%" : "50%")};
-    max-width: 1280px;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(3, 1fr);
+
+    width: 100%;
+
+    @media (max-width: 1000px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(1, 1fr);
+    }
   }
 
   .sns-postBox {
     cursor: pointer;
-    width: calc(50% - 10px);
     aspect-ratio: ${(props) =>
-      props.$variant === "album" ? "1/0.8" : "1/0.75"};
+      props.$variant === "album" ? "1/0.8" : "1/0.8"};
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
     border-radius: 4px;
-    border: 1px solid lightgray;
     background-color: #fff;
-    box-shadow: 0 4px 12px rgba(250, 250, 250, 0.1);
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
   }
 
   .sns-postBox:nth-child(even) {
@@ -129,66 +131,48 @@ export const SnsPostStyled = styled.div<{ $variant?: "default" | "album" }>`
     flex-direction: column;
     justify-content: ${(props) =>
       props.$variant === "album" ? "flex-end" : "center"};
-    gap: 2px;
-    height: ${(props) => (props.$variant === "album" ? "15%" : "35%")};
-    padding: ${(props) => (props.$variant === "album" ? "5px" : "12px 5px")};
+    gap: 6px;
+    padding: ${(props) => (props.$variant === "album" ? "10px" : "5px")};
   }
 
   .sns-title {
     text-align: ${(props) => (props.$variant === "album" ? "center" : "")};
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
   }
 
   .sns-hashtag {
-    font-size: 10px;
+    font-size: 12px;
     color: gray;
   }
 
   .sns-content {
-    font-size: 12px;
+    font-size: 14px;
   }
 
   /* 반응형 */
   @media (max-width: 1000px) {
-    .sns-postBox {
-      width: calc(100% - 10px);
-    }
     .sns-postBox:nth-child(even) {
       transform: translateY(0);
     }
     .sns-title {
       font-size: 18px;
     }
-    .sns-comment {
+    .sns-content {
       font-size: 14px;
     }
   }
 
   @media (max-width: 768px) {
     .sns-title {
-      font-size: 15px;
-    }
-    .sns-comment {
-      font-size: 12px;
-    }
-    .sns-wrap {
-      width: ${(props) => (props.$variant === "album" ? "80%" : "60%")};
-    }
-  }
-
-  @media (max-width: 450px) {
-    .sns-title {
-      font-size: 12px;
+      font-size: 20px;
     }
     .sns-hashtag {
-      font-size: 8px;
+      font-size: 14px;
+      color: gray;
     }
-    .sns-comment {
-      font-size: 10px;
-    }
-    .sns-wrap {
-      width: ${(props) => (props.$variant === "album" ? "100%" : "60%")};
+    .sns-content {
+      font-size: 16px;
     }
   }
 `;

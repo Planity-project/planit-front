@@ -2,12 +2,13 @@ import styled from "styled-components";
 
 export const AlbumMainStyled = styled.div`
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   .AlbumMain-wrap {
-    margin-top: 50px;
-    width: 50%;
+    max-width: 1280px;
+    margin: 50px auto;
+
+    @media (max-width: 768px) {
+      padding: 0px 10px;
+    }
   }
   .AlbumMain-title {
     font-size: 24px;
@@ -20,17 +21,18 @@ export const AlbumMainStyled = styled.div`
     margin-top: 20px;
     display: flex;
     justify-content: flex-end;
-    align-items: flex-end;
   }
   .AlbumMain-btnDiv Button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     background-color: rgb(83, 183, 232, 0.6);
     border-radius: 5px;
     color: white;
     border: none;
-    padding: 20px 20px;
+    height: 40px;
+    @media (max-width: 768px) {
+      width: 100%;
+      height: 50px;
+      font-size: 20px;
+    }
   }
   .AlbimMain-container {
     margin-top: 5px;

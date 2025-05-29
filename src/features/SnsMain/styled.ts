@@ -1,13 +1,16 @@
 import styled from "styled-components";
 
 export const SnsMainStyled = styled.div`
-  margin-top: 70px;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 
+  .snsmain-wrap {
+    max-width: 1280px;
+    margin: 50px auto;
+
+    @media (max-width: 768px) {
+      padding: 0px 10px;
+    }
+  }
   .snsmain-noData {
     width: 100%;
     display: flex;
@@ -18,8 +21,14 @@ export const SnsMainStyled = styled.div`
     margin: 200px auto;
   }
   .AlbumMain-title {
-    font-size: 24px;
+    width: 100%;
+    font-size: 22px;
     text-align: center;
-    font-weight: 600;
+    font-weight: 500;
+  }
+  .snsmain-container {
+    margin-top: 5px;
+    width: 100%;
+    aspect-ratio: 1 / 0.8;
   }
 `;

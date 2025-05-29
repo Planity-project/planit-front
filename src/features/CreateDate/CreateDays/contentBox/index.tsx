@@ -8,7 +8,7 @@ import {
 import { Modal } from "antd";
 import { CategoryBadge } from "./styled";
 import { PlaceCardWrapper } from "./styled";
-import PlaceDetail from "@/components/PlaceDetail";
+import PlaceDetail from "@/components/SnsPost/PlaceDetail";
 
 // 전화번호 추가 (모달에서만 전화번호 보이게)
 
