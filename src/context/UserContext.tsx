@@ -61,6 +61,13 @@ export const UserProvider = ({ children }: UserProviderProps) => {
             setModalOpen(true);
             setBanReason(data.reason);
             setBanEndDate(data.endDate);
+            console.log(
+              "정지 테스트",
+              isSuspended,
+              modalOpen,
+              banReason,
+              banEndDate
+            );
           }
         } else {
           setUser(null);
