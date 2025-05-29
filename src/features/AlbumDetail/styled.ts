@@ -235,6 +235,7 @@ export const AlbumDetailStyled = styled.div`
     width: 100%;
   }
   .ellipsis-menu-trigger {
+    width: 5%;
     cursor: pointer;
   }
   .menu-item {

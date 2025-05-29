@@ -74,6 +74,7 @@ const SnsMain = () => {
         <div className="snsmain-noData">아직 게시된 게시글이 없습니다</div>
       ) : (
         <>
+          <div className="AlbumMain-title">공유된 일정을 살펴보세요</div>
           <SnsPost data={data} />
           {loading && <Spin style={{ marginTop: 20 }} />}
         </>

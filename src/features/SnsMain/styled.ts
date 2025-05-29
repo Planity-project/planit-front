@@ -17,4 +17,9 @@ export const SnsMainStyled = styled.div`
     font-weight: 500;
     margin: 200px auto;
   }
+  .AlbumMain-title {
+    font-size: 24px;
+    text-align: center;
+    font-weight: 600;
+  }
 `;
