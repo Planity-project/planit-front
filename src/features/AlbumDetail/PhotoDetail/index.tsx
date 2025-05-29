@@ -257,6 +257,9 @@ const PhotoDetail = ({ modal, setModal, albumId, userrole }: Albumprops) => {
                     setComment(e.target.value);
                   }
                 }}
+                onPressEnter={() => {
+                  commentpost(data.id);
+                }}
               />
               <div
                 onClick={() => {
