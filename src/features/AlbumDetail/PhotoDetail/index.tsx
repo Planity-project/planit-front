@@ -152,6 +152,7 @@ const PhotoDetail = ({ modal, setModal, albumId, userrole }: Albumprops) => {
                   <img
                     src={img}
                     alt={`image-${idx}`}
+                    className="photo-image"
                     style={{
                       width: "100%",
                       height: "100%",
@@ -256,6 +257,9 @@ const PhotoDetail = ({ modal, setModal, albumId, userrole }: Albumprops) => {
                   } else {
                     setComment(e.target.value);
                   }
+                }}
+                onPressEnter={() => {
+                  commentpost(data.id);
                 }}
               />
               <div

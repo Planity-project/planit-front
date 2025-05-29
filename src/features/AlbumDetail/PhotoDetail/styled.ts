@@ -78,7 +78,7 @@ export const PhotoStyled = styled.div<{ $modal?: true | false }>`
   .photo-image {
     width: 100%;
     height: 100%;
-    object-fit: cover; // 또는 contain
+    object-fit: contain; // 또는 contain
     display: block;
   }
   .photo-user {
