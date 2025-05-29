@@ -52,7 +52,6 @@ export const UserProvider = ({ children }: UserProviderProps) => {
           reason?: string;
           endDate?: string;
         };
-        console.log(data, "data");
         if (data.result && data.user) {
           setUser(data.user);
 
