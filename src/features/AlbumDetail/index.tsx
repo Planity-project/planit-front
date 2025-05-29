@@ -74,7 +74,6 @@ const AlbumDetail = () => {
     if (!file) return;
 
     try {
-      console.log(file, id, user.id, "대표이미지 변경 요청 값");
       const formData = new FormData();
       formData.append("file", file);
       formData.append("albumId", id);
@@ -132,7 +131,6 @@ const AlbumDetail = () => {
         title: titleChange,
       })
       .then((res: any) => {
-        console.log(res.data);
         Modal.warning({
           title: "앨범 이름이 변경되었습니다.",
         });
@@ -152,7 +150,6 @@ const AlbumDetail = () => {
     api
       .get("/album/destroy", { params: { userId: targetId, albumId: id } })
       .then((res) => {
-        console.log(res.data, "강퇴 요청 응답");
         setNum(num + 1);
       });
   };

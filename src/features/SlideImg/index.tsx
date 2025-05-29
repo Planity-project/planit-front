@@ -57,7 +57,7 @@ const SlideComponent = ({ imgModal, setImgModal, imglist }: SlideProps) => {
                   src={src}
                   alt={`img-${i}`}
                   fill
-                  style={{ objectFit: "cover" }}
+                  style={{ objectFit: "contain" }}
                 />
               </div>
             ))}
