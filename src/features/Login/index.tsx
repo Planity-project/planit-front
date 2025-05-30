@@ -29,7 +29,7 @@ const Login = () => {
   };
 
   const testLogin = () => {
-    api.get("testLogin").then((res) => {
+    api.get("testLogin").then((res: any) => {
       if (res.data.result) {
         router.push("/");
       } else {
