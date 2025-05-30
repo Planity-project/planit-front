@@ -150,6 +150,7 @@ const AlbumDetail = () => {
     api
       .get("/album/destroy", { params: { userId: targetId, albumId: id } })
       .then((res) => {
+        console.log(res.data, "강퇴 데이터");
         setNum(num + 1);
       });
   };
@@ -176,7 +177,8 @@ const AlbumDetail = () => {
     api
       .post("/album/exitalbum", { albumId: id, userId: user.id })
       .then((res) => {
-        router.push("/album");
+        console.log(res.data, "방 나가기");
+        // router.push("/album");
       });
   };
   return (
