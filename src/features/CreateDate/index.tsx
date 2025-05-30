@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, ReactNode } from "react";
 import { Modal, Steps } from "antd";
 import DateChoice from "./DateChoice";
 import { Createpage } from "./styled";
@@ -31,7 +31,7 @@ const CreateDatePage: React.FC = () => {
   const [time, setTime] = useState<TimeType>();
   const [resultLoading, setresultLoading] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState<ReactNode>("");
   const [schedule, setSchedule] = useState<ScheduleType>({
     dataTime: [],
     dataPlace: [],
@@ -57,7 +57,14 @@ const CreateDatePage: React.FC = () => {
   const commentSet = (step: number) => {
     switch (step) {
       case 0:
-        return "여행 날짜를 정해 나만의 특별한 시간을 계획하세요.";
+        return (
+          <>
+            여행 날짜를 정해 나만의 특별한 시간을 계획하세요.{" "}
+            <span style={{ color: "#999", fontSize: "0.9em" }}>
+              일정은 최대 4박5일까지 가능합니다.
+            </span>
+          </>
+        );
       case 1:
         return "떠날 장소를 선택해 꿈꾸던 여행을 시작하세요.";
       case 2:
