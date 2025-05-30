@@ -176,7 +176,7 @@ const AlbumDetail = () => {
     api
       .post("/album/exitalbum", { albumId: id, userId: user.id })
       .then((res) => {
-        // router.push("/album");
+        router.push("/album");
       });
   };
   return (
