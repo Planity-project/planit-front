@@ -31,6 +31,7 @@ const Login = () => {
   const testLogin = () => {
     api.get("/auth/testLogin").then((res: any) => {
       if (res.data.result) {
+        window.location.reload();
         router.push("/");
       } else {
         Modal.error({
