@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const AlbumDetailStyled = styled.div`
   margin-top: 100px;
   width: 100%;
+  min-height: 35vw;
   display: flex;
   flex-direction: column;
   align-items: center;
