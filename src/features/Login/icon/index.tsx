@@ -3,7 +3,7 @@ import { StyledButton, LogoImage } from "./styled";
 
 interface Props {
   onClick: () => void;
-  iconSrc: string;
+  iconSrc?: string;
   text: string;
   backgroundColor: string;
   textColor?: string;
@@ -26,7 +26,7 @@ const SocialLoginButton = ({
       className={className}
       type="button"
     >
-      <LogoImage src={iconSrc} alt="logo" />
+      {iconSrc && <LogoImage src={iconSrc} alt="logo" />}
       {text}
     </StyledButton>
   );

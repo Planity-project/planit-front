@@ -4,7 +4,8 @@ import kakao from "@/assets/images/sns_kakao.svg";
 import google from "@/assets/images/sns_google.svg";
 import { LoginStyled } from "@/features/Login/styled";
 import { useRouter } from "next/router";
-import { serverUrl } from "@/util/api";
+import api, { serverUrl } from "@/util/api";
+import { Modal } from "antd";
 const Login = () => {
   const router = useRouter();
   const { redirect } = router.query;
@@ -22,6 +23,19 @@ const Login = () => {
   };
   const googleLogin = () => {
     window.location.href = makeLoginUrl("google");
+  };
+
+  const testLogin = () => {
+    api.get("testLogin").then((res) => {
+      if (res.data.result) {
+        router.push("/");
+      } else {
+        Modal.error({
+          title: `${res.data.message}`,
+          centered: true,
+        });
+      }
+    });
   };
 
   return (
@@ -49,6 +63,12 @@ const Login = () => {
               backgroundColor="#ffffff"
               textColor="#000"
               className="google-logo"
+            />
+            <SocialLoginButton
+              onClick={testLogin}
+              text="테스트 로그인"
+              backgroundColor="#000000"
+              textColor="#ffffff"
             />
           </div>
         </form>
