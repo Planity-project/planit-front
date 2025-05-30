@@ -16,7 +16,10 @@ const Login = () => {
       : base;
   };
   const naverLogin = () => {
-    window.location.href = makeLoginUrl("naver");
+    Modal.error({
+      title: "네이버 로그인은 테스트 api 이용으로 문의 후 이용이 가능합니다.",
+      centered: true,
+    });
   };
   const kakaoLogin = () => {
     window.location.href = makeLoginUrl("kakao");
