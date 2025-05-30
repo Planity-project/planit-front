@@ -150,6 +150,11 @@ const AlbumDetail = () => {
     api
       .get("/album/destroy", { params: { userId: targetId, albumId: id } })
       .then((res) => {
+        Modal.warning({
+          title: "강퇴되었습니다.",
+          okText: "예",
+          cancelText: "아니요",
+        });
         setNum(num + 1);
       });
   };
