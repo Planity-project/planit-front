@@ -147,6 +147,7 @@ const AlbumDetail = () => {
       });
   };
   const exitUser = (targetId) => {
+    console.log(targetId, "타겟ID");
     api
       .get("/album/destroy", { params: { userId: targetId, albumId: id } })
       .then((res) => {
