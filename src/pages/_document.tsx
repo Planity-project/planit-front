@@ -34,7 +34,7 @@ class MyDocument extends Document {
   }
   render() {
     return (
-      <Html lang="en">
+      <Html lang="ko">
         <Head>
           {/* Google Fonts 불러오기 */}
           <link rel="preconnect" href="https://fonts.googleapis.com" />
